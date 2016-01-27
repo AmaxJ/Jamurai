@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
 	album: {
 		type: String
 	},
-	metadata: Schema.type.mixed,
+	metadata: mongoose.Schema.Types.Mixed,
 	totalVotes: {
 		type: Number
 	},
