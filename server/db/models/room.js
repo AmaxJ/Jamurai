@@ -23,15 +23,15 @@ var schema = new mongoose.Schema({
         default: Date.now
     },
     users: {
-        type: [Schema.types.ObjectId],
+        type: [mongoose.Schema.Types.ObjectId],
         ref: User
     },
     songs: {
-        type: [Schema.types.ObjectId],
+        type: [mongoose.Schema.Types.ObjectId],
         ref: Song
     },
     roomMetadata: {
-        type: Schema.Types.Mixed
+        type: mongoose.Schema.Types.Mixed
     }
 });
 
