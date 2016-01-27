@@ -24,6 +24,12 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
+    },
+    experience: {
+        type: Number
+    },
+    rank: {
+        type: Number
     }
 });
 
