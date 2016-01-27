@@ -40,6 +40,12 @@ var seedUsers = function () {
 
 };
 
+var seedSongs = function () {
+    var songs = [
+        {}
+    ]
+}
+
 connectToDb.then(function () {
     User.findAsync({}).then(function (users) {
         if (users.length === 0) {
