@@ -1,6 +1,7 @@
 app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 	var factory = {};
 	var playlist = [];
+    var currentlyPlayingSong;
 	var socket = SocketFactory.getSocket();
 
 	factory.populateSongs = function () {
@@ -31,6 +32,14 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 
     factory.getVoteValue = function(song) {
     	return song.voteValue;
+    }
+
+    factory.setCurrentSong = function(song) {
+        currentlyPlayingSong = song;
+    }
+
+    factory.getCurrentSong = function(song) {
+        return currentlyPlayingSong;
     }
 
     socket.on('updateVotes', function(vote){

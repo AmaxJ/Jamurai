@@ -1,4 +1,4 @@
-app.factory('PlayerFactory', () => {
+app.factory('PlayerFactory', (PlaylistFactory) => {
     var youtubePlayer;
     return {
             play() {
@@ -55,8 +55,10 @@ app.factory('PlayerFactory', () => {
                 youtubePlayer.getPlayerState();
             },
 
-            loadVideoById (id) {
-                youtubePlayer.loadVideoById(id);
+            loadVideoById (song) {
+                var songID = song.youTubeId;
+                youtubePlayer.loadVideoById(songID);
+                PlaylistFactory.setCurrentSong(song);
             },
             getPlayer() {
                 return youtubePlayer;

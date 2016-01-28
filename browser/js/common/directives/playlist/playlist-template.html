@@ -8,7 +8,7 @@
                 <th>Vote Count</th>
 			</tr>
 			<tr ng-repeat='song in songs()'
-            ng-click='loadVideoById(song.youTubeId)' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+            ng-click='loadVideoById(song)' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
 				<td>{{song.title}}</td>
 				<td>{{song.artist}}</td>
                 <td>
