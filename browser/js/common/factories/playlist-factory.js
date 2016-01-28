@@ -1,7 +1,7 @@
-app.factory('PlaylistFactory', function($http,$rootScope) {
+app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 	var factory = {};
 	var playlist = [];
-	var socket = io.connect(window.location.href);
+	var socket = SocketFactory.getSocket();
 
 	factory.populateSongs = function () {
 		return $http.get('/api/songs/')
@@ -22,10 +22,7 @@ app.factory('PlaylistFactory', function($http,$rootScope) {
 
     factory.vote = function($event, song, vote) {
         $event.stopPropagation();
-        // if (vote === 'up') song.voteValue += 1;
-        // else if (vote === 'down') song.voteValue -= 1;
-        // factory.sort();
-        socket.emit('vote', {song: song, voteType: vote});
+        SocketFactory.emitVote({song: song, voteType: vote})
     };
 
     factory.getPlaylist = function() {
