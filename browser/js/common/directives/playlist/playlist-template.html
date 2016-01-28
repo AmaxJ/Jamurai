@@ -1,0 +1,22 @@
+<div class='container-fluid'>
+	<div class='col-md-8 col-md-offset-2'>
+		<table class='table'>
+			<tr>
+				<th>Song</th>
+				<th>Artist</th>
+                <th>Vote</th>
+                <th>Vote Count</th>
+			</tr>
+			<tr ng-repeat='song in songs'
+            ng-click='loadVideoById(song.youTubeId)' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+				<td>{{song.title}}</td>
+				<td>{{song.artist}}</td>
+                <td>
+                    <button class="btn btn-sm btn-success" ng-click="vote($event, song, 'up')"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                    <button class="btn btn-sm btn-danger" ng-click="vote($event, song, 'down')"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                </td>
+                <td>{{song.voteValue}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
