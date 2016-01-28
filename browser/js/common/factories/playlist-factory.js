@@ -38,7 +38,7 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
         currentlyPlayingSong = song;
     }
 
-    factory.getCurrentSong = function(song) {
+    factory.getCurrentSong = function() {
         return currentlyPlayingSong;
     }
 

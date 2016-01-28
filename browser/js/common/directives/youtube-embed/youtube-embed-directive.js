@@ -1,4 +1,4 @@
-app.directive('youtubeEmbed', function($window, PlayerFactory) {
+app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory) {
     return {
         restrict: "E",
 
@@ -16,7 +16,10 @@ app.directive('youtubeEmbed', function($window, PlayerFactory) {
 
             //Loads player and attaches to DOM
             function stateChange(event) { 
-              // if(event.data === 0) PlayerFactory.playNext();
+              if(event.data === 0) {
+                var currentSong = PlaylistFactory.getCurrentSong();
+                PlayerFactory.playNextSong(currentSong);
+              }
             }
 
             var tag = document.createElement('script');
