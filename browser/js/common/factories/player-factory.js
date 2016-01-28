@@ -1,5 +1,5 @@
 app.factory('PlayerFactory', () => {
-
+    var youtubePlayer;
     return {
             play() {
                 youtubePlayer.playVideo();
@@ -57,6 +57,12 @@ app.factory('PlayerFactory', () => {
 
             loadVideoById (id) {
                 youtubePlayer.loadVideoById(id);
+            },
+            getPlayer() {
+                return youtubePlayer;
+            },
+            setPlayer(newPlayer){
+                youtubePlayer = newPlayer;
             }
 
     }

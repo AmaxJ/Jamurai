@@ -1,6 +1,4 @@
-//Adapted from http://blog.oxrud.com/posts/creating-youtube-directive/
-var youtubePlayer;
-app.directive('youtubeEmbed', function($window) {
+app.directive('youtubeEmbed', function($window, PlayerFactory) {
     return {
         restrict: "E",
 
@@ -14,6 +12,8 @@ app.directive('youtubeEmbed', function($window) {
 
         link: function(scope, element) {
 
+            var youtubePlayer = PlayerFactory.getPlayer();
+
             //Loads player and attaches to DOM
             function stateChange(event) { 
               // if(event.data === 0) PlayerFactory.playNext();
@@ -26,7 +26,7 @@ app.directive('youtubeEmbed', function($window) {
 
 
             $window.onYouTubeIframeAPIReady = function() {
-                youtubePlayer = new YT.Player('player', {
+                PlayerFactory.setPlayer(new YT.Player('player', {
                     height: scope.height,
                     width: scope.width,
                     videoId: scope.videoid,
@@ -34,7 +34,7 @@ app.directive('youtubeEmbed', function($window) {
                         'onReady': '',
                         'onStateChange': stateChange
                     }
-                });
+                }));
             };
         },
     }
