@@ -53,6 +53,10 @@ app.factory('PlayerFactory', () => {
 
             getPlayerState() {
                 youtubePlayer.getPlayerState();
+            },
+
+            loadVideoById (id) {
+                youtubePlayer.loadVideoById(id);
             }
 
     }

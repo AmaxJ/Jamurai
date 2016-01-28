@@ -1,0 +1,14 @@
+<div class='container-fluid'>
+	<div class='col-md-8 col-md-offset-2'>
+		<table class='table'>
+			<tr>
+				<th>Song</th>
+				<th>Artist</th>
+			</tr>
+			<tr ng-repeat='song in songs' ng-click='loadVideoById(song.youTubeId)' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+				<td>{{song.title}}</td>
+				<td>{{song.artist}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
