@@ -4,12 +4,10 @@
 			<tr>
 				<th>Song</th>
 				<th>Artist</th>
-				<th>Posted by</th>
 			</tr>
-			<tr ng-repeat='song in songs'>
-				<td>Song:{{song.name}}</td>
-				<td>Artist:{{song.artist}}</td>
-				<!-- <td>:{{song.postedBy}}</td> -->
+			<tr ng-repeat='song in songs' ng-click='loadVideoById(song.youTubeId)' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+				<td>{{song.title}}</td>
+				<td>{{song.artist}}</td>
 			</tr>
 		</table>
 	</div>
