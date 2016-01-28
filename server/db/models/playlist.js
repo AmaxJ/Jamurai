@@ -4,11 +4,11 @@ var mongoose = require('mongoose');
 var schema = new mongoose.Schema({
     room : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: User
+        ref: "User"
     },
     songs : {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: Song
+        ref: "Song"
     }
 })
 
@@ -17,3 +17,5 @@ schema.statics.addSong = function(id, songId) {
         {$push: {"songs": songId}},
         { new: true });
 };
+
+mongoose.model('Playlist', schema);
