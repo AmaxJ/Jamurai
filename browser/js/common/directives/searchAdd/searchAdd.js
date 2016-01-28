@@ -1,11 +1,16 @@
-app.directive('searchAdd', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('searchAdd', function (SubmitSongFactory) {
 
     return {
         restrict: 'E',
         templateUrl: 'js/common/directives/searchAdd/searchAdd.html',
         link: function (scope) {
+            scope.showSearchResults = false;
             scope.search = function(text) {
-                console.log(text);
+                return SubmitSongFactory.searchYoutube(text)
+                .then(function(searchResults){
+                    scope.searchResults = SubmitSongFactory.getSearchResults();
+                    scope.showSearchResults = true;
+                })
             }
             scope.entry = "A-team";
             scope.add = function(entry) {
