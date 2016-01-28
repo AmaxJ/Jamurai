@@ -4,4 +4,5 @@
 require('./user');
 require('./song');
 require('./room');
+require('./playlist');
 

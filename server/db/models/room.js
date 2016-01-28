@@ -26,9 +26,9 @@ var schema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: User
     },
-    songs: {
+    playlists: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: Song
+        ref: "Playlist"
     },
     roomMetadata: {
         type: mongoose.Schema.Types.Mixed
