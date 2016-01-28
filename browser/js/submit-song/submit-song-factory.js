@@ -2,12 +2,12 @@ app.factory('SubmitSongFactory', ($http)=>{
 	var factory = {};
 	
 	var searchResults;
-	factory.searchYoutube = ()=>{
+	factory.searchYoutube = (searchParams)=>{
 		return $http({
 			method: 'GET',
 			url: 'https://www.googleapis.com/youtube/v3/search',
 			params: {
-				q: $scope.search, 
+				q: searchParams, 
 				part: 'snippet', 
 				maxResults: 25,
 				kind: 'video',
@@ -25,3 +25,5 @@ app.factory('SubmitSongFactory', ($http)=>{
 
 	return factory;
 })
+
+
