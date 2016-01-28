@@ -14,11 +14,13 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory){
 	$scope.getRoomState = RoomFactory.getRoomState;
 	$scope.showForm = RoomFactory.showForm;
 	$scope.createNewRoom = function() {
-			return RoomFactory.createNewRoom($scope.newRoom)
+			RoomFactory.createNewRoom($scope.newRoom)
 			.then(function(){
 				$scope.newRoom = {
-			        roomName: null,
-			        roomPrivacy: null
+			        ame: null,
+			        privacy: null,
+			        location: null,
+			        ambassadors: []
 	    		}
 			})
 	}
