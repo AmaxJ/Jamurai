@@ -5,10 +5,11 @@ app.directive('playlist', function() {
 		scope: {
 			songs: '='
 		},
-		controller: function($scope, PlayerFactory) {
+		controller: function($scope, PlayerFactory, PlaylistFactory) {
 			// $scope.songs = PlaylistFactory.getAllSongs;
 			// console.log("controller ", $scope.songs);
 			$scope.loadVideoById = PlayerFactory.loadVideoById;
+            $scope.vote = PlaylistFactory.vote;
 		}
 	}
 })
