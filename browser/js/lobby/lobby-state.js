@@ -5,9 +5,6 @@ app.config(function($stateProvider) {
     })
 })
 
-app.controller('LobbyCtrl', ($scope) => {
-    $scope.newRoom = {
-        roomName: null,
-        roomPrivacy: null
-    }
-})
+// app.controller('LobbyCtrl', ($scope) => {
+    
+// })

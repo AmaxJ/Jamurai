@@ -1,16 +1,15 @@
 <div>
-	<button>Create A Room</button>
-	<form name="roomForm">
+	<button type='button' ng-click="showForm()">Create A Room</button>
+	<form ng-submit="createNewRoom()" name="roomForm" ng-show="getRoomState()">
 		<div class="form-group">
 			<label for="roomName">Name</label>
-			<input ng-model="newRoom.roomName" type="text" id="roomName" name="name">
+			<input ng-model="newRoom.roomName" type="text" id="roomName" name="name" required class='form-control'>
 		</div>
-		<div class="form-group">
-			<label for="roomName">Private</label>
-			<input ng-model="newRoom.roomPrivacy" type="checkbox" id="roomPrivacy" name="name">
+		<div class="checkbox">
+			<label for="roomName">
+			<input ng-model="newRoom.roomPrivacy" type="checkbox" id="roomPrivacy" name="name"> Private
+			</label>
 		</div>
 		<input type="submit"></input>
 	</form>
 </div>
-
-{{newRoom}}
