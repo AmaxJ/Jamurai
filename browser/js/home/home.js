@@ -4,19 +4,18 @@ app.config(function($stateProvider) {
         templateUrl: 'js/home/home.html',
         controller: 'HomeCtrl',
         resolve: {
-        	songs: function (PlaylistFactory) {
-        		return PlaylistFactory.getAllSongs();
+        	loadSongs: function (PlaylistFactory) {
+        		return PlaylistFactory.populateSongs();
         	}
         }
     });
 })
 
-.controller('HomeCtrl', ($scope, PlayerFactory, songs) => {
+.controller('HomeCtrl', ($scope, PlayerFactory, loadSongs,PlaylistFactory) => {
 
     $scope.play = PlayerFactory.play;
     $scope.pause = PlayerFactory.pause;
     $scope.mute = PlayerFactory.mute;
-
-    $scope.songs = songs;
+    $scope.songs = PlaylistFactory.getPlaylist;
 
 })
