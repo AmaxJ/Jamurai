@@ -6,18 +6,25 @@ app.directive('createRoom', function(){
 	}
 })
 
-app.controller('RoomFormCtrl', function($scope, RoomFactory){
+app.controller('RoomFormCtrl', function($scope, RoomFactory, $state){
 	$scope.newRoom = {
-        roomName: null,
-        roomPrivacy: null
+		//creator field just for testing... remove later
+		creator: '0823082308423',
+        name: null,
+        privacy: null,
+        location: null,
+        ambassadors: []
     }
 	$scope.getRoomState = RoomFactory.getRoomState;
 	$scope.showForm = RoomFactory.showForm;
 	$scope.createNewRoom = function() {
 			RoomFactory.createNewRoom($scope.newRoom)
+			.then(function(newRoom) {
+				$state.go('room', {roomId: newRoom._id});
+			})
 			.then(function(){
 				$scope.newRoom = {
-			        ame: null,
+			        name: null,
 			        privacy: null,
 			        location: null,
 			        ambassadors: []

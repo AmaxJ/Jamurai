@@ -18,8 +18,17 @@ app.factory('RoomFactory', function($http){
 			data: newRoom
 		})
 		.then(function(response){
-			console.log(response);
-			// return response.data;
+			return response.data;
+		})
+	}
+
+	factory.getRoomById = (roomId) => {
+		return $http({
+			method: 'GET',
+			url: '/api/rooms/' + roomId
+		})
+		.then(function(response){
+			return response.data;
 		})
 	}
 
