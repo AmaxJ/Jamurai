@@ -5,7 +5,8 @@ app.config(function($stateProvider) {
         controller: 'HomeCtrl',
         resolve: {
         	songs: function (PlaylistFactory) {
-        		return PlaylistFactory.getAllSongs();
+        		return PlaylistFactory.populateSongs()
+                    .then(PlaylistFactory.getPlaylist);
         	}
         }
     });
@@ -16,7 +17,7 @@ app.config(function($stateProvider) {
     $scope.play = PlayerFactory.play;
     $scope.pause = PlayerFactory.pause;
     $scope.mute = PlayerFactory.mute;
-
+    console.log(songs);
     $scope.songs = songs;
 
 })
