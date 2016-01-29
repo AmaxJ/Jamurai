@@ -5,7 +5,8 @@ var Song = mongoose.model('Song');
 
 var schema = new mongoose.Schema({
     creator: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     name: {
@@ -36,18 +37,18 @@ var schema = new mongoose.Schema({
 });
 
 
-schema.statics.getRoomUsers = function getRoomUsers () {
+schema.statics.getRoomUsers = function getRoomUsers() {
     return this.find()
-    .populate('users')
-    .select('users')
-    .exec()
+        .populate('users')
+        .select('users')
+        .exec()
 };
 
-schema.statics.getRoomSongs = function getRoomSongs () {
+schema.statics.getRoomSongs = function getRoomSongs() {
     return this.find()
-    .populate('songs')
-    .select('songs')
-    .exec()
+        .populate('songs')
+        .select('songs')
+        .exec()
 };
 
 

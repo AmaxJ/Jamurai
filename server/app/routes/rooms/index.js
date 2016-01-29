@@ -8,6 +8,10 @@ router.route('/')
 		Room.find({})
 		.populate('songs')
 		.populate('users')
+        .populate({
+            path: 'playlists',
+            populate : { path : 'songs' }
+        });
 		.exec()
 		.then(function(rooms){
 			res.json(rooms);
