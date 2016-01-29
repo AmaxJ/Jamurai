@@ -11,7 +11,7 @@ router.route('/')
         .populate({
             path: 'playlists',
             populate : { path : 'songs' }
-        });
+        })
 		.exec()
 		.then(function(rooms){
 			res.json(rooms);
