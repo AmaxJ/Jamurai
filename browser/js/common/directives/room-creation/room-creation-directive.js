@@ -6,9 +6,13 @@ app.directive('createRoom', function(){
 	}
 })
 
-app.controller('RoomFormCtrl', function($scope, RoomFactory, $state){
+app.controller('RoomFormCtrl', function($scope, RoomFactory, $state, AuthService){
+
+	let user = AuthService.getLoggedInUser();
+
 	$scope.newRoom = {
 		//creator field just for testing... remove later
+		//normally will be: user._id
 		creator: '0823082308423',
         name: null,
         privacy: null,
@@ -17,12 +21,12 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory, $state){
     }
 	$scope.getRoomState = RoomFactory.getRoomState;
 	$scope.showForm = RoomFactory.showForm;
-	$scope.createNewRoom = function() {
+	$scope.createNewRoom = () => {
 			RoomFactory.createNewRoom($scope.newRoom)
 			.then(function(newRoom) {
 				$state.go('room', {roomId: newRoom._id});
 			})
-			.then(function(){
+			.then(() => {
 				$scope.newRoom = {
 			        name: null,
 			        privacy: null,
