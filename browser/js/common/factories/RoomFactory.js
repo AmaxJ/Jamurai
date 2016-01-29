@@ -17,7 +17,7 @@ app.factory('RoomFactory', function($http){
 			url: '/api/rooms/',
 			data: newRoom
 		})
-		.then(function(response){
+		.then((response) => {
 			return response.data;
 		})
 	}
@@ -27,7 +27,7 @@ app.factory('RoomFactory', function($http){
 			method: 'GET',
 			url: '/api/rooms/' + roomId
 		})
-		.then(function(response){
+		.then((response) => {
 			return response.data;
 		})
 	}

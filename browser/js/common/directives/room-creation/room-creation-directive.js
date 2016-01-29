@@ -23,7 +23,7 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory, $state, AuthService
 	$scope.showForm = RoomFactory.showForm;
 	$scope.createNewRoom = () => {
 			RoomFactory.createNewRoom($scope.newRoom)
-			.then(function(newRoom) {
+			.then((newRoom) => {
 				$state.go('room', {roomId: newRoom._id});
 			})
 			.then(() => {
