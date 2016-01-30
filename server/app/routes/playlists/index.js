@@ -1,3 +1,4 @@
+'use strict';
 let router = require('express').Router();
 let Playlist = require('mongoose').model('Playlist');
 module.exports = router;
