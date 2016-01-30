@@ -8,10 +8,11 @@ var schema = new mongoose.Schema({
     }]
 });
 
-schema.statics.addSong = function(id, songId) {
-    return this.findByIdAndUpdate( id,
-        {$push: {"songs": songId}},
-        { new: true });
-};
+schema.method({
+    addSong: function(songId) {
+        this.songs.addToSet(songId);
+        return this.save();
+    }
+})
 
 mongoose.model('Playlist', schema);
