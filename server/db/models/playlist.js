@@ -6,7 +6,7 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Song"
     }]
-})
+});
 
 schema.statics.addSong = function(id, songId) {
     return this.findByIdAndUpdate( id,

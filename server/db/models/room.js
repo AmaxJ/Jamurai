@@ -1,7 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var Song = mongoose.model('Song');
 
 var schema = new mongoose.Schema({
     creator: {
@@ -25,7 +23,7 @@ var schema = new mongoose.Schema({
     },
     users: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: User
+        ref: "User"
     }],
     playlists: [{
         type: mongoose.Schema.Types.ObjectId,
