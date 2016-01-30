@@ -20,6 +20,7 @@ app.config(function($stateProvider) {
     $scope.loggedInUser = theUser;
     $scope.isEditable = ProfileFactory.getIsEditable;
     $scope.setEditable = ProfileFactory.setIsEditable;
+    $scope.updateDetails = {};
 })
 
 .factory('ProfileFactory', function($http){
