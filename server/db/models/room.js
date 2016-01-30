@@ -11,8 +11,9 @@ var schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    privacy: {
-        type: String
+    isPrivate: {
+        type: Boolean,
+        default: false
     },
     location: {
         type: String

@@ -138,7 +138,6 @@ connectToDb.then(function () {
         });
     })
     .then(function (playlist) {
-        console.log(playlist);
         return Room.create({
             creator : userId,
             name : "room!",
@@ -146,7 +145,6 @@ connectToDb.then(function () {
         });
     })
     .then(function (room) {
-        console.log(room);
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     })
