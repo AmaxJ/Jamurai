@@ -7,7 +7,6 @@ app.config(function($stateProvider) {
         	theUser: function (AuthService) {
         		return AuthService.getLoggedInUser()
                 .then(function(user){
-                    console.log('Logged in?',user)
                     return user;
                 })
         	}
@@ -16,8 +15,19 @@ app.config(function($stateProvider) {
 })
 
 .controller('ProfileCtrl', function($scope, ProfileFactory, theUser){
-    $scope.updateUser = ProfileFactory.updateUser;
-    $scope.loggedInUser = theUser;
+    var loggedInUser = theUser;
+    $scope.loggedInUser = () => {
+        return loggedInUser;
+    }
+    $scope.updateUser = function(user, update){
+        ProfileFactory.updateUser(user, update)
+        .then(function(user){
+            $scope.updateDetails = {};
+            ProfileFactory.setIsEditable();
+            loggedInUser = user;
+        })
+    }
+    // $scope.loggedInUser = ProfileFactory.getLoggedInUser;
     $scope.isEditable = ProfileFactory.getIsEditable;
     $scope.setEditable = ProfileFactory.setIsEditable;
     $scope.updateDetails = {};
@@ -26,18 +36,17 @@ app.config(function($stateProvider) {
 .factory('ProfileFactory', function($http){
     var factory = {};
     var isEditable = false;
+   
 
     factory.updateUser = (user, update) => {
-        console.log('Hello from profile factory')
-        console.log('USER', user._id);
-        console.log('UPDATE', update);
-        $http({
+        return $http({
             method: 'PUT',
             url: 'api/users/' + user._id,
             data: update
         })
         .then(function(response){
             console.log('Updated user?',response.data);
+            return response.data;
         })
     }
 
