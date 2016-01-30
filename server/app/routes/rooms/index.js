@@ -6,12 +6,12 @@ module.exports = router;
 router.route('/')
 	.get(function(req,res,next){
 		Room.find({})
-		.populate('songs')
 		.populate('users')
-        .populate({
-            path: 'playlists',
-            populate : { path : 'songs' }
-        })
+        .populate('playlists')
+        // .populate({
+        //     path: 'playlists',
+        //     populate : { path : 'songs' }
+        // })
 		.exec()
 		.then(function(rooms){
 			res.json(rooms);

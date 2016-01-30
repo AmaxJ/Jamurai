@@ -2,14 +2,10 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    room : {
+    songs : [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-    songs : {
-        type: [mongoose.Schema.Types.ObjectId],
         ref: "Song"
-    }
+    }]
 })
 
 schema.statics.addSong = function(id, songId) {

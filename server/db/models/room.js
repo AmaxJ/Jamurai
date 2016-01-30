@@ -23,14 +23,14 @@ var schema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    users: {
-        type: [mongoose.Schema.Types.ObjectId],
+    users: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: User
-    },
-    playlists: {
-        type: [mongoose.Schema.Types.ObjectId],
+    }],
+    playlists: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist"
-    },
+    }],
     roomMetadata: {
         type: mongoose.Schema.Types.Mixed
     }

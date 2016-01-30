@@ -115,6 +115,8 @@ var seedSongs = function () {
 }
 
 var songIds;
+var userId;
+
 connectToDb.then(function () {
     Song.findAsync({}).then(function (songs) {
         if (songs.length > 0) Song.remove({}).exec();
@@ -130,19 +132,21 @@ connectToDb.then(function () {
         });
     })
     .then(function (user) {
-        return Room.create({
-            creator : user._id,
-            name : "testRoom"
-        });
-    })
-    .then(function (room) {
+        userId = user._id;
         return Playlist.create({
-            room : room._id,
             songs : songIds
         });
     })
     .then(function (playlist) {
-        console.log('playlist', playlist);
+        console.log(playlist);
+        return Room.create({
+            creator : userId,
+            name : "room!",
+            playlists : [playlist._id]
+        });
+    })
+    .then(function (room) {
+        console.log(room);
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     })
