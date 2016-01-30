@@ -10,7 +10,11 @@ router.route('/')
         .populate('playlists')
         .populate({
             path: 'playlists',
-            populate : { path : 'songs' }
+            model: 'Playlist',
+            populate : {
+                path : 'songs',
+                model : 'Song'
+            }
         })
 		.exec()
 		.then(function(rooms){

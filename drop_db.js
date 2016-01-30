@@ -4,12 +4,13 @@ var DATABASE_URI = require(path.join(__dirname, './server/env')).DATABASE_URI;
 var mongoose = require('mongoose');
 
 mongoose.connect(DATABASE_URI, function() {
-
-    mongoose.connection.db.dropCollection('capstone', function(err, result) {
+    mongoose.connection.db.dropDatabase(function(err, result) {
         if (err) {
-            console.log(err)
+            console.error(err);
+            process.kill(1);
         } else {
-            console.log("success: ", result)
+            process.kill(0);
         }
     });
+
 });
