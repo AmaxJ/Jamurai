@@ -1,6 +1,7 @@
 <p>User Profiles</p>
 {{loggedInUser}}
-<form name="updateUserForm" ng-submit="updateUser(loggedInUser, updateUserForm)">
+<button ng-click="setEditable()">Edit</button>
+<form ng-show="isEditable()" name="updateUserForm" ng-submit="updateUser(loggedInUser, updateUserForm)">
 	<label>Name:</label>
 	<input ng-model="updateUserForm.userName" type="text">
 	<input type="submit">

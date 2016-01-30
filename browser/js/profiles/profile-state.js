@@ -18,10 +18,13 @@ app.config(function($stateProvider) {
 .controller('ProfileCtrl', function($scope, ProfileFactory, theUser){
     $scope.updateUser = ProfileFactory.updateUser;
     $scope.loggedInUser = theUser;
+    $scope.isEditable = ProfileFactory.getIsEditable;
+    $scope.setEditable = ProfileFactory.setIsEditable;
 })
 
 .factory('ProfileFactory', function($http){
     var factory = {};
+    var isEditable = false;
 
     factory.updateUser = (user, update) => {
         console.log('Hello from profile factory')
@@ -35,6 +38,14 @@ app.config(function($stateProvider) {
         .then(function(response){
             console.log('Updated user?',response.data);
         })
+    }
+
+    factory.getIsEditable = () => {
+        return isEditable;
+    }
+
+    factory.setIsEditable = () => {
+        isEditable = !isEditable;
     }
 
     return factory;
