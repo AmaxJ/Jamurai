@@ -17,7 +17,7 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory){
 			RoomFactory.createNewRoom($scope.newRoom)
 			.then(function(){
 				$scope.newRoom = {
-			        ame: null,
+			        name: null,
 			        privacy: null,
 			        location: null,
 			        ambassadors: []

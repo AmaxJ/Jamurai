@@ -1,10 +1,11 @@
-<div class='col-md-8 col-md-offset-2' id='roomCreation'>
+<div class='col-md-8 col-md-offset-2' id='roomForm'>
 	<button type='button' class='btn btn-default btn-lg' ng-click="showForm()">Create A Room</button>
-	<form ng-submit="createNewRoom()" class='form-group' name="roomForm" ng-show="getRoomState()">
+	<form ng-submit="createNewRoom()" class='form-group' name="roomForm" ng-show="getRoomState()" novalidate>
 		<div class="form-group">
 			<label for="roomName">Name</label>
 			<input ng-model="newRoom.name" type="text" id="roomName" name="name" required class='form-control'>
 		</div>
+		<p class='error' ng-show="roomForm.name.$invalid && roomForm.name.$dirty">Name is required!</p>
 		<div class="checkbox">
 			<label for="roomPrivacy">
 			<input ng-model="newRoom.privacy" type="checkbox" id="roomPrivacy" name="privacy">Private

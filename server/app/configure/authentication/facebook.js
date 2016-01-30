@@ -11,11 +11,12 @@ module.exports = function (app) {
     var facebookCredentials = {
         clientID: facebookConfig.clientID,
         clientSecret: facebookConfig.clientSecret,
-        callbackURL: facebookConfig.callbackURL
+        callbackURL: facebookConfig.callbackURL,
+        profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)', 'emails']
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
-
+        console.log('FACEBOOOK', profile)
         UserModel.findOne({ 'facebook.id': profile.id }).exec()
             .then(function (user) {
 
@@ -25,7 +26,10 @@ module.exports = function (app) {
                     return UserModel.create({
                         facebook: {
                             id: profile.id
-                        }
+                        },
+                        username: profile.displayName,
+                        picture: profile.photos[0].value,
+                        email: profile.emails[0].value
                     });
                 }
 
@@ -40,7 +44,7 @@ module.exports = function (app) {
 
     passport.use(new FacebookStrategy(facebookCredentials, verifyCallback));
 
-    app.get('/auth/facebook', passport.authenticate('facebook'));
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/login' }),
