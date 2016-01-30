@@ -11,7 +11,7 @@ app.config(function($stateProvider) {
     });
 })
 
-.controller('HomeCtrl', ($scope, PlayerFactory, loadSongs,PlaylistFactory) => {
+app.controller('HomeCtrl', ($scope, PlayerFactory, loadSongs,PlaylistFactory) => {
 
     $scope.play = PlayerFactory.play;
     $scope.pause = PlayerFactory.pause;
