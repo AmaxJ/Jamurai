@@ -33,6 +33,9 @@ var schema = new mongoose.Schema({
     },
     rank: {
         type: Number
+    },
+    picture: {
+        type: String
     }
 });
 
