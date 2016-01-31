@@ -9,12 +9,15 @@ app.config(function($stateProvider) {
         				.then((user)=>{
         					return user;
         				})
-        	}
+        	},
+            rooms: function (RoomFactory) {
+                return RoomFactory.getAllRooms();
+            }
         }
     })
-}).controller('LobbyCtrl', ($scope, user) => {
+}).controller('LobbyCtrl', ($scope, user, rooms) => {
     $scope.user = user;
-    console.log('does this even work');
+    $scope.rooms = rooms;
 })
 
 

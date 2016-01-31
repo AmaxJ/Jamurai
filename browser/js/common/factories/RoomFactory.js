@@ -11,6 +11,16 @@ app.factory('RoomFactory', function($http){
 		showForm = true;
 	};
 
+	factory.getAllRooms = () => {
+		return $http({
+			method: 'GET',
+			url: '/api/rooms/'
+		})
+		.then((response)=> {
+			return response.data;
+		})
+	}
+
 	factory.createNewRoom = (newRoom) => {
 		return $http({
 			method: 'POST',
