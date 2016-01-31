@@ -6,8 +6,16 @@ module.exports = router;
 router.route('/')
 	.get(function(req,res,next){
 		Room.find({})
-		.populate('songs')
 		.populate('users')
+        .populate('playlists')
+        .populate({
+            path: 'playlists',
+            model: 'Playlist',
+            populate : {
+                path : 'songs',
+                model : 'Song'
+            }
+        })
 		.exec()
 		.then(function(rooms){
 			res.json(rooms);
