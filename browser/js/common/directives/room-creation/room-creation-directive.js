@@ -4,9 +4,7 @@ app.directive('createRoom', function(){
 		templateUrl: 'js/common/directives/room-creation/room-creation-template.html',
 		controller: 'RoomFormCtrl'
 	}
-})
-
-app.controller('RoomFormCtrl', function($scope, RoomFactory, $state, user){
+}).controller('RoomFormCtrl', function($scope, RoomFactory, $state, user){
 
 	let user = user;
 	console.log('from roomForm', user);
@@ -20,6 +18,9 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory, $state, user){
         location: null,
         ambassadors: []
     }
+    console.log($scope.newRoom);
+    console.log('in the form controller')
+
 	$scope.getRoomState = RoomFactory.getRoomState;
 	$scope.showForm = RoomFactory.showForm;
 	$scope.createNewRoom = () => {

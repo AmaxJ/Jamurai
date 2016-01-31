@@ -16,6 +16,7 @@ app.config(function($stateProvider) {
 		}
 	})
 }).controller('RoomCtrl', function ($scope, room, user) {
+		console.log(user);
 		$scope.room = room;
 		$scope.user = user;
 })
