@@ -1,22 +1,3 @@
-/*
-
-This seed file is only a placeholder. It should be expanded and altered
-to fit the development of your application.
-
-It uses the same file the server uses to establish
-the database connection:
---- server/db/index.js
-
-The name of the database used is set in your environment files:
---- server/env/*
-
-This seed file has a safety check to see if you already have users
-in the database. If you are developing multiple applications with the
-fsg scaffolding, keep in mind that fsg always uses the same database
-name in the environment files.
-
-*/
-
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
@@ -24,6 +5,10 @@ var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Song = Promise.promisifyAll(mongoose.model('Song'));
 var Room = Promise.promisifyAll(mongoose.model('Room'));
+<<<<<<< HEAD
+=======
+var Playlist = Promise.promisifyAll(mongoose.model('Playlist'));
+>>>>>>> master
 
 var seedUsers = function () {
 
@@ -128,7 +113,7 @@ var seedSongs = function () {
             totalDownVotes: 2
         }
     ];
-    
+
     return Song.createAsync(songs);
 }
 
@@ -170,22 +155,41 @@ var seedRooms = function () {
     return Room.createAsync(rooms);
 }
 
+var songIds;
+var userId;
+
 connectToDb.then(function () {
     Song.findAsync({}).then(function (songs) {
-        if (songs.length === 0) {
-            return seedSongs();
-        } else {
-            console.log(chalk.magenta('Seems to already be song data, exiting!'));
-            process.kill(0);
-        }
+        if (songs.length > 0) Song.remove({}).exec();
+        return seedSongs();
     })
-    .then(function() {
-        return seedRooms();
+    .then(function (songs) {
+        songIds = songs.map(function(song) {
+            return song._id;
+        });
+        return User.create({
+            email : "test@gmail.com",
+            password : "test"
+        });
     })
-    .then(function () {
+    .then(function (user) {
+        userId = user._id;
+        return Playlist.create({
+            songs : songIds
+        });
+    })
+    .then(function (playlist) {
+        return Room.create({
+            creator : userId,
+            name : "room!",
+            playlists : [playlist._id]
+        });
+    })
+    .then(function (room) {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.error(err);
         process.kill(1);
     });

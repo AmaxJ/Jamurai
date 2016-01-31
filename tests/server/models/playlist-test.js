@@ -10,7 +10,6 @@ require('../../../server/db/models');
 
 var Playlist = mongoose.model('Playlist');
 var Song = mongoose.model('Song');
-var Room = mongoose.model('Room');
 
 describe('Playlist model', function() {
 
@@ -28,35 +27,29 @@ describe('Playlist model', function() {
     });
 
     it('addSong() should add a song to songs field', function(done) {
-        var room;
         var song;
-        Room.create({
-                creator: "testCreator",
-                name: "testRoom",
-            })
-            .then(function(newRoom) {
-                room = newRoom;
-                return Song.create({
-                    title: 'Kusanagi',
-                    artist: 'Odesza',
-                    album: 'In Return',
-                    youTubeId: 'I2mK-Ql9r1Y',
-                    totalUpVotes: 102,
-                    totalDownVotes: 72
-                })
+        Song.create({
+                title: 'Kusanagi',
+                artist: 'Odesza',
+                album: 'In Return',
+                youTubeId: 'I2mK-Ql9r1Y',
+                totalUpVotes: 102,
+                totalDownVotes: 72
             })
             .then(function(newSong) {
-                song = newSong
-                return Playlist.create({
-                    room : room._id
-                });
+                song = newSong;
+                return Playlist.create({})
             })
-            .then(function(newPlaylist) {
-                return Playlist.addSong(newPlaylist._id, song._id)
+            .then(function(playlist) {
+                return playlist.addSong(song._id);
+            })
+            .then(function(playlist) {
+                return Playlist.findById(playlist._id)
             })
             .then(function(playlist) {
                 expect(playlist.songs.length).to.equal(1);
+                expect(playlist.songs[0].toString()).to.equal(song._id.toString());
                 done();
-            })
+            });
     });
 });

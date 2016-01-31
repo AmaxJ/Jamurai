@@ -14,54 +14,55 @@ var app = require('../../../server/app');
 var db;
 
 describe('Rooms Route', function() {
-   before('Establish DB connection', function(done){
-       if(!mongoose.connection.db) mongoose.connect(dbURI, done);
-       done();
-   });
+    before('Establish DB connection', function(done) {
+        if (!mongoose.connection.db) mongoose.connect(dbURI, done);
+        done();
+    });
 
-   beforeEach('Seed sample data', function(done) {
-      User.create({
-        email: 'properTestEmail@email.email'
-      })
-      .then(function(user){
-        return Room.create({
-           creator: 'God',
-           name: 'D-Block',
-           privacy: 'Public',
-           location: 'Yonkers',
-           users: [user['_id']]
-       })
-      })
-       
-       .then(function() {
-           done();
-       });
-   });
+    beforeEach('Seed sample data', function(done) {
+        User.create({
+                email: 'properTestEmail@email.email'
+            })
+            .then(function(user) {
+                return Room.create({
+                    creator: user._id,
+                    name: 'testRoom',
+                    isPrivate: false,
+                    location: 'Yonkers',
+                    users: [user._id]
+                })
+            })
+            .then(function() {
+                done();
+            })
+            .then(null, console.error.bind(console));
 
-   afterEach('Clear test database', function(done) {
-     clearDB(done);
-   });
+    });
 
-   describe('Get /api/rooms', function() {
-       var guestAgent;
+    afterEach('Clear test database', function(done) {
+        clearDB(done);
+    });
 
-       beforeEach('Create guest agent', function() {
-           guestAgent = supertest.agent(app);
-       });
+    describe('Get /api/rooms', function() {
+        var guestAgent;
 
-       it('should get a 200 response', function(done) {
-           guestAgent.get('/api/rooms/')
-           .expect(200)
-           .end(done);
-       });
+        beforeEach('Create guest agent', function() {
+            guestAgent = supertest.agent(app);
+        });
 
-       it('should find some rooms', function(done) {
-           guestAgent.get('/api/rooms/').expect(200)
-           .end(function(err, response) {
-               if(err) return done(err);
-               expect(response.body[0].creator).to.equal('God')
-               done()
-           });
-       });
-   });
+        it('should get a 200 response', function(done) {
+            guestAgent.get('/api/rooms/')
+                .expect(200)
+                .end(done);
+        });
+
+        it('should find some rooms', function(done) {
+            guestAgent.get('/api/rooms/').expect(200)
+                .end(function(err, response) {
+                    if (err) return done(err);
+                    expect(response.body[0].name).to.equal('testRoom');
+                    done()
+                });
+        });
+    });
 })
