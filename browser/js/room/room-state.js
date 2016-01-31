@@ -8,7 +8,10 @@ app.config(function($stateProvider) {
 				return RoomFactory.getRoomById( $stateParams.roomId );
 			},
 			user: function (AuthService) {
-				return AuthService.getLoggedInUser();
+				return AuthService.getLoggedInUser()
+						.then((user)=> {
+							return user;
+						});
 			}
 		}
 	})

@@ -6,9 +6,10 @@ app.directive('createRoom', function(){
 	}
 })
 
-app.controller('RoomFormCtrl', function($scope, RoomFactory, $state, AuthService){
+app.controller('RoomFormCtrl', function($scope, RoomFactory, $state, user){
 
-	let user = AuthService.getLoggedInUser();
+	let user = user;
+	console.log('from roomForm', user);
 
 	$scope.newRoom = {
 		//creator field just for testing... remove later
