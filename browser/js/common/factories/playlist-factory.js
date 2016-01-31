@@ -8,10 +8,9 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 		return $http.get('/api/songs/')
 		.then(function(songs){
             songs.data.forEach(function(song) {
-                song.voteValue = song.totalUpVotes-song.totalDownVotes;
+                song.voteValue = 0;
             });
             playlist = songs.data;
-            factory.sort();
 		});
 	};
 
@@ -45,27 +44,13 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 
     socket.on('updateVotes', function(vote){
     	var song = vote.song;
-        var songId = song._id;
-        var songUrl = '/api/songs/'+songId;
     	var songToUpdate = _.find(playlist, function(o){
     		return o.title ===song.title;
     	})
-    	if(vote.voteType === 'up') {
-            songToUpdate.voteValue++;
-            song.totalUpVotes++;
-        }
-        if(vote.voteType === 'down') {
-            songToUpdate.voteValue--;
-            song.totalDownVotes--;
-        }
-        return $http.put(songUrl,song)
-        .then(function(song){
-            factory.sort();
-            if(!$rootScope.$$phase)
-            {
-                $rootScope.$digest();
-            }
-        })
+    	if(vote.voteType === 'up') songToUpdate.voteValue++;
+        if(vote.voteType === 'down') songToUpdate.voteValue--;
+        factory.sort();
+        $rootScope.$digest();
     })
 
 	return factory;
