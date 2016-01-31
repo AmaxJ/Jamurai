@@ -11,8 +11,9 @@ app.config(function($stateProvider) {
         	}
         }
     })
+}).controller('LobbyCtrl', ($scope, user) => {
+    $scope.user = user;
+    console.log(user);
 })
 
-// app.controller('LobbyCtrl', ($scope) => {
-    
-// })
+
