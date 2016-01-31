@@ -19,18 +19,6 @@ router.route('/')
             .then(null, next);
     })
 
-//route to query by youtube id
-router.route('/yid/:youTubeId')
-    .get(function(req, res, next) {
-        Song.findOne({
-                youTubeId: req.params.youTubeId
-            })
-            .then(function(song) {
-                console.log(song);
-                res.status(200).json(song);
-            })
-            .then(null, next);
-    });
 
 router.route('/:songId')
     .get(function(req, res, next) {
@@ -45,5 +33,18 @@ router.route('/:songId')
             .then(function(song) {
                 res.status(204).json(song);
             }).then(null, next);
+    });
+
+
+router.route('/yid/:youTubeId')
+    .get(function(req, res, next) {
+        Song.findOne({
+                youTubeId: req.params.youTubeId
+            })
+            .then(function(song) {
+                console.log(song);
+                res.status(200).json(song);
+            })
+            .then(null, next);
     });
 
