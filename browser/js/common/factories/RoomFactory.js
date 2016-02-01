@@ -1,4 +1,4 @@
-app.factory('RoomFactory', function($http) {
+app.factory('RoomFactory', function($http, PlaylistFactory) {
     var factory = {};
 
     var showForm = false;
@@ -11,15 +11,17 @@ app.factory('RoomFactory', function($http) {
         showForm = true;
     };
 
-    factory.createNewRoom = (newRoom) => {
-        return $http({
-                method: 'POST',
-                url: '/api/rooms/',
-                data: newRoom
+    factory.createNewRoom = newRoom => {
+        return PlaylistFactory.createPlaylist()
+            .then(playlist => {
+                newRoom.playlists = [playlist];
+                return $http({
+                    method: 'POST',
+                    url: '/api/rooms/',
+                    data: newRoom
+                })
             })
-            .then(function(response) {
-                return response.data;
-            })
+            .then(room => room.data);
     }
 
     factory.getAllRooms = () => {
@@ -37,7 +39,7 @@ app.factory('RoomFactory', function($http) {
                 method: 'GET',
                 url: '/api/rooms/' + roomId
             })
-            .then(response =>response.data);
+            .then(response => response.data);
     }
 
     return factory;
