@@ -16,6 +16,7 @@ app.config( $stateProvider => {
 })
 .controller('RoomCtrl', ($scope, PlaylistFactory, room, user) => {
         PlaylistFactory.setPlaylist(room.playlists[0])
+        console.log(room);
 		$scope.room = room;
 		$scope.user = user;
 });

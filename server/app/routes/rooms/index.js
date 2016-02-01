@@ -37,10 +37,18 @@ router.route('/:roomId')
 		.populate('songs')
 		.populate('users')
         .populate('creator')
-		.then(function(room){
-			res.json(room);
-		})
-		.then(null,next);
+        .populate({
+            path: 'playlists',
+            model: 'Playlist',
+            populate : {
+                path : 'songs',
+                model : 'Song'
+            }
+        })
+        .then(function(room){
+            res.json(room);
+        })
+        .then(null,next);
 	})
 	.put(function(req,res,next){
 		Room.findByIdAndUpdate(req.params.roomId,req.body, {new: true})
