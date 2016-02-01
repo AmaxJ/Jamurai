@@ -8,25 +8,13 @@
 		<p class='error' ng-show="roomForm.name.$invalid && roomForm.name.$dirty">Name is required!</p>
 		<div class="checkbox">
 			<label for="roomPrivacy">
-			<input ng-model="newRoom.privacy" type="checkbox" id="roomPrivacy" name="privacy">Private
+			<input ng-model="newRoom.isPrivate" type="checkbox" id="roomPrivacy" name="privacy">Private
 			</label>
 		</div>
 		<div class="form-group">
 			<label for="roomLocation">Location</label>
 			<input ng-model="newRoom.location" type="text" id="roomLocation" name="location" required class='form-control'>
 		</div>
-			<label>Ambassadors</label>
-			<div class="form-inline">
-				<div class='form-group'>
-					<input ng-model="newRoom.ambassadors[0]" type="text" id="roomAmbassadors1" name="ambassadors1" required class='form-control'>
-				</div>
-				<div class='form-group'>
-					<input ng-model="newRoom.ambassadors[1]" type="text" id="roomAmbassadors2" name="ambassadors2" required class='form-control'>
-				</div>
-				<div class='form-group'>
-					<input ng-model="newRoom.ambassadors[2]" type="text" id="roomAmbassadors3" name="ambassadors3" required class='form-control'>
-				</div>
-			</div>
 		<input type="submit" id='submitButton'></input>
 	</form>
 </div>

@@ -1,3 +1,11 @@
 <section id="lobby">
-	<create-room></create-room>
+	<create-room user="user"></create-room>
+	<div class='container-fluid'>
+		<div class='col-md-6' ng-repeat='room in rooms'>
+			<h2 ui-sref='room({roomId: room._id})'><a>{{room.name}}</a></h2>
+			<h3>Created by: {{room.creator}}</h3>
+			<h3>Location: {{room.location}}<h3>
+			<hr>
+		</div>
+	</div>
 </section>
