@@ -12,10 +12,11 @@ module.exports = function (server) {
         // Now have access to socket, wowzers!
         console.log('Someone connected!!!');
         socket.on('vote', function(vote){
+            console.log("VOTE", vote);
         	io.emit('updateVotes', vote)
         })
     });
-    
+
     return io;
 
 };
