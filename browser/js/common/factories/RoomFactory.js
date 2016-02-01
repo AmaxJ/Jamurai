@@ -1,28 +1,46 @@
-app.factory('RoomFactory', function($http){
-	var factory = {};
+app.factory('RoomFactory', function($http, PlaylistFactory) {
+    var factory = {};
 
-	var showForm = false;
+    var showForm = false;
 
-	factory.getRoomState = () => {
-		return showForm;
-	};
+    factory.getRoomState = () => {
+        return showForm;
+    };
 
-	factory.showForm = () => {
-		showForm = true;
-	};
+    factory.showForm = () => {
+        showForm = true;
+    };
 
-	factory.createNewRoom = (newRoom) => {
-		return $http({
-			method: 'POST',
-			url: '/api/rooms/',
-			data: newRoom
-		})
-		.then(function(response){
-			console.log(response);
-			// return response.data;
-		})
-	}
+    factory.createNewRoom = newRoom => {
+        return PlaylistFactory.createPlaylist()
+            .then(playlist => {
+                newRoom.playlists = [playlist];
+                return $http({
+                    method: 'POST',
+                    url: '/api/rooms/',
+                    data: newRoom
+                })
+            })
+            .then(room => room.data);
+    }
 
+    factory.getAllRooms = () => {
+        return $http({
+                method: 'GET',
+                url: '/api/rooms/'
+            })
+            .then((response) => {
+                return response.data;
+            })
+    };
 
-	return factory;
+    factory.getRoomById = (roomId) => {
+        return $http({
+                method: 'GET',
+                url: '/api/rooms/' + roomId
+            })
+            .then(response => response.data);
+    }
+
+    return factory;
 })
