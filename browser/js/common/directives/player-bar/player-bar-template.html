@@ -5,16 +5,18 @@
             <span class="sr-only">70% Complete</span>
         </div>
     </div>
-    <button ng-click="toggleVid()">Toggle Vid</button>
-    <youtube-embed  height='200' width='350' videoid='I2mK-Ql9r1Y'></youtube-embed>
+   <!--  <button ng-click="toggleVid()">Toggle Vid</button> -->
+    <div class="video-embed">
+        <youtube-embed height='300' width='500' videoid='I2mK-Ql9r1Y'></youtube-embed>
+    </div>
     <div class="player-bar-buttons">
      <!--    <button class="btn btn-default">
             <span class="glyphicon glyphicon-backward"></span>
         </button> -->
-        <button  class="btn btn-default">
+        <button  ng-click="play()" class="btn btn-default">
             <span ng-if="!isPlaying()" class="glyphicon glyphicon-play"></span>
         </button>
-          <button class="btn btn-default">
+          <button ng-click="pause()" class="btn btn-default">
             <span class="glyphicon glyphicon-pause"></span>
         </button>
      <!--    <button class="btn btn-default">

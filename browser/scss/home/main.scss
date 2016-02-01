@@ -4,6 +4,9 @@
     width: 150px;
     margin: 0 auto;
   }
+  .row {
+    width: 100%;
+  }
   h1 {
     margin-top: 40px;
     text-align: center;
@@ -12,5 +15,14 @@
   	color: white;
   	background-color: #00e5e6;
   }
+
+  playlist {
+    margin: 0 auto;
+    width: 50%;
+  }
+}
+
+#playlist-table {
+    margin: 0 auto;
 }
 

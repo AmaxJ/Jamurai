@@ -1,4 +1,4 @@
-app.directive('playerBar', function(){
+app.directive('playerBar', function(PlayerFactory){
 	return {
 		restrict: "E",
 		templateUrl: '/js/common/directives/player-bar/player-bar-template.html',
@@ -10,7 +10,8 @@ app.directive('playerBar', function(){
 			s.getVidState = function(){
 				return showVid;
 			}
-
+			s.play = PlayerFactory.play;
+			s.pause = PlayerFactory.pause;
 		}
 	}
 })
