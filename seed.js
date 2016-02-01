@@ -13,9 +13,11 @@ var seedUsers = function () {
     var users = [{
         email: 'testing@fsa.com',
         username: "Shan Sarkar",
+        location: 'Queens, NY'
     }, {
         email: 'obama@gmail.com',
-        username: "president"
+        username: "president",
+        location: 'sldkfj'
     }, {
         email: "test user",
         username: "Testing"
