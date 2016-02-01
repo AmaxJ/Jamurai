@@ -30,6 +30,10 @@ var seedUsers = function () {
         email: "Bill@whitehouse.gov",
         username: "Clinton",
         location: 'Washington, DC'
+    }, {
+        email: 'wearymachine@gmail.com',
+        username: 'wearymachine',
+        location: 'Boston, MA'
     }];
 
     return User.createAsync(users);
