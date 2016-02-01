@@ -16,7 +16,6 @@ app.config(function($stateProvider) {
 }).controller('LobbyCtrl', ($scope, RoomFactory, user, rooms) => {
     $scope.user = user;
     $scope.rooms = rooms;
-    console.log(rooms);
     // RoomFactory.getAllRooms()
     //     .then(rooms => {
     //         $scope.rooms = rooms;

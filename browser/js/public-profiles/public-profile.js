@@ -14,6 +14,6 @@ app.config(function ($stateProvider) {
 	})
 })
 .controller('PublicProfileCtrl', function($scope, publicUser){
-		console.log(publicUser);
+		console.log('publicUSEr ', publicUser);
 		$scope.publicUser = publicUser;
 })
