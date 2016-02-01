@@ -72,6 +72,9 @@ app.factory('PlayerFactory', (PlaylistFactory) => {
     factory.setPlayer = (newPlayer) => {
         youtubePlayer = newPlayer;
     }
+    factory.destroy = () => {
+        youtubePlayer.destroy();
+    }
 
     return factory;
 
