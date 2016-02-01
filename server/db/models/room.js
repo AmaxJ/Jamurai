@@ -22,9 +22,6 @@ var schema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    ambassadors: {
-        type: [String]
-    },
     users: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
