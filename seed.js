@@ -13,18 +13,23 @@ var seedUsers = function () {
     var users = [{
         email: 'testing@fsa.com',
         username: "Shan Sarkar",
+        location: 'Queens, NY'
     }, {
         email: 'obama@gmail.com',
-        username: "president"
+        username: "president",
+        location: 'Washington, DC'
     }, {
         email: "test user",
-        username: "Testing"
+        username: "Testing",
+        location: 'Albany, NY'
     }, {
         email: "Donald@gmail.com",
-        username: "Donald Trum"
+        username: "Donald Trum",
+        location: 'New York, NY'
     }, {
         email: "Bill@whitehouse.gov",
-        username: "Clinton"
+        username: "Clinton",
+        location: 'Washington, DC'
     }];
 
     return User.createAsync(users);

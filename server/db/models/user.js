@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
+var rp = require('request-promise');
 
 var schema = new mongoose.Schema({
     username: {
@@ -13,8 +14,18 @@ var schema = new mongoose.Schema({
     password: {
         type: String
     },
+    location: {
+        type: String
+    },
+    coordinates: {
+        type: [Number]
+    },
     salt: {
         type: String
+    },
+    dateCreation: {
+        type: Date,
+        default: Date.now
     },
     twitter: {
         id: String,
@@ -63,8 +74,47 @@ schema.pre('save', function (next) {
         this.salt = this.constructor.generateSalt();
         this.password = this.constructor.encryptPassword(this.password, this.salt);
     }
-
+    var doc = this;
+    if(this.location)
+    {
+        console.log('boom');
+        var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+this.location+'&key=AIzaSyBOwi-4AsRFS8G0SYIAv5ysZpGU-LnOpgY';
+        return rp(url)
+        .then(function(htmlString){
+            // console.log('string',htmlString);
+            var objHtml = JSON.parse(htmlString);
+            console.log('OBJ',objHtml);
+            // console.log('rez1',objHtml.results[0].geometry.bounds);
+            // console.log('rez2',objHtml.results[1].geometry.bounds);
+            var sumNELat = 0;
+            var sumNELong = 0;
+            var sumSWLat = 0;
+            var sumSWLong = 0;
+            // if(objHtml.results.length>0)
+            // {
+                for(var x=0; x<objHtml.results.length; x++)
+                {
+                    sumNELat+= objHtml.results[x].geometry.bounds.northeast.lat;
+                    sumNELong+= objHtml.results[x].geometry.bounds.northeast.lng;
+                    sumSWLat += objHtml.results[x].geometry.bounds.southwest.lat;
+                    sumSWLong += objHtml.results[x].geometry.bounds.southwest.lng;
+                }
+                var avgNELat = sumNELat/objHtml.results.length;
+                var avgNELong = sumNELong/objHtml.results.length;
+                var avgSWLat = sumSWLat/objHtml.results.length;
+                var avgSWLong = sumSWLong/objHtml.results.length;
+                var lat = (avgNELat+avgSWLat)/2;
+                var lng = (avgNELong+avgSWLong)/2;
+                doc.coordinates = [lat,lng];
+                // console.log('coords',this.coordinates);
+            // }
+            next();
+        }).then(null,function(err){
+            console.log('error',err)
+        })
+    }
     next();
+    
 
 });
 
