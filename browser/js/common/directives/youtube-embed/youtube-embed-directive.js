@@ -22,6 +22,7 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory) 
               }
             }
 
+
             var tag = document.createElement('script');
             tag.src = "http://www.youtube.com/iframe_api";
             var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -39,6 +40,8 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory) 
                     }
                 }));
             };
+
+            $window.onYouTubeIframeAPIReady();
         },
     }
 });

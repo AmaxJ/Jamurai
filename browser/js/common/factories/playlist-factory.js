@@ -54,7 +54,7 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
            song.totalUpVotes++;
         }
         if(vote.voteType === 'down') {
-           song.totalDownVotes--;
+           song.totalDownVotes++;
         }
         return $http.put(songUrl,song)
         .then(function(song){
