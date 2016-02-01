@@ -1,8 +1,0 @@
-<form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
-
-    <alert type="danger" ng-show="error">
-        {{ error }}
-    </alert>
-    <oauth ng-hide='user' service-provider='Google'></oauth>
-    <oauth ng-hide='user' service-provider='Facebook'></oauth>
-</form>
