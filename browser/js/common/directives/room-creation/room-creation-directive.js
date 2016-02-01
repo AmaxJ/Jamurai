@@ -1,19 +1,19 @@
 app.directive('createRoom', function(){
 	return {
 		restrict: 'E',
+        scope : {
+            user : "="
+        },
 		templateUrl: 'js/common/directives/room-creation/room-creation-template.html',
 		controller: 'RoomFormCtrl'
 	}
 }).controller('RoomFormCtrl', function($scope, RoomFactory, $state){
 
 	$scope.newRoom = {
-		//creator field just for testing... remove later
-		//normally will be: user._id
-		creator: "56ab95583c716b49114954ec",
+		creator: $scope.user._id,
         name: null,
-        privacy: null,
-        location: null,
-        ambassadors: []
+        isPrivate: null,
+        location: null
     }
 
 	$scope.getRoomState = RoomFactory.getRoomState;
@@ -27,10 +27,9 @@ app.directive('createRoom', function(){
 				$scope.newRoom = {
 			        name: null,
 			        privacy: null,
-			        location: null,
-			        ambassadors: []
+			        location: null
 	    		}
 			})
 	}
-		
+
 })

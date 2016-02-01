@@ -35,6 +35,7 @@ router.route('/:roomId')
 		Room.findById(req.params.roomId)
 		.populate('songs')
 		.populate('users')
+        .populate('creator')
 		.then(function(room){
 			res.json(room);
 		})
