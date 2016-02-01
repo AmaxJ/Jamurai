@@ -57,6 +57,7 @@
     "passport-google-oauth": "^0.1.5",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.2",
+    "request-promise": "^2.0.0",
     "run-sequence": "^1.0.2",
     "serve-favicon": "^2.2.0",
     "sinon": "^1.13.0",
