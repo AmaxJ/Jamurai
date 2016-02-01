@@ -4,18 +4,26 @@ app.directive('createRoom', function(){
 		templateUrl: 'js/common/directives/room-creation/room-creation-template.html',
 		controller: 'RoomFormCtrl'
 	}
-})
+}).controller('RoomFormCtrl', function($scope, RoomFactory, $state){
 
-app.controller('RoomFormCtrl', function($scope, RoomFactory){
 	$scope.newRoom = {
-        roomName: null,
-        roomPrivacy: null
+		//creator field just for testing... remove later
+		//normally will be: user._id
+		creator: "56ab95583c716b49114954ec",
+        name: null,
+        privacy: null,
+        location: null,
+        ambassadors: []
     }
+
 	$scope.getRoomState = RoomFactory.getRoomState;
 	$scope.showForm = RoomFactory.showForm;
-	$scope.createNewRoom = function() {
+	$scope.createNewRoom = () => {
 			RoomFactory.createNewRoom($scope.newRoom)
-			.then(function(){
+			.then((newRoom) => {
+				$state.go('room', {roomId: newRoom._id});
+			})
+			.then(() => {
 				$scope.newRoom = {
 			        name: null,
 			        privacy: null,

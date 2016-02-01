@@ -7,6 +7,7 @@ var Song = Promise.promisifyAll(mongoose.model('Song'));
 var Room = Promise.promisifyAll(mongoose.model('Room'));
 var Playlist = Promise.promisifyAll(mongoose.model('Playlist'));
 
+
 var seedUsers = function () {
 
     var users = [
@@ -112,6 +113,44 @@ var seedSongs = function () {
     ];
 
     return Song.createAsync(songs);
+}
+
+var seedRooms = function () {
+
+    var rooms =[
+        {
+            creator: '022837257235',
+            name: "Sean's 30th",
+            location: "Greener Pastures (Sean's Yacht)",
+            ambassadors: ['Nate Dog', 'Chief Kief', 'Joe']
+        },
+        {
+            creator: '0234723571h114',
+            name: 'Going Away Party for Denise',
+            location: 'The Krusty Crab',
+            ambassadors: ['SpongeBob', 'Britney']
+        },
+        {
+            creator: '0202023441',
+            name: 'Farewell Fullstack Party',
+            location: 'probably somewhere in Brooklyn',
+            ambassadors: ['Joe', 'Rafi']
+        },
+        {
+            creator: '0232357235',
+            name: "Diplo's Git Nasty Party",
+            location: 'Top of the Empire State Builiding',
+            ambassadors: ['Sean']
+        },
+        {
+            creator: '09234235-2351',
+            name: 'Superbowl XLVISZI Party',
+            location: "Jim's Apartment",
+            ambassadors: ['Rosco', 'Leon', 'Paco']
+        }
+    ]
+
+    return Room.createAsync(rooms);
 }
 
 var songIds;
