@@ -5,10 +5,8 @@ var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Song = Promise.promisifyAll(mongoose.model('Song'));
 var Room = Promise.promisifyAll(mongoose.model('Room'));
-<<<<<<< HEAD
-=======
 var Playlist = Promise.promisifyAll(mongoose.model('Playlist'));
->>>>>>> master
+
 
 var seedUsers = function () {
 
