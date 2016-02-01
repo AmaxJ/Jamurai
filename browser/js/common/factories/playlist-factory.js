@@ -1,7 +1,7 @@
 app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 	var factory = {};
-	var playlist = [];
-    var playlistId;
+    var playlist;
+	var playlistId;
     var currentlyPlayingSong;
 	var socket = SocketFactory.getSocket();
 
@@ -28,6 +28,14 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
             });
     };
 
+    factory.createPlaylist = function() {
+        return $http.post('/api/playlists', {})
+            .then(function(response) {
+                playlistId = response.data._id;
+                return response.data._id;
+            });
+    };
+
 	factory.populateSongs = function () {
 		return $http.get('/api/songs/')
 		.then(function(songs){
@@ -39,7 +47,7 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 		});
 	};
 
-    factory.addSong = function(song, playlistId) {
+    factory.addSong = function(song) {
         return findSongAndReturn(song)
             .then(function(songFromDb) {
                 if (!songFromDb) {
@@ -64,6 +72,10 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
     factory.vote = function($event, song, vote) {
         $event.stopPropagation();
         SocketFactory.emitVote({song: song, voteType: vote})
+    };
+
+    factory.setPlaylist = function(id) {
+        playlistId = id;
     };
 
     factory.getPlaylist = function() {
