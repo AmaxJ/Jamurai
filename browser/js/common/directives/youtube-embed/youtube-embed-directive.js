@@ -34,6 +34,7 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory) 
                     height: scope.height,
                     width: scope.width,
                     videoId: scope.videoid,
+                    playerVars: {'controls': 0, 'disablekd': 0, 'fs': 1},
                     events: {
                         'onReady': '',
                         'onStateChange': stateChange
