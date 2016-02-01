@@ -8,17 +8,20 @@ app.config(function($stateProvider) {
         		return AuthService.getLoggedInUser()
         				.then(user=> user)
         	},
-        //     rooms: function (RoomFactory) {
-        //         return RoomFactory.getAllRooms();
-        //     }
+            rooms: function (RoomFactory) {
+                return RoomFactory.getAllRooms();
+            }
         }
     })
-}).controller('LobbyCtrl', ($scope, RoomFactory, user) => {
+}).controller('LobbyCtrl', ($scope, RoomFactory, user, rooms) => {
     $scope.user = user;
-    RoomFactory.getAllRooms()
-        .then(rooms => {
-            $scope.rooms = rooms;
-        });
+    $scope.rooms = rooms;
+    console.log(rooms);
+    // RoomFactory.getAllRooms()
+    //     .then(rooms => {
+    //         $scope.rooms = rooms;
+    //         console.log(rooms);
+    //     });
 })
 
 

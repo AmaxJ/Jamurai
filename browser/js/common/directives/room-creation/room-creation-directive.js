@@ -7,7 +7,6 @@ app.directive('createRoom', function() {
 })
 
 app.controller('RoomFormCtrl', function($scope, RoomFactory, $state) {
-    console.log("USER", $scope.user);
     $scope.newRoom = {
         creator: $scope.user._id,
         name: null,

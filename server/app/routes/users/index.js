@@ -4,13 +4,13 @@ var User = require('mongoose').model('User');
 module.exports = router;
 
 router.route('/')
-	// .get(function(req,res,next){
-	// 	User.find({})
-	// 	.then(function(user){
-	// 		res.json(user);
-	// 	})
-	// 	.then(null,next);
-	// })
+	.get(function(req,res,next){
+		User.find({})
+		.then(function(user){
+			res.json(user);
+		})
+		.then(null,next);
+	})
 	.post(function(req,res,next){
 		User.create(req.body)
 		.then(function(user){
@@ -20,13 +20,13 @@ router.route('/')
 	})
 
 router.route('/:id')
-	// .get(function(req,res,next){
-	// 	User.find({})
-	// 	.then(function(user){
-	// 		res.json(user);
-	// 	})
-	// 	.then(null,next);
-	// })
+	.get(function(req,res,next){
+		User.find({})
+		.then(function(user){
+			res.json(user);
+		})
+		.then(null,next);
+	})
 	.put(function(req,res,next){
 		var userId = req.params.id;
 		var update = req.body;

@@ -3,8 +3,8 @@
 	<div class='container-fluid'>
 		<div class='col-md-6' ng-repeat='room in rooms'>
 			<h2 ui-sref='room({roomId: room._id})'><a>{{room.name}}</a></h2>
-			<h3>Created by: {{room.creator}}</h3>
-			<h3>Location: {{room.location}}<h3>
+			<h3>Created by:</h3><a><h3 ui-sref="publicProfile({userId: room.creator._id})">{{room.creator.username}}</h3></a>
+			<h3>Location: {{room.location}}</h3>
 			<hr>
 		</div>
 	</div>
