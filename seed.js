@@ -1,28 +1,12 @@
-/*
-
-This seed file is only a placeholder. It should be expanded and altered
-to fit the development of your application.
-
-It uses the same file the server uses to establish
-the database connection:
---- server/db/index.js
-
-The name of the database used is set in your environment files:
---- server/env/*
-
-This seed file has a safety check to see if you already have users
-in the database. If you are developing multiple applications with the
-fsg scaffolding, keep in mind that fsg always uses the same database
-name in the environment files.
-
-*/
-
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Song = Promise.promisifyAll(mongoose.model('Song'));
+var Room = Promise.promisifyAll(mongoose.model('Room'));
+var Playlist = Promise.promisifyAll(mongoose.model('Playlist'));
+
 
 var seedUsers = function () {
 
@@ -127,22 +111,83 @@ var seedSongs = function () {
             totalDownVotes: 2
         }
     ];
-    
+
     return Song.createAsync(songs);
 }
 
+var seedRooms = function () {
+
+    var rooms =[
+        {
+            creator: '022837257235',
+            name: "Sean's 30th",
+            location: "Greener Pastures (Sean's Yacht)",
+            ambassadors: ['Nate Dog', 'Chief Kief', 'Joe']
+        },
+        {
+            creator: '0234723571h114',
+            name: 'Going Away Party for Denise',
+            location: 'The Krusty Crab',
+            ambassadors: ['SpongeBob', 'Britney']
+        },
+        {
+            creator: '0202023441',
+            name: 'Farewell Fullstack Party',
+            location: 'probably somewhere in Brooklyn',
+            ambassadors: ['Joe', 'Rafi']
+        },
+        {
+            creator: '0232357235',
+            name: "Diplo's Git Nasty Party",
+            location: 'Top of the Empire State Builiding',
+            ambassadors: ['Sean']
+        },
+        {
+            creator: '09234235-2351',
+            name: 'Superbowl XLVISZI Party',
+            location: "Jim's Apartment",
+            ambassadors: ['Rosco', 'Leon', 'Paco']
+        }
+    ]
+
+    return Room.createAsync(rooms);
+}
+
+var songIds;
+var userId;
+
 connectToDb.then(function () {
     Song.findAsync({}).then(function (songs) {
-        if (songs.length === 0) {
-            return seedSongs();
-        } else {
-            console.log(chalk.magenta('Seems to already be song data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
+        if (songs.length > 0) Song.remove({}).exec();
+        return seedSongs();
+    })
+    .then(function (songs) {
+        songIds = songs.map(function(song) {
+            return song._id;
+        });
+        return User.create({
+            email : "test@gmail.com",
+            password : "test"
+        });
+    })
+    .then(function (user) {
+        userId = user._id;
+        return Playlist.create({
+            songs : songIds
+        });
+    })
+    .then(function (playlist) {
+        return Room.create({
+            creator : userId,
+            name : "room!",
+            playlists : [playlist._id]
+        });
+    })
+    .then(function (room) {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.error(err);
         process.kill(1);
     });

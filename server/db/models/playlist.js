@@ -2,20 +2,17 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    room : {
+    songs : [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-    songs : {
-        type: [mongoose.Schema.Types.ObjectId],
         ref: "Song"
+    }]
+});
+
+schema.method({
+    addSong: function(songId) {
+        this.songs.addToSet(songId);
+        return this.save();
     }
 })
-
-schema.statics.addSong = function(id, songId) {
-    return this.findByIdAndUpdate( id,
-        {$push: {"songs": songId}},
-        { new: true });
-};
 
 mongoose.model('Playlist', schema);
