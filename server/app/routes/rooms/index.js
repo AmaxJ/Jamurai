@@ -7,6 +7,7 @@ router.route('/')
 	.get(function(req,res,next){
 		Room.find({})
 		.populate('users')
+		.populate('creator')
         .populate('playlists')
         .populate({
             path: 'playlists',
