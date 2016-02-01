@@ -8,7 +8,7 @@ var Room = Promise.promisifyAll(mongoose.model('Room'));
 var Playlist = Promise.promisifyAll(mongoose.model('Playlist'));
 
 
-var seedUsers = function() {
+var seedUsers = function () {
 
     var users = [{
         email: 'testing@fsa.com',

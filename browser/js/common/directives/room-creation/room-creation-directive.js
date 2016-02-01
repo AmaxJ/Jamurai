@@ -1,35 +1,32 @@
-app.directive('createRoom', function(){
-	return {
-		restrict: 'E',
-        scope : {
-            user : "="
+app.directive('createRoom', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            user: "="
         },
-		templateUrl: 'js/common/directives/room-creation/room-creation-template.html',
-		controller: 'RoomFormCtrl'
-	}
-}).controller('RoomFormCtrl', function($scope, RoomFactory, $state){
+        templateUrl: 'js/common/directives/room-creation/room-creation-template.html',
+        controller: 'RoomFormCtrl'
+    }
+})
 
-	$scope.newRoom = {
-		creator: $scope.user._id,
+app.controller('RoomFormCtrl', function($scope, RoomFactory) {
+    $scope.newRoom = {
+        creator: $scope.user._id,
         name: null,
         isPrivate: null,
         location: null
     }
-
-	$scope.getRoomState = RoomFactory.getRoomState;
-	$scope.showForm = RoomFactory.showForm;
-	$scope.createNewRoom = () => {
-			RoomFactory.createNewRoom($scope.newRoom)
-			.then((newRoom) => {
-				$state.go('room', {roomId: newRoom._id});
-			})
-			.then(() => {
-				$scope.newRoom = {
-			        name: null,
-			        privacy: null,
-			        location: null
-	    		}
-			})
-	}
+    $scope.getRoomState = RoomFactory.getRoomState;
+    $scope.showForm = RoomFactory.showForm;
+    $scope.createNewRoom = function() {
+        RoomFactory.createNewRoom($scope.newRoom)
+            .then(function() {
+                $scope.newRoom = {
+                    name: null,
+                    privacy: null,
+                    location: null
+                }
+            })
+    }
 
 })

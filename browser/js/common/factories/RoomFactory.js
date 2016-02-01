@@ -11,34 +11,15 @@ app.factory('RoomFactory', function($http){
 		showForm = true;
 	};
 
-	factory.getAllRooms = () => {
-		return $http({
-			method: 'GET',
-			url: '/api/rooms/'
-		})
-		.then((response)=> {
-			return response.data;
-		})
-	}
-
 	factory.createNewRoom = (newRoom) => {
 		return $http({
 			method: 'POST',
 			url: '/api/rooms/',
 			data: newRoom
 		})
-		.then((response) => {
-			return response.data;
-		})
-	}
-
-	factory.getRoomById = (roomId) => {
-		return $http({
-			method: 'GET',
-			url: '/api/rooms/' + roomId
-		})
-		.then((response) => {
-			return response.data;
+		.then(function(response){
+			console.log(response);
+			// return response.data;
 		})
 	}
 

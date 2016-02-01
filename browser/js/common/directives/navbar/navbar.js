@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, PlayerFactory) {
 
     return {
         restrict: 'E',
@@ -23,6 +23,12 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                    $state.go('home');
                 });
             };
+
+            // scope.goToState = function(state) {
+            //     console.log('state line',$state);
+            //     $state.go(state);
+            
+            // }
 
             var setUser = function () {
                 AuthService.getLoggedInUser().then(function (user) {
