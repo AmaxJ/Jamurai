@@ -5,7 +5,11 @@ var schema = new mongoose.Schema({
     songs : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Song"
-    }]
+    }],
+
+    songData : {
+        type: mongoose.Schema.Types.Mixed
+    }
 });
 
 schema.method({
