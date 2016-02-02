@@ -30,7 +30,7 @@ var schema = new mongoose.Schema({
 
 });
 
-schema.methods({
+schema.method({
     calculateValue : function() {
         this.total = this.upVotes - this.downVotes;
         return this.save();

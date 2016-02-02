@@ -9,6 +9,7 @@ var Promise = require('bluebird');
 require('../../../server/db/models');
 
 var Playlist = mongoose.model('Playlist');
+var SongData = mongoose.model('SongData');
 var Song = mongoose.model('Song');
 
 describe('Playlist model', function() {
@@ -27,7 +28,9 @@ describe('Playlist model', function() {
     });
 
     it('addSong() should add a song to songs field', function(done) {
+        var songDataObj;
         var song;
+        var playlistId;
         Song.create({
                 title: 'Kusanagi',
                 artist: 'Odesza',
@@ -41,13 +44,18 @@ describe('Playlist model', function() {
                 return Playlist.create({})
             })
             .then(function(playlist) {
+                playlistId = playlist._id;
                 return playlist.addSong(song._id);
             })
             .then(function(playlist) {
-                return Playlist.findById(playlist._id)
+                return SongData.findOne({playlist : playlistId})
+            })
+            .then(function(songData) {
+                songDataObj = songData;
+                return Playlist.findById(playlistId);
             })
             .then(function(playlist) {
-                expect(playlist.songs.length).to.equal(1);
+                expect(songDataObj.playlist.toString()).to.equal(playlist._id.toString());
                 expect(playlist.songs[0].toString()).to.equal(song._id.toString());
                 done();
             })
@@ -70,20 +78,17 @@ describe('Playlist model', function() {
                 return Playlist.create({})
             })
             .then(function(playlist) {
+                playlistId = playlist._id;
                 return playlist.addSong(song._id);
             })
-            .then(function(playlist) {
-                playlistId = playlist._id
-                return Playlist.findById(playlist._id)
+            .then(function(songData) {
+                return Playlist.findById(playlistId)
             })
             .then(function(playlist) {
                 return playlist.updateSongValue(song._id, 4);
             })
-            .then(function(playlist) {
-                return Playlist.findById(playlistId)
-            })
-            .then(function(playlist) {
-                expect(playlist.songData[song._id]).to.equal(4);
+            .then(function(songData) {
+                expect(songData.total).to.equal(4);
                 done();
             })
             .then(null, console.error.bind(console));
