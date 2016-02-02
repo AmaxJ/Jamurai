@@ -17,4 +17,5 @@ app.config( $stateProvider => {
 .controller('RoomCtrl', ($scope, room, user) => {
 		$scope.room = room;
 		$scope.user = user;
+        $scope.songs = () => room.playlist.songs;
 });
