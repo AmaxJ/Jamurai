@@ -5,6 +5,7 @@ var Playlist = require('mongoose').model('Playlist')
 module.exports = router;
 
 router.route('/')
+
     .get((req, res, next) => {
         Room.find({})
             .populate('users')
@@ -17,7 +18,6 @@ router.route('/')
                     model: 'Song'
                 }
             })
-            .exec()
             .then(rooms => {
                 res.json(rooms);
             })
@@ -64,6 +64,7 @@ router.route('/:roomId')
             })
             .then(null, next);
     })
+
     .delete((req, res, next) => {
         Room.findByIdAndRemove(req.params.roomId)
             .exec()
