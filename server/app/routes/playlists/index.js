@@ -41,3 +41,15 @@ router.route('/:playlistId')
             })
             .then(null, next);
     });
+
+router.route('/:playlistId/score')
+    .put((req, res, next) => {
+        Playlist.findById(req.params.playlistId)
+            .then(playlist => {
+                return playlist.updateSongValue(req.body.song._id, req.body.songValue);
+            })
+            .then( playlist => {
+                res.status(204).json(playlist);
+            })
+            .then(null, next);
+    });
