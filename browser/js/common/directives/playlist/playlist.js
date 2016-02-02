@@ -8,7 +8,6 @@ app.directive('playlist', function() {
         controller: function($scope, PlayerFactory, PlaylistFactory) {
             $scope.loadVideoById = PlayerFactory.loadVideoById;
             $scope.vote = PlaylistFactory.vote;
-            $scope.getVoteValue = PlaylistFactory.getVoteValue;
         }
     }
 })

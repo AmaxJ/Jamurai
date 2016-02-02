@@ -18,4 +18,8 @@ app.config( $stateProvider => {
 		$scope.room = room;
 		$scope.user = user;
         $scope.songs = () => room.playlist.songs;
+        $scope.getVoteValue = (song) => {
+            console.log("called me!!!")
+            return room.playlist.songData[song._id];
+        }
 });

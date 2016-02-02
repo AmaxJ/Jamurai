@@ -18,14 +18,20 @@ schema.method({
         if (!this.songData) {
             this.songData = {}
         }
-        this.songData[songId] = 0;
+        this.songData[songId] = {
+            value: 0,
+            upVoters: [],
+            downVoters: []
+        };
         this.markModified('songData');
         return this.save();
     },
     updateSongValue: function(songId, total) {
         if (!(songId in this.songData)) return;
-        this.songData[songId] = total;
-        this.markModified('songData');
+        this.songData[songId].value = total;
+        var path = 'songData.' + songId;
+        console.log("PATH:", path);
+        this.markModified(path);
         return this.save();
     }
 });
@@ -33,7 +39,11 @@ schema.method({
 schema.post('init', function(doc) {
     doc.songData = {};
     doc.songs.forEach(function(songId) {
-        doc.songData[songId] = 0;
+        doc.songData[songId] = {
+            value: 0,
+            upVoters: [],
+            downVoters: []
+        };
     });
     doc.markModified('songData')
     doc.save();
