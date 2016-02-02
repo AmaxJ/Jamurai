@@ -13,23 +13,18 @@ var seedUsers = function () {
     var users = [{
         email: 'testing@fsa.com',
         username: "Shan Sarkar",
-        location: 'Queens, NY'
     }, {
         email: 'obama@gmail.com',
-        username: "president",
-        location: 'Washington, DC'
+        username: "president"
     }, {
         email: "test user",
-        username: "Testing",
-        location: 'Albany, NY'
+        username: "Testing"
     }, {
         email: "Donald@gmail.com",
-        username: "Donald Trum",
-        location: 'New York, NY'
+        username: "Donald Trum"
     }, {
         email: "Bill@whitehouse.gov",
-        username: "Clinton",
-        location: 'Washington, DC'
+        username: "Clinton"
     }];
 
     return User.createAsync(users);
@@ -135,7 +130,7 @@ var seedRooms = function(usersIds, playlist) {
 
     rooms = rooms.map(function(room, idx) {
         room.creator = usersIds[idx];
-        room.playlists = [playlist];
+        room.playlist = playlist;
         return room;
     });
 
