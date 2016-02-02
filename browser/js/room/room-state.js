@@ -14,7 +14,13 @@ app.config( $stateProvider => {
 		}
 	})
 })
-.controller('RoomCtrl', ($scope, room, user) => {
+.controller('RoomCtrl', ($scope, room, user, RoomFactory) => {
 		$scope.room = room;
 		$scope.user = user;
+		
+		//update room with users
+		$scope.user = RoomFactory.addUserToRoom(user._id, room)
+		
+		console.log('user', $scope.user);
+		console.log('room', $scope.room)
 });

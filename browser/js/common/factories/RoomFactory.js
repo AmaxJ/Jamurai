@@ -30,6 +30,17 @@ app.factory('RoomFactory', function($http, PlaylistFactory) {
                 url: '/api/rooms/' + roomId
             })
             .then(response => response.data);
+    };
+
+    factory.addUserToRoom = (userId, room) => {
+        return $http({
+            method: 'PUT',
+            url: '/api/rooms/addUser/' + room._id,
+            data: {userId: userId}
+        })
+        .then((response) => {
+            return response.data
+        });
     }
 
     return factory;

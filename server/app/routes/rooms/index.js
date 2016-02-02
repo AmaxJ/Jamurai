@@ -36,6 +36,20 @@ router.route('/')
             .then(null, next);
     })
 
+router.route('/addUser/:roomId')
+    .put((req, res, next) => {
+        Room.findById(req.params.roomId)
+        .then((room) => {
+            console.log('body', req.body);
+            return room.addUser(req.body.userId)
+        })
+        .then((room) => {
+            console.log(room);
+            res.status(204).json(room)
+        })
+        .then(null, next)
+    })
+
 router.route('/:roomId')
     .get((req, res, next) => {
         Room.findById(req.params.roomId)
