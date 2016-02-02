@@ -50,6 +50,42 @@ describe('Playlist model', function() {
                 expect(playlist.songs.length).to.equal(1);
                 expect(playlist.songs[0].toString()).to.equal(song._id.toString());
                 done();
-            });
+            })
+            .then(null, console.error.bind(console));
+    });
+
+    it('updateSongValue() should update songs score', function(done) {
+        var song;
+        var playlistId;
+        Song.create({
+                title: 'Kusanagi',
+                artist: 'Odesza',
+                album: 'In Return',
+                youTubeId: 'I2mK-Ql9r1Y',
+                totalUpVotes: 102,
+                totalDownVotes: 72
+            })
+            .then(function(newSong) {
+                song = newSong;
+                return Playlist.create({})
+            })
+            .then(function(playlist) {
+                return playlist.addSong(song._id);
+            })
+            .then(function(playlist) {
+                playlistId = playlist._id
+                return Playlist.findById(playlist._id)
+            })
+            .then(function(playlist) {
+                return playlist.updateSongValue(song._id, 4);
+            })
+            .then(function(playlist) {
+                return Playlist.findById(playlistId)
+            })
+            .then(function(playlist) {
+                expect(playlist.songData[song._id]).to.equal(4);
+                done();
+            })
+            .then(null, console.error.bind(console));
     });
 });

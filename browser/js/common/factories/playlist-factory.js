@@ -1,9 +1,9 @@
-app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
-	var factory = {};
+app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
+    var factory = {};
     var playlist;
-	var playlistId;
+    var playlistId;
     var currentlyPlayingSong;
-	var socket = SocketFactory.getSocket();
+    var socket = SocketFactory.getSocket();
 
     var findSongAndReturn = function(song) {
         var youtubeId = song.id.videoId;
@@ -16,15 +16,15 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
     var addSongToDb = function(song) {
         console.log(song);
         var newSong = {
-            title : song.snippet.title,
-            youTubeId : song.id.videoId,
-            youTubeChannel : song.snippet.channelTitle,
-            publishedAt : song.snippet.publishedAt,
-            thumbnails : song.snippet.thumbnails
+            title: song.snippet.title,
+            youTubeId: song.id.videoId,
+            youTubeChannel: song.snippet.channelTitle,
+            publishedAt: song.snippet.publishedAt,
+            thumbnails: song.snippet.thumbnails
         }
         return $http.post('/api/songs', newSong)
-            .then(function(song) {
-                return song.data;
+            .then(function(response) {
+                return response.data;
             });
     };
 
@@ -36,16 +36,16 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
             });
     };
 
-	factory.populateSongs = function () {
-		return $http.get('/api/songs/')
-		.then(function(songs){
-            songs.data.forEach(function(song) {
-                song.voteValue = song.totalUpVotes-song.totalDownVotes;
+    factory.populateSongs = function() {
+        return $http.get('/api/songs/')
+            .then(function(songs) {
+                songs.data.forEach(function(song) {
+                    song.voteValue = song.totalUpVotes - song.totalDownVotes;
+                });
+                playlist = songs.data;
+                factory.sort();
             });
-            playlist = songs.data;
-            factory.sort();
-		});
-	};
+    };
 
     factory.addSong = function(song) {
         return findSongAndReturn(song)
@@ -57,7 +57,7 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
             })
             .then(function(song) {
                 return $http.put('/api/playlists/' + playlistId, {
-                    song : song
+                    song: song
                 });
             })
             .then(null, console.error.bind(console));
@@ -71,7 +71,10 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 
     factory.vote = function($event, song, vote) {
         $event.stopPropagation();
-        SocketFactory.emitVote({song: song, voteType: vote})
+        if (vote === 'up') {
+            song.voteValue++;
+        } else song.voteValue--;
+        SocketFactory.emitVote(song);
     };
 
     factory.setPlaylist = function(id) {
@@ -83,7 +86,7 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
     };
 
     factory.getVoteValue = function(song) {
-    	return song.voteValue;
+        return song.voteValue;
     }
 
     factory.setCurrentSong = function(song) {
@@ -94,31 +97,19 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
         return currentlyPlayingSong;
     }
 
-    socket.on('updateVotes', function(vote){
-    	var song = vote.song;
-        var songId = song._id;
-        var songUrl = '/api/songs/'+songId;
-    	var songToUpdate = _.find(playlist, function(o){
-    		return o.title ===song.title;
-    	})
-    	if(vote.voteType === 'up') {
-           song.totalUpVotes++;
-        }
-        if(vote.voteType === 'down') {
-           song.totalDownVotes++;
-        }
-        return $http.put(songUrl,song)
-        .then(function(song){
-            return $http.get(songUrl)
-        })
-        .then(function(song){
-            factory.populateSongs();
-            if(!$rootScope.$$phase)
-            {
-                $rootScope.$digest();
-            }
-        })
+    socket.on('updateVotes', function(song) {
+        // var song = songObj.song;
+        var songToUpdate = _.find(playlist, function(o) {
+                return o.title === song.title;
+            })
+            // if(songObj.voteType === 'up') {
+            //       song.voteValue++;
+            //    }
+            //    else song.voteValue--;
+            //Set playlist song to updated song
+        playlist[playlist.indexOf(songToUpdate)] = song;
+        $rootScope.$digest();
     })
 
-	return factory;
+    return factory;
 })
