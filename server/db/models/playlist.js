@@ -15,8 +15,16 @@ var schema = new mongoose.Schema({
 schema.method({
     addSong: function(songId) {
         this.songs.addToSet(songId);
+        if (!this.songData) {this.songData = {};}
+        this.songData[songId] = 0;
+        return this.save();
+    },
+    updateSongValue : function(songId, total) {
+        if (!(songId in this.songData)) return;
+        this.songData[songId] = total;
+        this.markModified('songData');
         return this.save();
     }
-})
+});
 
 mongoose.model('Playlist', schema);
