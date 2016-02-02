@@ -110,8 +110,6 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
         //Set playlist song to updated song
         playlist[playlist.indexOf(songToUpdate)]= song;
         $rootScope.$digest();
- 
-
     })
 
 	return factory;
