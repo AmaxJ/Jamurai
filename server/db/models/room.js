@@ -26,10 +26,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    playlist: {
+    playlists: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist"
-    },
+    }],
     roomMetadata: {
         type: mongoose.Schema.Types.Mixed
     }
