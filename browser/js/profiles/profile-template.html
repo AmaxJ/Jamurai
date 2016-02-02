@@ -1,16 +1,16 @@
 <div class="profile-details">
 	<button ng-click="setEditable()">Edit Profile</button>
 	<br>
-	<img src="{{loggedInUser().picture}}" alt="">
-<form name="userForm" ng-submit="updateUser(loggedInUser(), updateDetails)">
+	<img src="{{loggedInUser.picture}}" alt="">
+<form name="userForm" ng-submit="updateUser(loggedInUser, updateDetails)">
 		<div class="form-group">
 			<label for="userName">Username:</label>
-			<p>{{loggedInUser().username}}
+			<p>{{loggedInUser.username}}
 			<input ng-show="isEditable()" ng-model="updateDetails.username" type="text" id="userName" class='form-control'>
 		</div>
 		<div class="form-group">
 			<label for="userEmail">Email:</label>
-			<p>{{loggedInUser().email}}</p>
+			<p>{{loggedInUser.email}}</p>
 			<input ng-show="isEditable()" ng-model="updateDetails.email" type="text" id="userEmail" class="form-control">
 		</div>
 
