@@ -71,7 +71,11 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
 
     factory.vote = function($event, song, vote) {
         $event.stopPropagation();
-        SocketFactory.emitVote({song: song, voteType: vote})
+        if(vote === 'up') {
+           song.voteValue++;
+        }
+        else song.voteValue--;
+        SocketFactory.emitVote(song);
     };
 
     factory.setPlaylist = function(id) {
@@ -94,30 +98,20 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
         return currentlyPlayingSong;
     }
 
-    socket.on('updateVotes', function(vote){
-    	var song = vote.song;
-        var songId = song._id;
-        var songUrl = '/api/songs/'+songId;
+    socket.on('updateVotes', function(song){
+    	// var song = songObj.song;
     	var songToUpdate = _.find(playlist, function(o){
     		return o.title ===song.title;
     	})
-    	if(vote.voteType === 'up') {
-           song.totalUpVotes++;
-        }
-        if(vote.voteType === 'down') {
-           song.totalDownVotes++;
-        }
-        return $http.put(songUrl,song)
-        .then(function(song){
-            return $http.get(songUrl)
-        })
-        .then(function(song){
-            factory.populateSongs();
-            if(!$rootScope.$$phase)
-            {
-                $rootScope.$digest();
-            }
-        })
+    	// if(songObj.voteType === 'up') {
+     //       song.voteValue++;
+     //    }
+     //    else song.voteValue--;
+        //Set playlist song to updated song
+        playlist[playlist.indexOf(songToUpdate)]= song;
+        $rootScope.$digest();
+ 
+
     })
 
 	return factory;
