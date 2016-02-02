@@ -1,16 +1,6 @@
 app.factory('RoomFactory', function($http, PlaylistFactory) {
     var factory = {};
 
-    var showForm = false;
-
-    factory.getRoomState = () => {
-        return showForm;
-    };
-
-    factory.showForm = () => {
-        showForm = true;
-    };
-
     factory.createNewRoom = newRoom => {
         return PlaylistFactory.createPlaylist()
             .then(playlist => {

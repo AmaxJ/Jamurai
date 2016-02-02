@@ -7,14 +7,19 @@ app.directive('createRoom', function() {
 })
 
 app.controller('RoomFormCtrl', function($scope, RoomFactory, $state) {
+    var showForm = false;
     $scope.newRoom = {
         creator: $scope.user._id,
         name: null,
         location: null,
         playlists: []
     }
-    $scope.getRoomState = RoomFactory.getRoomState;
-    $scope.showForm = RoomFactory.showForm;
+    $scope.getRoomState = () => {
+        return showForm;
+    }
+    $scope.showForm = () => {
+        showForm = true;
+    }
     $scope.createNewRoom = function() {
         $scope.newRoom.isPrivate = $scope.newRoom.isPrivate || false;
         RoomFactory.createNewRoom($scope.newRoom)
