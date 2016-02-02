@@ -135,7 +135,7 @@ var seedRooms = function(usersIds, playlist) {
 
     rooms = rooms.map(function(room, idx) {
         room.creator = usersIds[idx];
-        room.playlists = [playlist];
+        room.playlist = playlist;
         return room;
     });
 

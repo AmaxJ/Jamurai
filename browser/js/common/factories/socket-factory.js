@@ -6,6 +6,7 @@ app.factory('SocketFactory', function() {
         var factory = {};
 
         factory.emitVote = function(voteObj){
+            console.log("VOTE EMITTED", voteObj);
         	socket.emit('vote', {song: voteObj.song, voteType: voteObj.voteType});
         }
 
