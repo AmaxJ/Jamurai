@@ -36,7 +36,6 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
             });
     };
 
-    //TODO change this
 	factory.populateSongs = function () {
 		return $http.get('/api/songs/')
 		.then(function(songs){
@@ -71,6 +70,7 @@ app.factory('PlaylistFactory', function($http,$rootScope, SocketFactory) {
     };
 
     factory.vote = function($event, song, vote) {
+        $event.stopPropagation();
         SocketFactory.emitVote({song: song, voteType: vote})
     };
 

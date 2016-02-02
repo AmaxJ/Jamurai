@@ -22,6 +22,13 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory, $state) {
                 $state.go('room', {roomId: newRoom._id});
             })
             .then(null, console.error.bind(console));
+            // .then(() => {
+            //     $scope.newRoom = {
+            //         name: null,
+            //         privacy: null,
+            //         location: null
+            //     }
+            // })
     }
 
 })
