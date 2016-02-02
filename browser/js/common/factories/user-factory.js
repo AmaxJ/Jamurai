@@ -11,5 +11,15 @@ app.factory('UserFactory', function($http){
 		})
 	}
 
+	factory.getAllUsers = (id) => {
+		return $http({
+			method: 'GET',
+			url: '/api/users'
+		})
+		.then((response) => {
+			return response.data;
+		})
+	}
+
 	return factory;
 })

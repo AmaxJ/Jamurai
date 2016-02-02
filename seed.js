@@ -21,7 +21,8 @@ var seedUsers = function () {
     }, {
         email: "test user",
         username: "Testing",
-        location: 'Albany, NY'
+        location: 'Albany, NY',
+        DOB: '1/1/1999'
     }, {
         email: "Donald@gmail.com",
         username: "Donald Trum",
@@ -31,9 +32,19 @@ var seedUsers = function () {
         username: "Clinton",
         location: 'Washington, DC'
     }, {
+        email: 'shansarkar@gmail.com',
+        username: 'sarkas',
+        location: 'Dorchester, MA',
+        DOB: '2/2/1986'
+    }, {
         email: 'wearymachine@gmail.com',
         username: 'wearymachine',
-        location: 'Boston, MA'
+        location: 'Boston, MA',
+        DOB: 'sldj'
+    }, {
+        email: 'nunyabizz@sss.com',
+        username: 'fake',
+        location: 'sldkj'
     }];
 
     return User.createAsync(users);
