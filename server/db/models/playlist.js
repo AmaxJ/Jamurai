@@ -25,6 +25,7 @@ schema.method({
         this.markModified('songData');
         return this.save();
     }
+
 });
 
 mongoose.model('Playlist', schema);
