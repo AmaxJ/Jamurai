@@ -18,11 +18,15 @@ app.config( $stateProvider => {
 		}
 	})
 })
-.controller('RoomCtrl', ($scope, room, user, RoomFactory) => {
-		var users = RoomFactory.getRoomById(room._id)
-		.then((room) => {
-			return room.users
-		});
+.controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory) => {
+
+		var socket = SocketFactory.getSocket();
+		
+		socket.on('updateUsers', function(room) {
+		        console.log('its happening in the controller', room)
+		        $scope.room = room;
+		        $scope.$digest();
+		    })
 
 		$scope.room = room;
 		$scope.user = user;

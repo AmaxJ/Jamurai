@@ -28,18 +28,16 @@ module.exports = function (server) {
 
             Room.findById(roomId)
             .then((room) => {
-                console.log('old room', room)
                 return room.removeUser(userId);
             })
             .then((room) => {
-                console.log('updated room', room)
+                console.log('user leaving', room)
                 io.emit('updateUsers', room);
             })
         })
         socket.on('userEntered', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
-            console.log('enter user', data);
 
             Room.findById(roomId)
             .then((room) => {

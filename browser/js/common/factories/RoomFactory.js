@@ -33,29 +33,6 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
             .then(response => response.data);
     };
 
-    factory.addUserToRoom = (userId, roomId) => {
-        return $http({
-            method: 'PUT',
-            url: '/api/rooms/addUser/' + roomId,
-            data: {userId: userId}
-        })
-        .then((response) => {
-            return response.data
-        });
-    }
-
-    factory.removeUserFromRoom = (userId, roomId) => {
-        return $http({
-            method: 'PUT',
-            url: '/api/rooms/removeUser/' + roomId,
-            data: {userId: userId}
-        })
-        .then((response) => {
-            console.log('factory remove/add', response);
-            return response.data;
-        })
-    }
-
     factory.addUserEmit = (roomId, userId) => {
         SocketFactory.emitUserAdd(roomId, userId);
     }
@@ -64,10 +41,9 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
         SocketFactory.emitUserRemove(roomId, userId)
     }
 
-    socket.on('updateUsers', function(room) {
-        console.log('its happening!', room)
-        $rootScope.$digest();
-    })
+    // socket.on('updateUsers', function(room) {
+    //             console.log('its happening in the factory!', room)
+    //         })`
 
     return factory;
 })
