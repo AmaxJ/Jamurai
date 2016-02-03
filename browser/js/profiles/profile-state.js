@@ -15,10 +15,8 @@ app.config(function($stateProvider) {
 })
 
 .controller('ProfileCtrl', function($scope, ProfileFactory, theUser){
-    var loggedInUser = theUser;
-    $scope.loggedInUser = () => {
-        return loggedInUser;
-    }
+    var isEditable = false;
+    $scope.loggedInUser = theUser;
     $scope.updateUser = function(user, update){
         ProfileFactory.updateUser(user, update)
         .then(function(user){
@@ -28,16 +26,18 @@ app.config(function($stateProvider) {
         })
     }
     // $scope.loggedInUser = ProfileFactory.getLoggedInUser;
-    $scope.isEditable = ProfileFactory.getIsEditable;
-    $scope.setEditable = ProfileFactory.setIsEditable;
+    $scope.isEditable = () => {
+        return isEditable;
+    }
+    $scope.setEditable = () => {
+        isEditable = !isEditable;
+    }
     $scope.updateDetails = {};
 })
 
 .factory('ProfileFactory', function($http){
     var factory = {};
-    var isEditable = false;
-   
-
+    
     factory.updateUser = (user, update) => {
         return $http({
             method: 'PUT',
@@ -50,13 +50,6 @@ app.config(function($stateProvider) {
         })
     }
 
-    factory.getIsEditable = () => {
-        return isEditable;
-    }
-
-    factory.setIsEditable = () => {
-        isEditable = !isEditable;
-    }
 
     return factory;
 })
