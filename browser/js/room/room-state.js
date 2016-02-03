@@ -7,7 +7,6 @@ app.config( $stateProvider => {
 			room(RoomFactory, $stateParams, PlaylistFactory) {
 				return RoomFactory.getRoomById( $stateParams.roomId )
 						.then(room => {
-							console.log('ROOM', room)
 							PlaylistFactory.setPlaylist(room.playlist);
 							return room;
 						});
@@ -21,18 +20,6 @@ app.config( $stateProvider => {
 })
 .controller('RoomCtrl', ($scope, room, user, PlaylistFactory) => {
 		$scope.playlist = PlaylistFactory.getPlaylist();
-		console.log('Room Playlist', $scope.playlist)
 		$scope.room = room;
 		$scope.user = user;
-		// PlaylistFactory.getRoomPlaylist()
-		// .then(()=>{
-		// 	return PlaylistFactory.getPlaylist()
-		// })
-		// .then(newSongs =>{
-		// 	$scope.songs = newSongs;
-		// })
-        // $scope.getVoteValue = (songObj) => {
-        // 	console.log('GETTING VOTE', songObj)
-        //     return songObj.total;
-        // }
 });

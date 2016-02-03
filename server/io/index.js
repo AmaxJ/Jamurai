@@ -21,17 +21,22 @@ module.exports = function (server) {
             var room = payload.room;
             var playlist = payload.room.playlist;
             console.log('PAYLOAD',payload)
-            SongData.findOne({playlist: playlist._id, song: song._id})
+            SongData.findOne({_id: song._id})
             .then(function(songData){
+                console.log('SONG DATA OBJ', songData)
                 return songData.vote(user._id, vote)
             })
             .then(function(songData){
                 console.log('Update song data', songData);
+                return SongData.findById(songData._id)
+                    .populate('song')
+            })
+            .then(songData => {
+        	   io.emit('updateVotes', songData);
             })
             .then(null, function(err){
                 console.log('Something went wrong with songData', err);
             })
-        	io.emit('updateVotes', song);
 
         })
     });

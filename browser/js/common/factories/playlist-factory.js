@@ -93,17 +93,13 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
 
-    socket.on('updateVotes', function(song) {
-        // var song = songObj.song;
-        var songToUpdate = _.find(playlist, function(o) {
-                return o.title === song.title;
+    socket.on('updateVotes', function(songObj) {
+        console.log('SONG???', songObj);
+        var songToUpdate = _.find(playlist.songs, function(o) {
+                return o.song.title === songObj.song.title;
             })
-            // if(songObj.voteType === 'up') {
-            //       song.voteValue++;
-            //    }
-            //    else song.voteValue--;
-            //Set playlist song to updated song
-        playlist[playlist.indexOf(songToUpdate)] = song;
+        var updateIndex = playlist.songs.indexOf(songToUpdate)
+        playlist.songs[updateIndex] = songObj;
         $rootScope.$digest();
     })
 
