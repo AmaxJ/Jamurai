@@ -33,7 +33,9 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             method: 'GET',
             url: '/api/playlists/' + playlistId + '/songData'
         })
-        .then(response => response.data);
+        .then(response => {
+            playlist =response.data
+        });
     }
 
     factory.createPlaylist = function() {
