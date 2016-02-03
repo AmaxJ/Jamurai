@@ -1,5 +1,6 @@
-app.factory('RoomFactory', function($http, PlaylistFactory) {
+app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFactory) {
     var factory = {};
+    var socket = SocketFactory.getSocket();
 
     factory.createNewRoom = newRoom => {
         return PlaylistFactory.createPlaylist()
@@ -50,9 +51,23 @@ app.factory('RoomFactory', function($http, PlaylistFactory) {
             data: {userId: userId}
         })
         .then((response) => {
+            console.log('factory remove/add', response);
             return response.data;
         })
     }
+
+    factory.addUserEmit = (roomId, userId) => {
+        SocketFactory.emitUserAdd(roomId, userId);
+    }
+
+    factory.removeUserEmit = (roomId, userId) => {
+        SocketFactory.emitUserRemove(roomId, userId)
+    }
+
+    socket.on('updateUsers', function(room) {
+        console.log('its happening!', room)
+        $rootScope.$digest();
+    })
 
     return factory;
 })

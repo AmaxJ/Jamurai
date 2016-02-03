@@ -53,11 +53,17 @@ schema.statics.getRoomSongs = function getRoomSongs() {
 schema.method({
     addUser: function(userId) {
         this.users.addToSet(userId);
-        return this.save();
+        return this.save()
+                .then((room) => {
+                    return room;
+                });
     },
     removeUser: function(userId) {
         this.users.pull(userId);
-        return this.save();
+        return this.save()
+                .then((room) => {
+                    return room;
+                });
     }
 });
 

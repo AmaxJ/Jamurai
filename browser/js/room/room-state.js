@@ -13,15 +13,8 @@ app.config( $stateProvider => {
 						.then(user => user);
 			}
 		},
-			// updatedRoom(RoomFactory, $stateParams, user) {
-			// 	return RoomFactory.addUserToRoom(user._id, $stateParams.roomId)
-			// 			.then((room) => {
-			// 				console.log('asdfadsf', room)
-			// 			});
-			// }
-		// },
 		onExit: function (user, room, RoomFactory) {
-			RoomFactory.removeUserFromRoom(user._id, room._id);
+			RoomFactory.removeUserEmit(room._id, user._id);
 		}
 	})
 })
@@ -34,11 +27,16 @@ app.config( $stateProvider => {
 		$scope.room = room;
 		$scope.user = user;
 
-		$scope.getUsers = () => {
-			console.log('running', users);
-			return users;
-		}
+		// $scope.getUsers = () => {
+		// 	console.log('running', users);
+		// 	return users;
+		// }
 
-		RoomFactory.addUserToRoom(user._id, room._id)
+		RoomFactory.addUserEmit(room._id, user._id);
+
+		// RoomFactory.addUserToRoom(user._id, room._id)
+		// .then(() => {
+		// 	RoomFactory.addOrRemoveUser();
+		// })
 
 });

@@ -83,7 +83,6 @@ router.route('/addUser/:roomId')
             return room.addUser(req.body.userId)
         })
         .then((room) => {
-            console.log('add', room);
             res.status(204).json(room)
         })
         .then(null, next)
@@ -96,7 +95,6 @@ router.route('/removeUser/:roomId')
             return room.removeUser(req.body.userId)
         })
         .then((room) => {
-            console.log('remove', room);
             res.status(204).json(room)
         })
         .then(null, next)
