@@ -2,6 +2,7 @@
 var socketio = require('socket.io');
 var io = null;
 var Song = require('mongoose').model('Song');
+var SongData = require('mongoose').model('SongData');
 
 module.exports = function (server) {
 
@@ -18,12 +19,12 @@ module.exports = function (server) {
             var vote = payload.vote;
             var room = payload.room;
             var playlist = payload.room.playlist;
-            if (payload.vote === 'up') {
-                song.voteValue++;
-            } 
-            else payload.vote--;
+            // if (payload.vote === 'up') {
+            //     song.voteValue++;
+            // } 
+            // else payload.vote--;
             SongData.findOne({playlist: playlist._id, song: song_.id})
-            
+
         	io.emit('updateVotes', song);
 
             // Song.findById(songId)
