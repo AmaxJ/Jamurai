@@ -87,16 +87,8 @@ describe('Playlist model', function() {
             .then(function(playlist) {
                 return playlist.updateSongValue(song._id, 4);
             })
-<<<<<<< HEAD
-            .then(function(playlist) {
-                return Playlist.findById(playlistId)
-            })
-            .then(function(playlist) {
-                expect(playlist.songData[song._id].value).to.equal(4);
-=======
             .then(function(songData) {
                 expect(songData.total).to.equal(4);
->>>>>>> master
                 done();
             })
             .then(null, console.error.bind(console));
