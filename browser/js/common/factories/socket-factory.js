@@ -5,8 +5,9 @@ app.factory('SocketFactory', function() {
 
         var factory = {};
 
-        factory.emitVote = function(song){
-        	socket.emit('vote', song);
+        factory.emitVote = function(payload){
+            console.log('Vote emitting', payload)
+        	socket.emit('vote', payload);
         }
 
         factory.getSocket = function(){

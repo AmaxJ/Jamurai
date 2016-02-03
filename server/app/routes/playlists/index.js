@@ -58,6 +58,7 @@ router.route('/:playlistId/score')
 router.route('/:playlistId/songData')
     .get((req, res, next) => {
         SongData.find({playlist: req.params.playlistId})
+            .populate('song')
             .then(songDataObjs => {
                 res.json(songDataObjs);
             })

@@ -3,11 +3,17 @@ app.directive('playlist', function() {
         restrict: 'E',
         templateUrl: '/js/common/directives/playlist/playlist-template.html',
         scope: {
-            songs: '='
+            songs: '=',
+            room: '=',
+            user: '='
         },
         controller: function($scope, PlayerFactory, PlaylistFactory) {
             $scope.loadVideoById = PlayerFactory.loadVideoById;
             $scope.vote = PlaylistFactory.vote;
+            $scope.getVoteValue = (songObj) => {
+                console.log('GETTING VOTE', songObj)
+                return songObj.total;
+            }
         }
     }
 })
