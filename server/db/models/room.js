@@ -50,5 +50,11 @@ schema.statics.getRoomSongs = function getRoomSongs() {
         .exec()
 };
 
+schema.method({
+    addUser: function(userId) {
+        this.users.addToSet(userId);
+        return this.save();
+    }
+});
 
 mongoose.model('Room', schema);

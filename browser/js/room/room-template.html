@@ -2,4 +2,6 @@
 <h2>Created by {{room.creator.username}}</h2>
 <h3>This event is being hosted at {{room.location}}</h3>
 <div>
+	<h4>Users in this room right now:</h4>
+	<p ng-repeat='user in room.users'>{{user.username}}</p>
 </div>
