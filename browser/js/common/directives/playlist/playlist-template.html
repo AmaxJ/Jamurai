@@ -5,14 +5,12 @@
     <br>
     <table class='table'>
         <tr>
-            <th>Song</th>
-            <th>Artist</th>
+            <th>Video</th>
             <th>Vote</th>
             <th>Vote Count</th>
         </tr>
-        <tr ng-repeat='song in songs() track by $index' ng-click='loadVideoById(song)' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+        <tr ng-repeat='song in songs() track by $index' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
             <td>{{song.title}}</td>
-            <td>{{song.artist}}</td>
             <td>
                 <button class="btn btn-sm btn-success" ng-click="vote($event, song, 'up')"><span class="glyphicon glyphicon-arrow-up"></span></button>
                 <button class="btn btn-sm btn-danger" ng-click="vote($event, song, 'down')"><span class="glyphicon glyphicon-arrow-down"></span></button>

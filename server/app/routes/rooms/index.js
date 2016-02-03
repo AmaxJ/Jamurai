@@ -57,7 +57,7 @@ router.route('/:roomId')
             .populate('users')
             .populate('creator')
             .populate({
-                path: 'playlists',
+                path: 'playlist',
                 model: 'Playlist',
                 populate: {
                     path: 'songs',

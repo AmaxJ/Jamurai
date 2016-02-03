@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var SongData = mongoose.model('SongData');
 
 var schema = new mongoose.Schema({
-    songs : [{
+    songs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Song"
     }],

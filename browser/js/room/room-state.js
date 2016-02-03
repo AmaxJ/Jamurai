@@ -24,5 +24,9 @@ app.config( $stateProvider => {
 .controller('RoomCtrl', ($scope, room, user) => {
 		$scope.room = room;
 		$scope.user = user;
-		// RoomFactory.addUserToRoom(user._id, room._id)
+        $scope.songs = () => room.playlist.songs;
+        $scope.getVoteValue = (song) => {
+            console.log("called me!!!")
+            return room.playlist.songData[song._id];
+        }
 });
