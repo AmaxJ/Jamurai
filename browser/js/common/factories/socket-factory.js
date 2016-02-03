@@ -1,12 +1,12 @@
 app.factory('SocketFactory', function() {
         if (!window.io) throw new Error('socket.io not found!');
-        // return window.io(window.location.origin);
+
         var socket = io.connect(window.location.origin);
 
         var factory = {};
 
-        factory.emitVote = function(song){
-        	socket.emit('vote', song);
+        factory.emitVote = function(payload){
+        	socket.emit('vote', payload);
         }
 
         factory.emitUserAdd = function (roomId, userId) {

@@ -3,6 +3,8 @@ var socketio = require('socket.io');
 var io = null;
 var Song = require('mongoose').model('Song');
 var Room = require('mongoose').model('Room');
+var SongData = require('mongoose').model('SongData');
+
 
 module.exports = function (server) {
 
@@ -13,16 +15,29 @@ module.exports = function (server) {
     io.on('connection', function (socket) {
         // Now have access to socket, wowzers!
         console.log('Someone connected!!!');
-        socket.on('vote', function(song){
-            var songId = song._id;
-        	io.emit('updateVotes', song);
-            // Song.findById(songId)
-            // .then(function(song) {
-            //     song.
-            // }).then(null, next);
+        socket.on('vote', function(payload){
+            var song = payload.song;
+            var user = payload.user;
+            var vote = payload.vote;
+            var room = payload.room;
+            var playlist = payload.room.playlist;
+            SongData.findOne({_id: song._id})
+            .then(function(songData){
+                return songData.vote(user._id, vote)
+            })
+            .then(function(songData){
+                return SongData.findById(songData._id)
+                    .populate('song')
+            })
+            .then(songData => {
+        	   io.emit('updateVotes', songData);
+            })
+            .then(null, function(err){
+                console.log('Something went wrong with songData', err);
+            })
+
         })
         socket.on('userLeft', function(data) {
-            console.log('user left:', data)
             let roomId = data.roomId;
             let userId = data.userId;
 
@@ -31,7 +46,6 @@ module.exports = function (server) {
                 return room.removeUser(userId);
             })
             .then((room) => {
-                console.log('user leaving', room)
                 io.emit('updateUsers', room);
             })
         })

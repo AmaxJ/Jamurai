@@ -15,7 +15,11 @@ router.route('/')
                 model: 'Playlist',
                 populate: {
                     path: 'songs',
-                    model: 'Song'
+                    model: 'SongData',
+                    populate: {
+                        path: 'song',
+                        model: 'Song'
+                    }
                 }
             })
             .then(rooms => {
@@ -44,11 +48,15 @@ router.route('/:roomId')
             .populate('users')
             .populate('creator')
             .populate({
-                path: 'playlists',
+                path: 'playlist',
                 model: 'Playlist',
                 populate: {
                     path: 'songs',
-                    model: 'Song'
+                    model: 'SongData',
+                    populate: {
+                        path: 'song',
+                        model: 'Song'
+                    }
                 }
             })
             .then(room => {

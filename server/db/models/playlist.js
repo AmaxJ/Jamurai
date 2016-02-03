@@ -1,30 +1,32 @@
 'use strict'
 var mongoose = require('mongoose');
+var SongData = mongoose.model('SongData');
 
 var schema = new mongoose.Schema({
-    songs : [{
+    songs: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Song"
+        ref: "SongData"
     }],
-
-    songData : {
-        type: mongoose.Schema.Types.Mixed
-    }
 });
 
 schema.method({
     addSong: function(songId) {
-        this.songs.addToSet(songId);
-        if (!this.songData) {this.songData = {}}
-        this.songData[songId] = 0;
-        return this.save();
+        var self = this;
+        SongData.create({playlist: self._id, song: songId})
+        .then(songDataObj => {
+            self.songs.addToSet(songDataObj._id);
+            return self.save();
+        })
+        .then(null, console.error.bind(console));
     },
     updateSongValue : function(songId, total) {
-        if (!(songId in this.songData)) return;
-        this.songData[songId] = total;
-        this.markModified('songData');
-        return this.save();
+        return SongData.findOne({song: songId})
+            .then(function(songDataObj) {
+                songDataObj.total = total;
+                return songDataObj.save();
+            });
     }
 });
+
 
 mongoose.model('Playlist', schema);

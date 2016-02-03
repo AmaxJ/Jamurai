@@ -41,9 +41,5 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
         SocketFactory.emitUserRemove(roomId, userId)
     }
 
-    // socket.on('updateUsers', function(room) {
-    //             console.log('its happening in the factory!', room)
-    //         })`
-
     return factory;
 })

@@ -4,9 +4,12 @@ app.config( $stateProvider => {
 		templateUrl: '/js/room/room-template.html',
 		controller: 'RoomCtrl',
 		resolve: {
-			room(RoomFactory, $stateParams) {
+			room(RoomFactory, $stateParams, PlaylistFactory) {
 				return RoomFactory.getRoomById( $stateParams.roomId )
-						.then(room => room);
+						.then(room => {
+							PlaylistFactory.setPlaylist(room.playlist);
+							return room;
+						});
 			},
 			user(AuthService) {
 				return AuthService.getLoggedInUser()
@@ -18,29 +21,19 @@ app.config( $stateProvider => {
 		}
 	})
 })
-.controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory) => {
+.controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory) => {
 
 		var socket = SocketFactory.getSocket();
 		
 		socket.on('updateUsers', function(room) {
-		        console.log('its happening in the controller', room)
 		        $scope.room = room;
 		        $scope.$digest();
 		    })
 
 		$scope.room = room;
 		$scope.user = user;
-
-		// $scope.getUsers = () => {
-		// 	console.log('running', users);
-		// 	return users;
-		// }
+		$scope.playlist = PlaylistFactory.getPlaylist();
 
 		RoomFactory.addUserEmit(room._id, user._id);
-
-		// RoomFactory.addUserToRoom(user._id, room._id)
-		// .then(() => {
-		// 	RoomFactory.addOrRemoveUser();
-		// })
 
 });

@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
-var Promise = require('bluebird');
-var chalk = require('chalk');
-var connectToDb = require('./server/db');
-var User = Promise.promisifyAll(mongoose.model('User'));
-var Song = Promise.promisifyAll(mongoose.model('Song'));
-var Room = Promise.promisifyAll(mongoose.model('Room'));
+var mongoose = require('mongoose'); 
+var Promise = require('bluebird'); 
+var chalk = require('chalk'); 
+var connectToDb = require('./server/db'); 
+var User = Promise.promisifyAll(mongoose.model('User')); 
+var Song = Promise.promisifyAll(mongoose.model('Song')); 
+var Room = Promise.promisifyAll(mongoose.model('Room')); 
 var Playlist = Promise.promisifyAll(mongoose.model('Playlist'));
 
 
@@ -20,7 +20,7 @@ var seedUsers = function () {
         email: "test user",
         username: "Testing",
         location: 'Albany, NY',
-        DOB: '1/1/1999'
+        DOB: '1/1/1999',
         username: "Testing"
     }, {
         email: "Donald@gmail.com",
@@ -175,6 +175,7 @@ connectToDb.then(function() {
             return Playlist.create({
                 songs: songIds
             });
+
         })
         .then(function(playlist) {
             return seedRooms(userIds, playlist);

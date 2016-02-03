@@ -26,10 +26,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    playlists: [{
+    playlist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist"
-    }],
+    },
     roomMetadata: {
         type: mongoose.Schema.Types.Mixed
     }
@@ -52,7 +52,6 @@ schema.statics.getRoomSongs = function getRoomSongs() {
 
 schema.method({
     addUser: function(userId) {
-        console.log(userId);
         this.users.addToSet(userId);
         return this.save()
                 .then((room) => {
