@@ -1,52 +1,47 @@
 'use strict'
 var mongoose = require('mongoose');
+var SongData = mongoose.model('SongData');
 
 var schema = new mongoose.Schema({
     songs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Song"
     }],
-
-    songData: {
-        type: mongoose.Schema.Types.Mixed
-    }
 });
 
 schema.method({
     addSong: function(songId) {
+        var id = this._id;
         this.songs.addToSet(songId);
-        if (!this.songData) {
-            this.songData = {}
-        }
-        this.songData[songId] = {
-            value: 0,
-            upVoters: [],
-            downVoters: []
-        };
-        this.markModified('songData');
-        return this.save();
+        return this.save()
+            .then(function() {
+                return SongData.create({
+                    playlist : id,
+                    song : songId
+                })
+            })
+            .then(null, console.error.bind(console));
     },
-    updateSongValue: function(songId, total) {
-        if (!(songId in this.songData)) return;
-        this.songData[songId].value = total;
-        var path = 'songData.' + songId;
-        console.log("PATH:", path);
-        this.markModified(path);
-        return this.save();
+    updateSongValue : function(songId, total) {
+        return SongData.findOne({song: songId})
+            .then(function(songDataObj) {
+                songDataObj.total = total;
+                return songDataObj.save();
+            });
     }
 });
 
-schema.post('init', function(doc) {
-    doc.songData = {};
-    doc.songs.forEach(function(songId) {
-        doc.songData[songId] = {
-            value: 0,
-            upVoters: [],
-            downVoters: []
-        };
-    });
-    doc.markModified('songData')
-    doc.save();
-});
+// schema.post('init', function(doc) {
+//     var songDataObjs = [];
+//     doc.songs.forEach(function(song) {
+//         songDataObjs.push({
+//             song: song,
+//             playlist: doc._id
+//         });
+//     })
+//     console.log("SONGDATA", songDataObjs);
+//     SongData.create(songDataObjs);
+// });
+>>>>>>> master
 
 mongoose.model('Playlist', schema);

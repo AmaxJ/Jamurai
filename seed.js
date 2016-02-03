@@ -18,13 +18,32 @@ var seedUsers = function () {
         username: "president"
     }, {
         email: "test user",
+        username: "Testing",
+        location: 'Albany, NY',
+        DOB: '1/1/1999'
         username: "Testing"
     }, {
         email: "Donald@gmail.com",
-        username: "Donald Trum"
+        username: "Donald Trum",
+        location: 'Wall St New York, NY'
     }, {
         email: "Bill@whitehouse.gov",
-        username: "Clinton"
+        username: "Clinton",
+        location: 'Washington, DC'
+    }, {
+        email: 'shansarkar@gmail.com',
+        username: 'sarkas',
+        location: 'Dorchester, MA',
+        DOB: '2/2/1986'
+    }, {
+        email: 'wearymachine@gmail.com',
+        username: 'wearymachine',
+        location: 'Boston, MA',
+        DOB: 'sldj'
+    }, {
+        email: 'nunyabizz@sss.com',
+        username: 'fake',
+        location: 'sldkj'
     }];
 
     return User.createAsync(users);
@@ -156,6 +175,7 @@ connectToDb.then(function() {
             return Playlist.create({
                 songs: songIds
             });
+
         })
         .then(function(playlist) {
             return seedRooms(userIds, playlist);

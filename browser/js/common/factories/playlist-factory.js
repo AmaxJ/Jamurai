@@ -97,6 +97,10 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         return currentlyPlayingSong;
     }
 
+    factory.getAllSongs = function() {
+        return $http.get('/api/songs');
+    }
+
     socket.on('updateVotes', function(song) {
         // var song = songObj.song;
         var songToUpdate = _.find(playlist, function(o) {
