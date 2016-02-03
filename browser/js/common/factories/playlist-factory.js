@@ -56,6 +56,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
                 return songFromDb;
             })
             .then(function(song) {
+                console.log('PLAYLIST ID', playlistId)
                 return $http.put('/api/playlists/' + playlistId, {
                     song: song
                 });

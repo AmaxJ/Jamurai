@@ -23,8 +23,11 @@ module.exports = function (server) {
             //     song.voteValue++;
             // } 
             // else payload.vote--;
-            SongData.findOne({playlist: playlist._id, song: song_.id})
-
+            console.log('PAYLOAD',payload)
+            SongData.findOne({playlist: playlist._id, song: song._id})
+            .then(function(songData){
+                console.log('SONGDATA FROM SOCKET', songData)
+            })
         	io.emit('updateVotes', song);
 
             // Song.findById(songId)
