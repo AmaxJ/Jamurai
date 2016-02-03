@@ -18,18 +18,6 @@ schema.method({
             return self.save();
         })
         .then(null, console.error.bind(console));
-
-
-        // var id = this._id;
-        // this.songs.addToSet(songId);
-        // return this.save()
-        //     .then(function() {
-        //         return SongData.create({
-        //             playlist : id,
-        //             song : songId
-        //         })
-        //     })
-        //     .then(null, console.error.bind(console));
     },
     updateSongValue : function(songId, total) {
         return SongData.findOne({song: songId})

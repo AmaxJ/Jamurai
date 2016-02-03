@@ -14,20 +14,16 @@ module.exports = function (server) {
         // Now have access to socket, wowzers!
         console.log('Someone connected!!!');
         socket.on('vote', function(payload){
-            console.log('Hitting this socket')
             var song = payload.song;
             var user = payload.user;
             var vote = payload.vote;
             var room = payload.room;
             var playlist = payload.room.playlist;
-            console.log('PAYLOAD',payload)
             SongData.findOne({_id: song._id})
             .then(function(songData){
-                console.log('SONG DATA OBJ', songData)
                 return songData.vote(user._id, vote)
             })
             .then(function(songData){
-                console.log('Update song data', songData);
                 return SongData.findById(songData._id)
                     .populate('song')
             })
