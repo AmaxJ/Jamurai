@@ -7,7 +7,6 @@ app.config(function($stateProvider) {
 })
 
 app.controller('userAnalyticsCtrl', ($scope, UserFactory) => {
-	$scope.testing = 'boom';
 	$scope.labels = [];
 	$scope.labels2 = ['under 18','18-25','26-35','36-45','46-55','56-65','over 65'];
 	$scope.data2 = [0,0,0,0,0,0,0];
