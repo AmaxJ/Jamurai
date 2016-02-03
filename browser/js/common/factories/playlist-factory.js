@@ -64,7 +64,6 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             .then(null, console.error.bind(console));
     };
 
-    //TODO: Check to make sure this works
     //Sorts playlist by vote value
     factory.sort = function() {
         playlist.songs.sort(function(a, b) {
@@ -78,6 +77,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     factory.setPlaylist = function(newPlaylist) {
         playlist = newPlaylist;
+        factory.sort();
     };
 
     factory.getPlaylist = function() {

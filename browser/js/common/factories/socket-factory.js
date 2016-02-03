@@ -1,7 +1,7 @@
 app.factory('SocketFactory', function() {
         if (!window.io) throw new Error('socket.io not found!');
-        // return window.io(window.location.origin);
-        var socket = io.connect(window.location.href);
+        
+        var socket = io.connect(window.location.origin);
 
         var factory = {};
 
