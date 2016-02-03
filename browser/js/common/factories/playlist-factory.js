@@ -69,12 +69,14 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         });
     };
 
-    factory.vote = function($event, song, vote) {
+    factory.vote = function($event, song, vote, user, room) {
+        console.log('Vote user', user)
+        console.log('Vote room', room)
         $event.stopPropagation();
-        if (vote === 'up') {
-            song.voteValue++;
-        } else song.voteValue--;
-        SocketFactory.emitVote(song);
+        // if (vote === 'up') {
+        //     song.voteValue++;
+        // } else song.voteValue--;
+        SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
     };
 
     factory.setPlaylist = function(id) {

@@ -3,7 +3,9 @@ app.directive('playlist', function() {
         restrict: 'E',
         templateUrl: '/js/common/directives/playlist/playlist-template.html',
         scope: {
-            songs: '='
+            songs: '=',
+            room: '=',
+            user: '='
         },
         controller: function($scope, PlayerFactory, PlaylistFactory) {
             $scope.loadVideoById = PlayerFactory.loadVideoById;
