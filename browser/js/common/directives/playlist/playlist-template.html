@@ -1,6 +1,7 @@
 <div class='col-md-3'></div>
 <div id="playlist-table" class='col-md-6'>
     <button ui-sref="submit-song" class="btn-default btn">Add a Song!!!!!</button>
+    SONGS: {{playlist}}
     <br>
     <br>
     <table class='table'>
@@ -9,13 +10,14 @@
             <th>Vote</th>
             <th>Vote Count</th>
         </tr>
-        <tr ng-repeat='songObj in songs() track by $index' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
-            <td>{{songObj.song.title}}</td>
+
+        <tr ng-repeat='song in playlist track by $index' ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+            <td>{{song}}</td>
             <td>
-                <button class="btn btn-sm btn-success" ng-click="vote($event, songObj.song, 'up', user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj.song, 'down',user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                <button class="btn btn-sm btn-success" ng-click="vote($event, song, 'up', user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                <button class="btn btn-sm btn-danger" ng-click="vote($event, song, 'down',user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
             </td>
-            <td>{{getVoteValue(songObj)}}</td>
+            <td>{{getVoteValue(song)}}</td>
         </tr>
     </table>
 </div>

@@ -4,35 +4,33 @@ app.config( $stateProvider => {
 		templateUrl: '/js/room/room-template.html',
 		controller: 'RoomCtrl',
 		resolve: {
-			room(RoomFactory, $stateParams) {
+			room(RoomFactory, $stateParams, PlaylistFactory) {
 				return RoomFactory.getRoomById( $stateParams.roomId )
-						.then(room => room);
+						.then(room => {
+							console.log('ROOM', room)
+							PlaylistFactory.setPlaylist(room.playlist);
+							return room;
+						});
 			},
 			user(AuthService) {
 				return AuthService.getLoggedInUser()
 						.then(user => user);
 			}
-			// updatedRoom(RoomFactory, $stateParams, user) {
-			// 	return RoomFactory.addUserToRoom(user._id, $stateParams.roomId)
-			// 			.then((room) => {
-			// 				console.log('asdfadsf', room)
-			// 			});
-			// }
 		}
 	})
 })
 .controller('RoomCtrl', ($scope, room, user, PlaylistFactory) => {
-		$scope.songs = [];
+		$scope.playlist = PlaylistFactory.getPlaylist();
+		console.log('Room Playlist', $scope.playlist)
 		$scope.room = room;
 		$scope.user = user;
-		PlaylistFactory.setPlaylist(room.playlist._id)
-		PlaylistFactory.getRoomPlaylist()
-		.then(()=>{
-			return PlaylistFactory.getPlaylist()
-		})
-		.then(newSongs =>{
-			$scope.songs = newSongs;
-		})
+		// PlaylistFactory.getRoomPlaylist()
+		// .then(()=>{
+		// 	return PlaylistFactory.getPlaylist()
+		// })
+		// .then(newSongs =>{
+		// 	$scope.songs = newSongs;
+		// })
         // $scope.getVoteValue = (songObj) => {
         // 	console.log('GETTING VOTE', songObj)
         //     return songObj.total;

@@ -1,11 +1,30 @@
 app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     var factory = {};
     var playlist;
-    var playlistId;
-    var currentlyPlayingSong;
     var socket = SocketFactory.getSocket();
 
-    var findSongAndReturn = function(song) {
+    //Called when new room is created
+    factory.createPlaylist = function() {
+        return $http.post('/api/playlists', {})
+            .then(function(response) {
+                playlist = response.data;
+                return response.data._id;
+            });
+    };
+
+    //Returns the playlist for specific room
+    factory.getRoomPlaylist = () => {
+        return $http({
+            method: 'GET',
+            url: '/api/playlists/' + playlist._id
+        })
+        .then(response => {
+            playlist =response.data
+        });
+    }
+
+    //Returns song from DB or null if song doesn't exist
+    var _findSongAndReturn = function(song) {
         var youtubeId = song.id.videoId;
         return $http.get('/api/songs/yid/' + youtubeId)
             .then(function(song) {
@@ -13,8 +32,8 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             });
     };
 
-    var addSongToDb = function(song) {
-        console.log(song);
+    //Creates new song in database
+    var _addSongToDb = function(song) {
         var newSong = {
             title: song.snippet.title,
             youTubeId: song.id.videoId,
@@ -28,55 +47,28 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             });
     };
 
-    factory.getRoomPlaylist = () => {
-        return $http({
-            method: 'GET',
-            url: '/api/playlists/' + playlistId + '/songData'
-        })
-        .then(response => {
-            playlist =response.data
-        });
-    }
-
-    factory.createPlaylist = function() {
-        return $http.post('/api/playlists', {})
-            .then(function(response) {
-                playlistId = response.data._id;
-                return response.data._id;
-            });
-    };
-
-    // factory.populateSongs = function() {
-    //     return $http.get('/api/songs/')
-    //         .then(function(songs) {
-    //             songs.data.forEach(function(song) {
-    //                 song.voteValue = song.totalUpVotes - song.totalDownVotes;
-    //             });
-    //             playlist = songs.data;
-    //             factory.sort();
-    //         });
-    // };
-
+    //Adding new songs to room playlist
     factory.addSong = function(song) {
-        return findSongAndReturn(song)
+        return _findSongAndReturn(song)
             .then(function(songFromDb) {
                 if (!songFromDb) {
-                    return addSongToDb(song);
+                    return _addSongToDb(song);
                 }
                 return songFromDb;
             })
             .then(function(song) {
-                console.log('PLAYLIST ID', playlistId)
-                return $http.put('/api/playlists/' + playlistId, {
+                return $http.put('/api/playlists/' + playlist._id, {
                     song: song
                 });
             })
             .then(null, console.error.bind(console));
     };
 
+    //TODO: Check to make sure this works
+    //Sorts playlist by vote value
     factory.sort = function() {
-        playlist.sort(function(a, b) {
-            return b.voteValue - a.voteValue;
+        playlist.songs.sort(function(a, b) {
+            return b.total - a.total;
         });
     };
 
@@ -92,29 +84,14 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
     };
 
-    factory.setPlaylist = function(id) {
-        playlistId = id;
+    factory.setPlaylist = function(newPlaylist) {
+        playlist = newPlaylist;
     };
 
     factory.getPlaylist = function() {
         return playlist;
     };
 
-    factory.getVoteValue = function(songObj) {
-        return songObj.total;
-    }
-
-    factory.setCurrentSong = function(song) {
-        currentlyPlayingSong = song;
-    }
-
-    factory.getCurrentSong = function() {
-        return currentlyPlayingSong;
-    }
-
-    factory.getAllSongs = function() {
-        return $http.get('/api/songs');
-    }
 
     socket.on('updateVotes', function(song) {
         // var song = songObj.song;
