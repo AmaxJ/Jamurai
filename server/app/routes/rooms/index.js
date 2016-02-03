@@ -36,19 +36,6 @@ router.route('/')
             .then(null, next);
     })
 
-router.route('/addUser/:roomId')
-    .put((req, res, next) => {
-        Room.findById(req.params.roomId)
-        .then((room) => {
-            console.log('body', req.body);
-            return room.addUser(req.body.userId)
-        })
-        .then((room) => {
-            console.log(room);
-            res.status(204).json(room)
-        })
-        .then(null, next)
-    })
 
 router.route('/:roomId')
     .get((req, res, next) => {
@@ -87,3 +74,30 @@ router.route('/:roomId')
             })
             .then(null, next);
     });
+
+
+router.route('/addUser/:roomId')
+    .put((req, res, next) => {
+        Room.findById(req.params.roomId)
+        .then((room) => {
+            return room.addUser(req.body.userId)
+        })
+        .then((room) => {
+            console.log('add', room);
+            res.status(204).json(room)
+        })
+        .then(null, next)
+    })
+
+router.route('/removeUser/:roomId')
+    .put((req, res, next) => {
+        Room.findById(req.params.roomId)
+        .then((room) => {
+            return room.removeUser(req.body.userId)
+        })
+        .then((room) => {
+            console.log('remove', room);
+            res.status(204).json(room)
+        })
+        .then(null, next)
+    })

@@ -43,5 +43,16 @@ app.factory('RoomFactory', function($http, PlaylistFactory) {
         });
     }
 
+    factory.removeUserFromRoom = (userId, roomId) => {
+        return $http({
+            method: 'PUT',
+            url: '/api/rooms/removeUser/' + roomId,
+            data: {userId: userId}
+        })
+        .then((response) => {
+            return response.data;
+        })
+    }
+
     return factory;
 })

@@ -54,6 +54,10 @@ schema.method({
     addUser: function(userId) {
         this.users.addToSet(userId);
         return this.save();
+    },
+    removeUser: function(userId) {
+        this.users.pull(userId);
+        return this.save();
     }
 });
 
