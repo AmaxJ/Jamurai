@@ -20,10 +20,6 @@ module.exports = function (server) {
             var vote = payload.vote;
             var room = payload.room;
             var playlist = payload.room.playlist;
-            // if (payload.vote === 'up') {
-            //     song.voteValue++;
-            // } 
-            // else payload.vote--;
             console.log('PAYLOAD',payload)
             SongData.findOne({playlist: playlist._id, song: song._id})
             .then(function(songData){
@@ -37,10 +33,6 @@ module.exports = function (server) {
             })
         	io.emit('updateVotes', song);
 
-            // Song.findById(songId)
-            // .then(function(song) {
-            //     song.
-            // }).then(null, next);
         })
     });
     

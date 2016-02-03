@@ -41,9 +41,11 @@ schema.method({
         if (!userId || !vote) return;
         if (vote === 'up') {
             if (this.upVotes.indexOf(userId) > -1) return;
+            cleanVotes(userId,vote, this);
             this.upVotes.push(userId);
         } else if (vote === 'down') {
             if (this.downVotes.indexOf(userId) > -1) return;
+            cleanVotes(userId,vote, this);
             this.downVotes.push(userId);
         }
         this.total = this.upVotes.length - this.downVotes.length;
@@ -59,5 +61,16 @@ schema.method({
         return this.save();
     }
 });
+
+function cleanVotes(userId, vote, doc) {
+    var index;
+    if (vote === 'up') {
+        index = doc.downVotes.indexOf(userId);
+        if (index > -1) doc.downVotes.splice(index, 1)
+    } else {
+        index = doc.upVotes.indexOf(userId);
+        if (index > -1) doc.upVotes.splice(index, 1)        
+    }
+}
 
 mongoose.model('SongData', schema);

@@ -22,13 +22,17 @@ app.config( $stateProvider => {
 	})
 })
 .controller('RoomCtrl', ($scope, room, user, PlaylistFactory) => {
+		var songs = [];
 		$scope.room = room;
 		$scope.user = user;
-		console.log('ROOM', room);
 		PlaylistFactory.setPlaylist(room.playlist._id)
-        $scope.songs = () => room.playlist.songs;
-        $scope.getVoteValue = (song) => {
-            console.log("called me!!!")
-            return room.playlist.songData[song._id];
-        }
+		PlaylistFactory.getRoomPlaylist()
+		.then(newSongs =>{
+			songs = newSongs;
+		})
+        $scope.songs = () => songs;
+        // $scope.getVoteValue = (songObj) => {
+        // 	console.log('GETTING VOTE', songObj)
+        //     return songObj.total;
+        // }
 });
