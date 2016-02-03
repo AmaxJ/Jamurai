@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var UserScore = mongoose.model("UserScore");
 
 var schema = new mongoose.Schema({
     creator: {
@@ -30,9 +31,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist"
     },
-    roomMetadata: {
-        type: mongoose.Schema.Types.Mixed
-    }
+    userScores: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserScore"
+    }]
 });
 
 
@@ -53,6 +55,23 @@ schema.statics.getRoomSongs = function getRoomSongs() {
 schema.method({
     addUser: function(userId) {
         this.users.addToSet(userId);
+        return this.save();
+    },
+    addToScore: function(songData, amount) {
+        // UserScore.findOne({user:})
+        // if (!this.userScores[userId]) {
+        //     this.userScores[userId] = 0;
+        // }
+        // this.userScores[userId] += amount;
+        // this.markModified('userScores');
+        // return this.save();
+    },
+    subtractFromScore: function(userId, amount) {
+        if (!this.userScores[userId]) {
+            this.userScores[userId] = 0;
+        }
+        this.userScores[userId] -= amount;
+        this.markModified('userScores');
         return this.save();
     }
 });

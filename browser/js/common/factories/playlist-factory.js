@@ -48,7 +48,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     //Adding new songs to room playlist
-    factory.addSong = function(song) {
+    factory.addSong = function(song, user) {
         return _findSongAndReturn(song)
             .then(function(songFromDb) {
                 if (!songFromDb) {
@@ -58,7 +58,8 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             })
             .then(function(song) {
                 return $http.put('/api/playlists/' + playlist._id, {
-                    song: song
+                    song: song,
+                    user: user._id
                 });
             })
             .then(null, console.error.bind(console));
