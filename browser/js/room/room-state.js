@@ -4,29 +4,22 @@ app.config( $stateProvider => {
 		templateUrl: '/js/room/room-template.html',
 		controller: 'RoomCtrl',
 		resolve: {
-			room(RoomFactory, $stateParams) {
+			room(RoomFactory, $stateParams, PlaylistFactory) {
 				return RoomFactory.getRoomById( $stateParams.roomId )
-						.then(room => room);
+						.then(room => {
+							PlaylistFactory.setPlaylist(room.playlist);
+							return room;
+						});
 			},
 			user(AuthService) {
 				return AuthService.getLoggedInUser()
 						.then(user => user);
 			}
-			// updatedRoom(RoomFactory, $stateParams, user) {
-			// 	return RoomFactory.addUserToRoom(user._id, $stateParams.roomId)
-			// 			.then((room) => {
-			// 				console.log('asdfadsf', room)
-			// 			});
-			// }
 		}
 	})
 })
-.controller('RoomCtrl', ($scope, room, user) => {
+.controller('RoomCtrl', ($scope, room, user, PlaylistFactory) => {
+		$scope.playlist = PlaylistFactory.getPlaylist();
 		$scope.room = room;
 		$scope.user = user;
-        $scope.songs = () => room.playlist.songs;
-        $scope.getVoteValue = (song) => {
-            console.log("called me!!!")
-            return room.playlist.songData[song._id];
-        }
 });

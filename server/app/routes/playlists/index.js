@@ -7,7 +7,14 @@ module.exports = router;
 router.route('/')
     .get((req, res, next) => {
         Playlist.find({})
-            .populate('songs')
+            .populate({
+                path: 'songs',
+                model: 'SongData',
+                populate: {
+                    path: 'song',
+                    model: 'Song'
+                }
+            })
             .exec()
             .then(playlist => {
                 res.json(playlist);
@@ -25,7 +32,14 @@ router.route('/')
 router.route('/:playlistId')
     .get((req, res, next) => {
         Playlist.findById(req.params.playlistId)
-            .populate('songs')
+            .populate({
+                path: 'songs',
+                model: 'SongData',
+                populate: {
+                    path: 'song',
+                    model: 'Song'
+                }
+            })
             .exec()
             .then(playlist => {
                 res.status(200).json(playlist);
@@ -58,6 +72,7 @@ router.route('/:playlistId/score')
 router.route('/:playlistId/songData')
     .get((req, res, next) => {
         SongData.find({playlist: req.params.playlistId})
+            .populate('song')
             .then(songDataObjs => {
                 res.json(songDataObjs);
             })
