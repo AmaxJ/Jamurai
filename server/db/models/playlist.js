@@ -28,11 +28,19 @@ schema.method({
                 songDataObj.total = total;
                 return songDataObj.save();
             });
-        // if (!(songId in this.songData)) return;
-        // this.songData[songId] = total;
-        // this.markModified('songData');
-        // return this.save();
     }
 });
+
+// schema.post('init', function(doc) {
+//     var songDataObjs = [];
+//     doc.songs.forEach(function(song) {
+//         songDataObjs.push({
+//             song: song,
+//             playlist: doc._id
+//         });
+//     })
+//     console.log("SONGDATA", songDataObjs);
+//     SongData.create(songDataObjs);
+// });
 
 mongoose.model('Playlist', schema);
