@@ -175,6 +175,7 @@ connectToDb.then(function() {
             return Playlist.create({
                 songs: songIds
             });
+
         })
         .then(function(playlist) {
             return seedRooms(userIds, playlist);

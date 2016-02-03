@@ -1,6 +1,7 @@
 'use strict';
 let router = require('express').Router();
 let Playlist = require('mongoose').model('Playlist');
+let SongData = require('mongoose').model('SongData');
 module.exports = router;
 
 router.route('/')
@@ -50,6 +51,15 @@ router.route('/:playlistId/score')
             })
             .then( playlist => {
                 res.status(204).json(playlist);
+            })
+            .then(null, next);
+    });
+
+router.route('/:playlistId/songData')
+    .get((req, res, next) => {
+        SongData.find({playlist: req.params.playlistId})
+            .then(songDataObjs => {
+                res.json(songDataObjs);
             })
             .then(null, next);
     });
