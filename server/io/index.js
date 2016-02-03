@@ -14,6 +14,7 @@ module.exports = function (server) {
         // Now have access to socket, wowzers!
         console.log('Someone connected!!!');
         socket.on('vote', function(payload){
+            console.log('Hitting this socket')
             var song = payload.song;
             var user = payload.user;
             var vote = payload.vote;

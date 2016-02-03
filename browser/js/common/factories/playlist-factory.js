@@ -73,7 +73,9 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     factory.vote = function($event, song, vote, user, room) {
         console.log('Vote user', user)
         console.log('Vote room', room)
-        $event.stopPropagation();
+        console.log('Vote song', song)
+        console.log('Vote vote', vote)
+        // $event.stopPropagation();
         // if (vote === 'up') {
         //     song.voteValue++;
         // } else song.voteValue--;
