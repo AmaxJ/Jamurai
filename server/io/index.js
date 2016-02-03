@@ -27,7 +27,13 @@ module.exports = function (server) {
             console.log('PAYLOAD',payload)
             SongData.findOne({playlist: playlist._id, song: song._id})
             .then(function(songData){
-                console.log('SONGDATA FROM SOCKET', songData)
+                return songData.vote(user._id, vote)
+            })
+            .then(function(songData){
+                console.log('Update song data', songData);
+            })
+            .then(null, function(err){
+                console.log('Something went wrong with songData', err);
             })
         	io.emit('updateVotes', song);
 

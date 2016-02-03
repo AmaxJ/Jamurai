@@ -13,7 +13,7 @@
             <td>{{song.title}}</td>
             <td>
                 <button class="btn btn-sm btn-success" ng-click="vote($event, song, 'up', user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                <button class="btn btn-sm btn-danger" ng-click="vote($event, song, 'down')"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                <button class="btn btn-sm btn-danger" ng-click="vote($event, song, 'down',user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
             </td>
             <td>{{getVoteValue(song)}}</td>
         </tr>
