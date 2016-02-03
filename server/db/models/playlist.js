@@ -42,6 +42,5 @@ schema.method({
 //     console.log("SONGDATA", songDataObjs);
 //     SongData.create(songDataObjs);
 // });
->>>>>>> master
 
 mongoose.model('Playlist', schema);
