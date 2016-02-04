@@ -15,11 +15,25 @@ app.config( $stateProvider => {
 				return AuthService.getLoggedInUser()
 						.then(user => user);
 			}
+		},
+		onExit: function (user, room, RoomFactory) {
+			RoomFactory.removeUserEmit(room._id, user._id);
 		}
 	})
 })
-.controller('RoomCtrl', ($scope, room, user, PlaylistFactory) => {
-		$scope.playlist = PlaylistFactory.getPlaylist();
+.controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory) => {
+
+		var socket = SocketFactory.getSocket();
+		
+		socket.on('updateUsers', function(room) {
+		        $scope.room = room;
+		        $scope.$digest();
+		    })
+
 		$scope.room = room;
 		$scope.user = user;
+		$scope.playlist = PlaylistFactory.getPlaylist();
+
+		RoomFactory.addUserEmit(room._id, user._id);
+
 });

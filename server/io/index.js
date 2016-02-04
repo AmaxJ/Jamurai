@@ -2,7 +2,9 @@
 var socketio = require('socket.io');
 var io = null;
 var Song = require('mongoose').model('Song');
+var Room = require('mongoose').model('Room');
 var SongData = require('mongoose').model('SongData');
+
 
 module.exports = function (server) {
 
@@ -34,6 +36,30 @@ module.exports = function (server) {
                 console.log('Something went wrong with songData', err);
             })
 
+        })
+        socket.on('userLeft', function(data) {
+            let roomId = data.roomId;
+            let userId = data.userId;
+
+            Room.findById(roomId)
+            .then((room) => {
+                return room.removeUser(userId);
+            })
+            .then((room) => {
+                io.emit('updateUsers', room);
+            })
+        })
+        socket.on('userEntered', function(data) {
+            let roomId = data.roomId;
+            let userId = data.userId;
+
+            Room.findById(roomId)
+            .then((room) => {
+                return room.addUser(userId);
+            })
+            .then((room) => {
+                io.emit('updateUsers', room)
+            })
         })
     });
     
