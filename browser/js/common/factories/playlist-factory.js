@@ -67,9 +67,11 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     //Sorts playlist by vote value
     factory.sort = function() {
-        playlist.songs.sort(function(a, b) {
-            return b.total - a.total;
-        });
+        if (playlist) {
+                playlist.songs.sort(function(a, b) {
+                return b.total - a.total;
+            });
+        }
     };
 
     factory.vote = function($event, song, vote, user, room) {
@@ -90,7 +92,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
                 return o.song.title === updatedObj.updatedSong.song.title;
             })
         var updateIndex = playlist.songs.indexOf(songToUpdate)
-        playlist.songs[updateIndex] = updatedObj.updatedSong.song;
+        playlist.songs[updateIndex] = updatedObj.updatedSong;
         factory.sort();
         $rootScope.$digest();
     })

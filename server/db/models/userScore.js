@@ -16,7 +16,21 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.method({});
+// schema.statics.createAndAddToRoom = function(userId, roomId) {
+//     var userScoreId;
+//     this.create({
+//         user : userId,
+//         room : roomId
+//     })
+//     .then(function(userScoreObj) {
+//         userScoreId = userScoreObj._id
+//         return Room.findById(roomId);
+//     })
+//     .then(function(room) {
+//         room.userScores.addToSet(userScoreId);
+//         return room.save();
+//     });
+// };
 
 
 mongoose.model('UserScore', schema);

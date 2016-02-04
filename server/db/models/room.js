@@ -37,6 +37,23 @@ var schema = new mongoose.Schema({
     }]
 });
 
+schema.statics.createScoreObj = function(roomId, userId) {
+    var savedRoom;
+    this.findById(roomId)
+        .then(function(room) {
+            savedRoom = room;
+            return UserScore.create({
+                user: userId,
+                room: roomId
+            });
+        })
+        .then(function(scoreObj) {
+            savedRoom.userScores.addToSet(scoreObj._id);
+            return savedRoom.save();
+        })
+
+
+};
 
 schema.statics.getRoomUsers = function getRoomUsers() {
     return this.find()
@@ -53,27 +70,42 @@ schema.statics.getRoomSongs = function getRoomSongs() {
 };
 
 schema.method({
-    addUser: function(userId) {
-        this.users.addToSet(userId);
-        return this.save();
-    },
     addToScore: function(songData, amount) {
         var self = this;
-        console.log("SongDATA: ", songData);
-        console.log("SELF", self);
         return UserScore.findOne({
-            user: songData.submittedBy,
-            room: self._id
-        })
-        .then(function(userScoreObj) {
-            console.log("userScore", userScoreObj);
-            userScoreObj.score += amount;
-            return userScoreObj.save();
-        })
-        .then(function(scoreObj) {
-            return self;
-        });
+                user: songData.submittedBy,
+                room: self._id
+            })
+            .then(function(userScoreObj) {
+                userScoreObj.score += amount;
+                return userScoreObj.save();
+            })
+            .then(function(scoreObj) {
+                return self.constructor.findById(self._id)
+                    .populate('users')
+                    .populate({
+                        path: 'userScores',
+                        model: 'UserScore',
+                        populate: {
+                            path: "user",
+                            model: "User"
+                        }
+                    })
+                    .populate({
+                        path: 'playlist',
+                        model: 'Playlist',
+                        populate: {
+                            path: 'songs',
+                            model: 'SongData',
+                            populate: {
+                                path: 'song',
+                                model: 'Song'
+                            }
+                        }
+                    })
+            })
     },
+
     subtractFromScore: function(userId, amount) {
         if (!this.userScores[userId]) {
             this.userScores[userId] = 0;
@@ -81,6 +113,63 @@ schema.method({
         this.userScores[userId] -= amount;
         this.markModified('userScores');
         return this.save();
+    },
+    /* when a user is added, we check the userScore objects
+    array on the room document. If there is already a
+     userScore object for the user with that ID, we do
+     nothing, otherwise create a new object*/
+    addUser: function(userId) {
+        let self = this;
+        this.users.addToSet(userId);
+        return this.save()
+            .then((room) => {
+                return this.constructor.findById(this._id)
+                    .populate('users')
+                    .populate('userScores');
+            })
+            .then(room => {
+                //returns userscore obj if it exists
+                let userScoreObj = room.userScores.filter(scoreObj => {
+                    return scoreObj.user.toString() === userId.toString();
+                })[0];
+                if (!userScoreObj) {
+                    return self.constructor.createScoreObj(self._id, userId);
+                } else {
+                    return "Already have a score Obj"
+                }
+            })
+            .then(function(scoreObj) {
+                return self.constructor.findById(self._id)
+                    .populate('users')
+                    .populate('userScores')
+                    .populate({
+                        path: 'userScores',
+                        model: 'UserScore',
+                        populate: {
+                            path: "user",
+                            model: "User"
+                        }
+                    })
+                    .populate({
+                        path: 'playlist',
+                        model: 'Playlist',
+                        populate: {
+                            path: 'songs',
+                            model: 'SongData',
+                            populate: {
+                                path: 'song',
+                                model: 'Song'
+                            }
+                        }
+                    })
+            })
+    },
+    removeUser: function(userId) {
+        this.users.pull(userId);
+        return this.save()
+            .then((room) => {
+                return this.constructor.findById(this._id).populate('users');
+            });
     }
 });
 

@@ -6,10 +6,18 @@ module.exports = router;
 
 router.route('/')
 
-    .get((req, res, next) => {
+.get((req, res, next) => {
         Room.find({})
             .populate('users')
             .populate('creator')
+            .populate({
+                path: 'userScores',
+                model: 'UserScore',
+                populate: {
+                    path: "user",
+                    model: "User"
+                }
+            })
             .populate({
                 path: 'playlist',
                 model: 'Playlist',
@@ -40,19 +48,6 @@ router.route('/')
             .then(null, next);
     })
 
-router.route('/addUser/:roomId')
-    .put((req, res, next) => {
-        Room.findById(req.params.roomId)
-        .then((room) => {
-            console.log('body', req.body);
-            return room.addUser(req.body.userId)
-        })
-        .then((room) => {
-            console.log(room);
-            res.status(204).json(room)
-        })
-        .then(null, next)
-    })
 
 router.route('/:roomId')
     .get((req, res, next) => {
@@ -60,6 +55,14 @@ router.route('/:roomId')
             .populate('songs')
             .populate('users')
             .populate('creator')
+            .populate({
+                path: 'userScores',
+                model: 'UserScore',
+                populate: {
+                    path: "user",
+                    model: "User"
+                }
+            })
             .populate({
                 path: 'playlist',
                 model: 'Playlist',
@@ -87,11 +90,36 @@ router.route('/:roomId')
             .then(null, next);
     })
 
-    .delete((req, res, next) => {
-        Room.findByIdAndRemove(req.params.roomId)
-            .exec()
-            .then(room => {
-                res.status(204).end();
+.delete((req, res, next) => {
+    Room.findByIdAndRemove(req.params.roomId)
+        .exec()
+        .then(room => {
+            res.status(204).end();
+        })
+        .then(null, next);
+});
+
+
+router.route('/addUser/:roomId')
+    .put((req, res, next) => {
+        Room.findById(req.params.roomId)
+            .then((room) => {
+                return room.addUser(req.body.userId)
             })
-            .then(null, next);
-    });
+            .then((room) => {
+                res.status(204).json(room)
+            })
+            .then(null, next)
+    })
+
+router.route('/removeUser/:roomId')
+    .put((req, res, next) => {
+        Room.findById(req.params.roomId)
+            .then((room) => {
+                return room.removeUser(req.body.userId)
+            })
+            .then((room) => {
+                res.status(204).json(room)
+            })
+            .then(null, next)
+    })

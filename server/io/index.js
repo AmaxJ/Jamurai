@@ -31,26 +31,50 @@ module.exports = function(server) {
                 .then(function(songData) {
                     return SongData.findById(songData._id)
                         .populate('song')
+
                 })
                 .then(function(songDataObj) {
-                    console.log("SOCKET SONGDATAOBJ:", songDataObj);
                     savedSongData = songDataObj;
                     return Room.findById(room._id)
                 })
                 .then(function(room) {
-                    //TODO figure out amount to increment by
                     return room.addToScore(savedSongData, 1);
                 })
                 .then(room => {
+                    console.log("SAVEDSONGDATA", savedSongData);
                     io.emit('updateVotes', {
-                        updatedSong : savedSongData,
-                        updatedRoom : room
+                        updatedSong: savedSongData,
+                        updatedRoom: room
                     });
                 })
                 .then(null, function(err) {
                     console.log('Something went wrong with songData', err);
                 })
 
+        })
+        socket.on('userLeft', function(data) {
+            let roomId = data.roomId;
+            let userId = data.userId;
+
+            Room.findById(roomId)
+                .then((room) => {
+                    return room.removeUser(userId);
+                })
+                .then((room) => {
+                    io.emit('updateUsers', room);
+                })
+        })
+        socket.on('userEntered', function(data) {
+            let roomId = data.roomId;
+            let userId = data.userId;
+
+            Room.findById(roomId)
+                .then((room) => {
+                    return room.addUser(userId);
+                })
+                .then((room) => {
+                    io.emit('updateUsers', room);
+                })
         })
     });
 
