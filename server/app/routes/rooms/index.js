@@ -6,10 +6,18 @@ module.exports = router;
 
 router.route('/')
 
-    .get((req, res, next) => {
+.get((req, res, next) => {
         Room.find({})
             .populate('users')
             .populate('creator')
+            .populate({
+                path: 'userScores',
+                model: 'UserScore',
+                populate: {
+                    path: "user",
+                    model: "User"
+                }
+            })
             .populate({
                 path: 'playlist',
                 model: 'Playlist',
@@ -48,6 +56,14 @@ router.route('/:roomId')
             .populate('users')
             .populate('creator')
             .populate({
+                path: 'userScores',
+                model: 'UserScore',
+                populate: {
+                    path: "user",
+                    model: "User"
+                }
+            })
+            .populate({
                 path: 'playlist',
                 model: 'Playlist',
                 populate: {
@@ -74,36 +90,36 @@ router.route('/:roomId')
             .then(null, next);
     })
 
-    .delete((req, res, next) => {
-        Room.findByIdAndRemove(req.params.roomId)
-            .exec()
-            .then(room => {
-                res.status(204).end();
-            })
-            .then(null, next);
-    });
+.delete((req, res, next) => {
+    Room.findByIdAndRemove(req.params.roomId)
+        .exec()
+        .then(room => {
+            res.status(204).end();
+        })
+        .then(null, next);
+});
 
 
 router.route('/addUser/:roomId')
     .put((req, res, next) => {
         Room.findById(req.params.roomId)
-        .then((room) => {
-            return room.addUser(req.body.userId)
-        })
-        .then((room) => {
-            res.status(204).json(room)
-        })
-        .then(null, next)
+            .then((room) => {
+                return room.addUser(req.body.userId)
+            })
+            .then((room) => {
+                res.status(204).json(room)
+            })
+            .then(null, next)
     })
 
 router.route('/removeUser/:roomId')
     .put((req, res, next) => {
         Room.findById(req.params.roomId)
-        .then((room) => {
-            return room.removeUser(req.body.userId)
-        })
-        .then((room) => {
-            res.status(204).json(room)
-        })
-        .then(null, next)
+            .then((room) => {
+                return room.removeUser(req.body.userId)
+            })
+            .then((room) => {
+                res.status(204).json(room)
+            })
+            .then(null, next)
     })

@@ -28,6 +28,11 @@ var schema = new mongoose.Schema({
     total : {
         type: Number,
         default: 0
+    },
+
+    submittedBy : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 
 });
@@ -69,7 +74,7 @@ function cleanVotes(userId, vote, doc) {
         if (index > -1) doc.downVotes.splice(index, 1)
     } else {
         index = doc.upVotes.indexOf(userId);
-        if (index > -1) doc.upVotes.splice(index, 1)        
+        if (index > -1) doc.upVotes.splice(index, 1)
     }
 }
 
