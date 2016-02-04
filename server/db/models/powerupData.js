@@ -7,7 +7,8 @@ var schema = new mongoose.Schema({
         ref: "User"
     },
     powerups: {
-        type: [String]
+        type: [String],
+        default: []
     },
     room : {
         type: mongoose.Schema.Types.ObjectId,

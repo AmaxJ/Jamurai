@@ -3,9 +3,9 @@
 // anywhere the User model needs to be used.
 require('./songData');
 require('./userScore');
+require('./powerupData');
 require('./user');
 require('./song');
 require('./room');
 require('./playlist');
-require('./powerupData');
 

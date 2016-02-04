@@ -1,6 +1,7 @@
 app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     var factory = {};
     var playlist;
+    var currentSong;
     var socket = SocketFactory.getSocket();
 
     //Called when new room is created
@@ -85,6 +86,14 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     factory.getPlaylist = function() {
         return playlist;
+    };
+
+    factory.setCurrentSong = function(newSong) {
+        currentSong = newSong;
+    };
+
+    factory.getCurrentSong = function() {
+        return currentSong;
     };
 
     socket.on('updateVotes', function(updatedObj) {

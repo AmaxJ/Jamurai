@@ -1,4 +1,4 @@
-app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory) {
+app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, SocketFactory) {
     return {
         restrict: "E",
 
@@ -13,12 +13,19 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory) 
         link: function(scope, element) {
 
             var youtubePlayer = PlayerFactory.getPlayer();
-
+            var socket = SocketFactory.getSocket();
             //Loads player and attaches to DOM
             function stateChange(event) { 
               if(event.data === 0) {
                 var currentSong = PlaylistFactory.getCurrentSong();
                 PlayerFactory.playNextSong(currentSong);
+              };
+              if(event.data === 1){
+                var currentSong = PlaylistFactory.getCurrentSong();
+                console.log('CURRENT SONG', currentSong);
+                var userToPowerUp = currentSong.submittedBy;
+                socket.emit('addPowerUp', {user: userToPowerUp, playlist: currentSong.playlist});
+
               }
             }
 

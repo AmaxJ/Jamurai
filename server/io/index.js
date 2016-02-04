@@ -4,6 +4,7 @@ var io = null;
 var Song = require('mongoose').model('Song');
 var Room = require('mongoose').model('Room');
 var SongData = require('mongoose').model('SongData');
+var PowerupData = require('mongoose').model('PowerupData');
 
 module.exports = function(server) {
 
@@ -15,6 +16,7 @@ module.exports = function(server) {
         //TODO when a user joins a CREATE A USERSCORE OBJ!
         // Now have access to socket, wowzers!
         console.log('Someone connected!!!');
+        //Vote functions
         socket.on('vote', function(payload) {
             var song = payload.song;
             var user = payload.user;
@@ -53,6 +55,7 @@ module.exports = function(server) {
                 })
 
         })
+        //User leaves room
         socket.on('userLeft', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
@@ -65,6 +68,7 @@ module.exports = function(server) {
                     io.emit('updateUsers', room);
                 })
         })
+        //User enters room
         socket.on('userEntered', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
@@ -76,6 +80,19 @@ module.exports = function(server) {
                 .then((room) => {
                     io.emit('updateUsers', room);
                 })
+        })
+        //Adding powerups
+        socket.on('addPowerUp', function(payload){
+            var playlist = payload.playlist;
+            console.log('POWERUP PAYLOAD', payload);
+            Room.findOne({playlist: playlist})
+            .then(function(room){
+                return PowerupData.findOne({room: room._id})
+            })
+            .then(function(powerupData){
+                console.log('POWER UP DATA', powerupData)
+                powerupData.addPowerup();
+            })
         })
     });
 

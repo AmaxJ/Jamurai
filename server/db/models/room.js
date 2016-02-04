@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var UserScore = mongoose.model("UserScore");
+var PowerupData = mongoose.model("PowerupData");
 
 var schema = new mongoose.Schema({
     creator: {
@@ -129,7 +130,10 @@ schema.method({
                     return "Already have a score Obj"
                 }
             })
-            .then(function(scoreObj) {
+            .then(function(scoreObj){
+                return self.addPowerupData(userId);
+            })
+            .then(function(powerUp) {
                 return self.constructor.findById(self._id)
                     .populate('users')
                     .populate('userScores')
@@ -161,6 +165,9 @@ schema.method({
             .then((room) => {
                 return this.constructor.findById(this._id).populate('users');
             });
+    },
+    addPowerupData: function(userId) {
+        return PowerupData.create({user: userId, room: this._id})
     }
 });
 
