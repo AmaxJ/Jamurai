@@ -105,15 +105,6 @@ schema.method({
                     })
             })
     },
-
-    subtractFromScore: function(userId, amount) {
-        if (!this.userScores[userId]) {
-            this.userScores[userId] = 0;
-        }
-        this.userScores[userId] -= amount;
-        this.markModified('userScores');
-        return this.save();
-    },
     /* when a user is added, we check the userScore objects
     array on the room document. If there is already a
      userScore object for the user with that ID, we do

@@ -38,7 +38,8 @@ module.exports = function(server) {
                     return Room.findById(room._id)
                 })
                 .then(function(room) {
-                    return room.addToScore(savedSongData, 1);
+                    var amount = vote === 'up' ? 1 : -1;
+                    return room.addToScore(savedSongData, amount);
                 })
                 .then(room => {
                     console.log("SAVEDSONGDATA", savedSongData);
