@@ -48,7 +48,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     //Adding new songs to room playlist
-    factory.addSong = function(song) {
+    factory.addSong = function(song, user) {
         return _findSongAndReturn(song)
             .then(function(songFromDb) {
                 if (!songFromDb) {
@@ -58,7 +58,8 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             })
             .then(function(song) {
                 return $http.put('/api/playlists/' + playlist._id, {
-                    song: song
+                    song: song,
+                    user: user._id
                 });
             })
             .then(null, console.error.bind(console));
@@ -66,9 +67,11 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     //Sorts playlist by vote value
     factory.sort = function() {
-        playlist.songs.sort(function(a, b) {
-            return b.total - a.total;
-        });
+        if (playlist) {
+                playlist.songs.sort(function(a, b) {
+                return b.total - a.total;
+            });
+        }
     };
 
     factory.vote = function($event, song, vote, user, room) {
@@ -84,13 +87,12 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         return playlist;
     };
 
-
-    socket.on('updateVotes', function(songObj) {
+    socket.on('updateVotes', function(updatedObj) {
         var songToUpdate = _.find(playlist.songs, function(o) {
-                return o.song.title === songObj.song.title;
+                return o.song.title === updatedObj.updatedSong.song.title;
             })
         var updateIndex = playlist.songs.indexOf(songToUpdate)
-        playlist.songs[updateIndex] = songObj;
+        playlist.songs[updateIndex] = updatedObj.updatedSong;
         factory.sort();
         $rootScope.$digest();
     })
