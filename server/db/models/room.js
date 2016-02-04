@@ -58,13 +58,21 @@ schema.method({
         return this.save();
     },
     addToScore: function(songData, amount) {
-        // UserScore.findOne({user:})
-        // if (!this.userScores[userId]) {
-        //     this.userScores[userId] = 0;
-        // }
-        // this.userScores[userId] += amount;
-        // this.markModified('userScores');
-        // return this.save();
+        var self = this;
+        console.log("SongDATA: ", songData);
+        console.log("SELF", self);
+        return UserScore.findOne({
+            user: songData.submittedBy,
+            room: self._id
+        })
+        .then(function(userScoreObj) {
+            console.log("userScore", userScoreObj);
+            userScoreObj.score += amount;
+            return userScoreObj.save();
+        })
+        .then(function(scoreObj) {
+            return self;
+        });
     },
     subtractFromScore: function(userId, amount) {
         if (!this.userScores[userId]) {

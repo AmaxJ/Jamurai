@@ -13,4 +13,11 @@
         <h4>Users in this room right now:</h4>
         <p ng-repeat='user in room.users'>{{user.username}}</p>
     </div>
+    <div>
+        <ul>
+            <li ng-repeat="score in room.userScores">
+                {{user.username}}
+            </li>
+        </ul>
+    </div>
 </div>

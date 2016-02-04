@@ -85,13 +85,12 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         return playlist;
     };
 
-
-    socket.on('updateVotes', function(songObj) {
+    socket.on('updateVotes', function(updatedObj) {
         var songToUpdate = _.find(playlist.songs, function(o) {
-                return o.song.title === songObj.song.title;
+                return o.song.title === updatedObj.updatedSong.song.title;
             })
         var updateIndex = playlist.songs.indexOf(songToUpdate)
-        playlist.songs[updateIndex] = songObj;
+        playlist.songs[updateIndex] = updatedObj.updatedSong.song;
         factory.sort();
         $rootScope.$digest();
     })
