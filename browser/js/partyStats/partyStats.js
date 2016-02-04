@@ -15,7 +15,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 	$scope.rooms = rooms;
 	console.log('rooms',$scope.rooms);
 
-	$scope.config = {
+	var config1 = {
     	title: 'Song Popularity by Party',
     	tooltips: true,
     	labels: false,
@@ -24,15 +24,36 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
     	click: function() {},
     	legend: {
       		display: true,
-      		//could be 'left, right'
       		position: 'right'
 		}
-    };
-	$scope.data = {
-		series: ['parties requested in'],
-		data:[]
 	}
+
+	var config2 = {
+		title: 'Overall Song Popularity',
+		tooltips: true,
+		labels: false,
+		mouseover: function(){},
+		mouseout: function(){},
+		click: function(){},
+		legend: {
+			display: true,
+			position: 'right'
+		}
+	}
+
+	var data1 = {
+		series: ['parties requested in'],
+		data: []
+	}
+
+	var data2 = {
+		series: ['overall number of requests'],
+		data: []
+	}
+
+
 	var masterSongList = [];
+	var overallMasterVzn = [];
 	for(var x=0; x<$scope.rooms.length; x++)
 	{
 		var nonRepeatingPlaylist = [];
@@ -44,7 +65,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 			{
 				thisSong = thisSong.substring(0,25);
 			}
-			console.log('song',$scope.rooms[x].playlist.songs[y].song.title);
 			var idx = nonRepeatingPlaylist.indexOf(thisSong);
 			if(idx === -1)
 			{
@@ -63,6 +83,20 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 				{
 					masterSongList.push([thisSong,1]);
 				}
+				var foundInMasterVzn = false;
+				for(var j=0; j<overallMasterVzn.length; j++)
+				{
+					if(overallMasterVzn[j][0]===thisSong)
+					{
+						overallMasterVzn[j][1]++;
+						foundInMasterVzn = true;
+						break;
+					}
+				}
+				if(!foundInMasterVzn)
+				{
+					overallMasterVzn.push([thisSong,1]);
+				}
 			}
 		}
 	}
@@ -80,16 +114,59 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 			}
 		}
 	}
+	for(var u=0; u<overallMasterVzn.length; u++)
+	{
+		var thisSongPopularity = overallMasterVzn[u][1];
+		for(var v=u+1; v<overallMasterVzn.length; v++)
+		{
+			var otherSongPopularity = overallMasterVzn[v][1];
+			if(otherSongPopularity>thisSongPopularity)
+			{
+				var temp = overallMasterVzn[u];
+				overallMasterVzn[u] = overallMasterVzn[v];
+				overallMasterVzn[v] = temp;
+			}
+		}
+	}
 	if(masterSongList.length > 10)
 	{
 		masterSongList = masterSongList.slice(0,10);
 	}
-	for(var u=0; u<masterSongList.length; u++)
+	if(overallMasterVzn.length > 10)
+	{
+		overallMasterVzn = overallMasterVzn.slice(0,10);
+	}
+
+	for(var g=0; g<masterSongList.length; g++)
 	{
 		var obj = {};
-		obj.x = masterSongList[u][0];
-		obj.y = [masterSongList[u][1]];
-		$scope.data.data.push(obj);
+		obj.x = masterSongList[g][0];
+		obj.y = [masterSongList[g][1]];
+		data1.data.push(obj);
 	}
-	console.log($scope.data)
+
+	for(var h=0; h<overallMasterVzn.length; h++)
+	{
+		var obj = {};
+		obj.x = overallMasterVzn[h][0];
+		obj.y = [overallMasterVzn[h][1]];
+		data2.data.push(obj);
+	}
+
+	$scope.getOverallPopularity = function() {
+		$scope.data = data2;
+		$scope.config = config2;
+		$scope.overall = true;
+		$scope.singular = false;
+	}
+
+	$scope.getSingularPopularity = function() {
+		$scope.data = data1;
+		$scope.config = config1;
+		$scope.singular = true;
+		$scope.overall = false;
+	}
+
+	$scope.getSingularPopularity();
+
 })
