@@ -10,9 +10,13 @@ var schema = new mongoose.Schema({
 });
 
 schema.method({
-    addSong: function(songId) {
+    addSong: function(songId, userId) {
         var self = this;
-        SongData.create({playlist: self._id, song: songId})
+        SongData.create({
+            playlist: self._id,
+            song: songId,
+            submittedBy : userId
+        })
         .then(songDataObj => {
             self.songs.addToSet(songDataObj._id);
             return self.save();
