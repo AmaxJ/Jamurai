@@ -35,6 +35,10 @@ var schema = new mongoose.Schema({
     userScores: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserScore"
+    }],
+    powerUps: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PowerupData" 
     }]
 });
 

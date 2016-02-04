@@ -22,6 +22,11 @@ schema.method({
         var randomPowerUp = powerUps[Math.floor(Math.random()*powerUps.length)];
         this.powerups.push(randomPowerUp);
         return this.save();
+    },
+    usePowerup: function(powerUp) {
+        var powerIndex = this.powerups.indexOf(powerUp);
+        this.powerups.splice(powerIndex, 1);
+        return this.save();
     }
 });
 

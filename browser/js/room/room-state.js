@@ -22,9 +22,17 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory) => {
+    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory) => {
 
         var socket = SocketFactory.getSocket();
+        $scope.room = room;
+        $scope.user = user;
+
+        $scope.powerups; 
+        UserFactory.getPowerUps(user._id, room._id)
+        .then(powerups => {
+            $scope.powerups = powerups;
+        })
 
         socket.on('updateUsers', function(room) {
             $scope.room = room;
@@ -36,8 +44,6 @@ app.config($stateProvider => {
             $scope.$digest();
         })
 
-        $scope.room = room;
-        $scope.user = user;
         $scope.playlist = PlaylistFactory.getPlaylist();
 
         RoomFactory.addUserEmit(room._id, user._id);

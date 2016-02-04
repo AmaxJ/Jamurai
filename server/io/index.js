@@ -81,18 +81,20 @@ module.exports = function(server) {
                     io.emit('updateUsers', room);
                 })
         })
-        //Adding powerups
+        //Add a powerup
         socket.on('addPowerUp', function(payload){
             var playlist = payload.playlist;
-            console.log('POWERUP PAYLOAD', payload);
             Room.findOne({playlist: playlist})
             .then(function(room){
                 return PowerupData.findOne({room: room._id})
             })
             .then(function(powerupData){
-                console.log('POWER UP DATA', powerupData)
                 powerupData.addPowerup();
             })
+        })
+        //Use a powerup
+        socket.on('usePowerUp', function(){
+            
         })
     });
 
