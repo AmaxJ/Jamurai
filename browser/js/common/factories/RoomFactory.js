@@ -44,4 +44,4 @@ app.factory('RoomFactory', function($http, PlaylistFactory) {
     }
 
     return factory;
-})
+});

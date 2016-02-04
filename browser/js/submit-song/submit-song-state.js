@@ -3,4 +3,4 @@ app.config(function($stateProvider) {
         url: '/submit-song',
         templateUrl: 'js/submit-song/submit-song-template.html'
     });
-})
+});

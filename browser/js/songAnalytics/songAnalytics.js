@@ -22,4 +22,4 @@ app.controller('songAnalyticsCtrl', ($scope, PlaylistFactory) => {
 		}
 	})
 
-})
+});
