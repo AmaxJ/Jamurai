@@ -89,12 +89,24 @@ module.exports = function(server) {
                 return PowerupData.findOne({room: room._id})
             })
             .then(function(powerupData){
-                powerupData.addPowerup();
+                return powerupData.addPowerup();
+            })
+            .then((updatedPowerups)=> {
+                io.emit('updatePowerups', updatedPowerups)
             })
         })
         //Use a powerup
-        socket.on('usePowerUp', function(){
-            
+        socket.on('usePowerUp', function(payload){
+            var powerup = payload.powerup;
+            var user = payload.user;
+            var room = payload.room;
+            PowerupData.findOne({room: room._id, user: user._id})
+            .then((powerupData)=> {
+                return powerupData.usePowerup(powerup);
+            })
+            .then((updatedPowerups)=> {
+                io.emit('updatePowerups', updatedPowerups)
+            })
         })
     });
 

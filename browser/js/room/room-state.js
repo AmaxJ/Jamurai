@@ -28,11 +28,16 @@ app.config($stateProvider => {
         $scope.room = room;
         $scope.user = user;
 
-        $scope.powerups; 
+        $scope.powerupObj; 
         UserFactory.getPowerUps(user._id, room._id)
         .then(powerups => {
-            $scope.powerups = powerups;
+            $scope.powerupObj = powerups;
         })
+
+        $scope.usePowerUp = (powerup,user,room) => {
+            console.log('Ready to emit powerup', powerup)
+            socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
+        }
 
         socket.on('updateUsers', function(room) {
             $scope.room = room;
@@ -41,6 +46,11 @@ app.config($stateProvider => {
 
         socket.on('updateVotes', function(updateObj) {
             $scope.room = updateObj.updatedRoom;
+            $scope.$digest();
+        })
+
+         socket.on('updatePowerups', function(updatedPowerups) {
+            $scope.powerupObj = updatedPowerups;
             $scope.$digest();
         })
 
