@@ -49,7 +49,7 @@ module.exports = function (app) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/login' }),
         function (req, res) {
-            res.redirect('/');
+            res.redirect('/lobby');
         });
 
 };

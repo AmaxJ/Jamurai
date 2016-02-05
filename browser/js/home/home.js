@@ -13,4 +13,4 @@ app.controller('HomeCtrl', ($scope, PlayerFactory,PlaylistFactory) => {
     $scope.mute = PlayerFactory.mute;
     $scope.songs = PlaylistFactory.getPlaylist;
 
-})
+});

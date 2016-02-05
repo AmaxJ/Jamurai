@@ -98,4 +98,4 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     })
 
     return factory;
-})
+});

@@ -11,4 +11,4 @@ app.controller('AnalyticsCtrl', ($scope) => {
 		{ label: 'User Analytics', state: 'userAnalytics' },
 		{ label: 'Song Analytics', state: 'songAnalytics'}
 	]
-})
+});
