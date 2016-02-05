@@ -1,0 +1,29 @@
+<div ng-show="getVidState()" class="player-bar">
+    <div class="progress">
+        <!-- ng-style="{width: getProgress()}" -->
+        <div class="progress-bar" id="progress1" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+            <span class="sr-only">70% Complete</span>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-3">
+            <h3>Room Info:</h3>
+            <!--    <div class="player-bar-buttons">
+                <button  ng-click="play()" class="btn btn-default">
+                    <span ng-if="!isPlaying()" class="glyphicon glyphicon-play"></span>
+                </button>
+                  <button ng-click="pause()" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pause"></span>
+                </button>
+            </div> -->
+        </div>
+        <!--  <button ng-click="toggleVid()">Toggle Vid</button> -->
+        <div class="video-embed col-md-6">
+            <youtube-embed height='300' width='500' videoid='I2mK-Ql9r1Y'></youtube-embed>
+        </div>
+        <div class="col-md-3">
+            <h3>Leaderboard:</h3>
+        </div>
+    </div>
+</div>
+<!-- End Player Bar -->
