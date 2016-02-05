@@ -1,12 +1,17 @@
 <navbar></navbar>
 <div class="row" id='room'>
-    <div class="col-md-2">
-            <p ng-repeat='user in room.users'>{{user.username}}</p>
+    <div id="left-sidebar" class="col-sm-2">
+        <div id="leader-profile" ng-repeat="score in room.userScores" class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <img class="img-circle profile-img" ng-src="{{score.user.picture}}" alt="">
+            </div>
+        </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-6">
         <playlist user='user' room='room' playlist="playlist"></playlist>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-4" id="right-sidebar">
+        <youtube-embed></youtube-embed>
     </div>
     <!-- <div class="col-md-12">
         <h1>Welcome to {{room.name}}!</h1>

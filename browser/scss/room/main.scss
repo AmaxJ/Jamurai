@@ -1,4 +1,30 @@
 #room {
-	background: #fff;
-	height: 100%;
+
+    #left-sidebar {
+        // border: 1px solid red;
+
+        .profile-img {
+            width : 95%;
+            border: 1px solid #00ff55;
+            transition: width 0.2s;
+        }
+
+        .profile-img:hover {
+            width: 100%;
+        }
+
+        #leader-profile {
+            margin-top: 10px;
+        }
+    }
+
+    #right-sidebar {
+        #player {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+            height: 60%;
+        }
+    }
+
 }
