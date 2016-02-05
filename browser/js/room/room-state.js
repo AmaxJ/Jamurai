@@ -22,7 +22,7 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory) => {
+    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory) => {
 
         var socket = SocketFactory.getSocket();
         $scope.room = room;
@@ -36,7 +36,8 @@ app.config($stateProvider => {
         })
 
         $scope.usePowerUp = (powerup,user,room) => {
-            console.log('Ready to emit powerup', powerup)
+            console.log('Reay to user powerup', powerup);
+            PowerupFactory.usePowerup(powerup);
             socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
         }
 

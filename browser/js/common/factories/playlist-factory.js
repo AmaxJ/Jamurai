@@ -2,6 +2,8 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     var factory = {};
     var playlist;
     var currentSong;
+    var upvoteAmount = 1;
+    var downvoteAmount = -1;
     var socket = SocketFactory.getSocket();
 
     //Called when new room is created
@@ -78,6 +80,9 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     factory.vote = function($event, song, vote, user, room) {
         $event.stopPropagation();
         SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
+        if(vote > 0) {
+            $rootScope.$emit('upvote');
+        };
     };
 
     factory.setPlaylist = function(newPlaylist) {
@@ -95,6 +100,23 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     factory.getCurrentSong = function() {
         return currentSong;
+    };
+
+    factory.getUpvoteAmount = () => {
+        return upvoteAmount;
+    };
+
+    factory.setUpvoteAmount = (num) => {
+        upvoteAmount = num;
+        console.log('new upvote amount', upvoteAmount);
+    };
+
+    factory.getDownvoteAmount = () => {
+        return downvoteAmount;
+    };
+
+    factory.setDownvoteAmount = (num) => {
+        downvoteAmount = num;
     };
 
     socket.on('updateVotes', function(updatedObj) {
