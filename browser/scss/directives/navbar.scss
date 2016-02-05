@@ -1,5 +1,4 @@
 navbar {
-
   display: block;
   background: white;
   border-bottom: 1px solid black;
@@ -8,13 +7,15 @@ navbar {
   .container {
     width: 91%;
     max-width: 1340px;
-    padding-top: 20px;
   }
 
-  fullstack-logo {
-    margin-top: 5px;
-    margin-right: 20px;
-    width: 40px;
+  span.glyphicon {
+    font-size: 2em;
+    margin: auto;
+  }
+
+  .navbar-nav {
+    margin-top: 2%;
   }
 
   a {
@@ -47,7 +48,7 @@ navbar {
 
   .welcome {
     float: right;
-    margin-top: 12px;
+    margin-top: 4%;
     span {
       color: black;
       font-size: 16px;
