@@ -24,6 +24,6 @@ app.factory('SubmitSongFactory', ($http)=>{
 	}
 
 	return factory;
-})
+});
 
 

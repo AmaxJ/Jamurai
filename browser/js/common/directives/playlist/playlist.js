@@ -15,4 +15,4 @@ app.directive('playlist', function() {
             }
         }
     }
-})
+});

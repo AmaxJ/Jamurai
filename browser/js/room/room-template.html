@@ -1,22 +1,30 @@
-<div class="row">
+<navbar></navbar>
+<div class="row" id='room'>
     <div class="col-md-12">
         <h1>Welcome to {{room.name}}!</h1>
         <h2>Created by {{room.creator.username}}</h2>
         <h3>This event is being hosted at {{room.location}}</h3>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <playlist user='user' room='room' playlist="playlist"></playlist>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <playlist user='user' room='room' playlist="playlist"></playlist>
+        </div>
+        <div>
+            <h4>Users in this room right now:</h4>
+            <p ng-repeat='user in room.users'>{{user.username}}</p>
+        </div>
+        <div>
+            <h2>user Scores</h2>
+            <ul>
+                <li ng-repeat="score in room.userScores"> {{score.user.username}} - {{score.score}}
+                </li>
+            </ul>
+        </div>
     </div>
     <div>
-        <h4>Users in this room right now:</h4>
-        <p ng-repeat='user in room.users'>{{user.username}}</p>
-    </div>
-    <div>
-        <h2>user Scores</h2>
+        <h2>Power Ups</h2>
         <ul>
-            <li ng-repeat="score in room.userScores"> {{score.user.username}} - {{score.score}}
+            <li ng-repeat="powerup in powerupObj.powerups track by $index" ng-click="usePowerUp(powerup, user, room)"> {{powerup}}
             </li>
         </ul>
     </div>

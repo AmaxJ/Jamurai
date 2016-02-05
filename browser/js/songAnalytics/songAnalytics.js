@@ -7,14 +7,12 @@ app.config(function($stateProvider) {
 })
 
 app.controller('songAnalyticsCtrl', ($scope, PlaylistFactory) => {
-	$scope.testing = 'boom';
 	$scope.labels = [];
 	$scope.data = [];
 	$scope.series = ['Series A'];
 	return PlaylistFactory.getAllSongs()
 	.then(function(songs){
 		songs = songs.data;
-		console.log('songs',songs);
 		for(var key in songs)
 		{
 			$scope.labels.push(songs[key].title);
@@ -22,4 +20,4 @@ app.controller('songAnalyticsCtrl', ($scope, PlaylistFactory) => {
 		}
 	})
 
-})
+});

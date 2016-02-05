@@ -12,4 +12,4 @@ app.controller('AnalyticsCtrl', ($scope) => {
 		{ label: 'Song Analytics', state: 'songAnalytics' },
 		{ label: 'Party Stats', state: 'partyStats'}
 	]
-})
+});

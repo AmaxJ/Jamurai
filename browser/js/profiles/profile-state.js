@@ -52,4 +52,4 @@ app.config(function($stateProvider) {
 
 
     return factory;
-})
+});

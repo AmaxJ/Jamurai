@@ -2,10 +2,10 @@ app.factory('PlayerFactory', (PlaylistFactory) => {
     var youtubePlayer;
     var factory = {};
 
-    factory.loadVideoById = (song) => {
-        var songID = song.youTubeId;
+    factory.loadVideoById = (songObj) => {
+        var songID = songObj.song.youTubeId;
+        PlaylistFactory.setCurrentSong(songObj);
         youtubePlayer.loadVideoById(songID);
-        PlaylistFactory.setCurrentSong(song);
     };
 
     factory.playNextSong = (currentSong) => {
@@ -28,4 +28,4 @@ app.factory('PlayerFactory', (PlaylistFactory) => {
 
     return factory;
 
-})
+});

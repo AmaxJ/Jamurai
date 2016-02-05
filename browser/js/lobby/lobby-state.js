@@ -29,4 +29,3 @@ app.config(function($stateProvider) {
     //     });
 });
 
-

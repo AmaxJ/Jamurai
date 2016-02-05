@@ -4,14 +4,19 @@
             <fullstack-logo></fullstack-logo>
         </div>
         <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-                <!-- <a ng-click='goToState(item.state)'>{{item.state}}</a> -->
+            <li>
+                <a ui-sref-active='active' ui-sref='lobby'><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+            </li>
+            <li>
+                <a ui-sref-active='active' ui-sref='profile'><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+            </li>
+            <li>
+                <a ui-sref-active='active' ui-sref='analytics'><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></a>
             </li>
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
+            <span>{{ user.email }}!</span>
             <a ng-click="logout()">Logout</a>
         </div>
     </div>
