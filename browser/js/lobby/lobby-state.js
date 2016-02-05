@@ -1,3 +1,5 @@
+var geo = navigator.geolocation;
+
 app.config(function($stateProvider) {
     $stateProvider.state('lobby', {
         url: '/lobby',
@@ -6,7 +8,11 @@ app.config(function($stateProvider) {
         resolve: {
         	user: function (AuthService) {
         		return AuthService.getLoggedInUser()
-        				.then(user=> user)
+        				.then(function(user){
+                            geo.getCurrentPosition(function(position){
+                                console.log('poz',position);
+                            })
+                        })
         	},
             rooms: function (RoomFactory) {
                 return RoomFactory.getAllRooms();
