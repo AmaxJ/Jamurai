@@ -1,26 +1,16 @@
 navbar {
-  display: block;
-  background: white;
-  border-bottom: 1px solid black;
-  box-shadow: 1px 1px 14px -3px black;
 
   .container {
     width: 91%;
     max-width: 1340px;
   }
 
+  #logout {
+    font-size: 1.1em;
+  }
   span.glyphicon {
     font-size: 1.5em;
     margin: auto;
-  }
-
-  .navbar-nav {
-    margin-top: 2%;
-  }
-
-  a {
-    color: black;
-    font-size: 16px;
   }
 
   .nav > li > a {
@@ -37,27 +27,4 @@ navbar {
       background: none;
     }
   }
-
-  .login-button {
-    float: right;
-    border: 1px solid black;
-    margin-top: 10px;
-    background: none;
-    outline: none !important;
-  }
-
-  .welcome {
-    float: right;
-    margin-top: 4%;
-    span {
-      color: black;
-      font-size: 16px;
-      margin-right: 5px;
-    }
-    a {
-      color: #f30046;
-      cursor: pointer;
-    }
-  }
-
 }
