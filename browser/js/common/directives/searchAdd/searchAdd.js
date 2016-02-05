@@ -1,4 +1,4 @@
-app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory) {
+app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory, $state) {
 
     return {
         restrict: 'E',
@@ -13,9 +13,8 @@ app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory) {
                 })
             }
             scope.entry = "A-team";
-            scope.add = PlaylistFactory.addSong;   
+            scope.add = PlaylistFactory.addSong
         }
-
     };
 
 });
