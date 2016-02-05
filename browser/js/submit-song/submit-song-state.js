@@ -14,7 +14,6 @@ app.config(function($stateProvider) {
         controller($scope, user, room) {
             $scope.user = user;
             $scope.room = room;
-            console.log($scope.room)
         }
     })
 })

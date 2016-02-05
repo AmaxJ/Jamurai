@@ -21,9 +21,23 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory) => {
+    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory) => {
 
         var socket = SocketFactory.getSocket();
+        $scope.room = room;
+        $scope.user = user;
+
+        $scope.powerupObj; 
+        UserFactory.getPowerUps(user._id, room._id)
+        .then(powerups => {
+            console.log('Getting power ups happening')
+            $scope.powerupObj = powerups;
+        })
+
+        $scope.usePowerUp = (powerup,user,room) => {
+            console.log('Ready to emit powerup', powerup)
+            socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
+        }
 
         socket.on('updateUsers', function(room) {
             $scope.room = room;
@@ -35,8 +49,15 @@ app.config($stateProvider => {
             $scope.$digest();
         })
 
-        $scope.room = room;
-        $scope.user = user;
+         socket.on('updatePowerups', function(updatedPowerups) {
+
+            if(updatedPowerups.user === user._id) {
+                $scope.powerupObj = updatedPowerups;
+                $scope.$digest();    
+            }
+        })
+
+
         $scope.playlist = PlaylistFactory.getPlaylist();
 
         RoomFactory.addUserEmit(room._id, user._id);

@@ -16,9 +16,16 @@
         <div>
             <h2>user Scores</h2>
             <ul>
-                <li ng-repeat="score in room.userScores"> {{score.user.username}} - {{score.score}}
+                <li ng-repeat="score in room.userScores"> {{score.user.username}}: {{score.score}}
                 </li>
             </ul>
         </div>
+    </div>
+    <div>
+        <h2>Power Ups</h2>
+        <ul>
+            <li ng-repeat="powerup in powerupObj.powerups track by $index" ng-click="usePowerUp(powerup, user, room)"> {{powerup}}
+            </li>
+        </ul>
     </div>
 </div>

@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var UserScore = mongoose.model("UserScore");
+var PowerupData = mongoose.model("PowerupData");
 
 var schema = new mongoose.Schema({
     creator: {
@@ -34,6 +35,10 @@ var schema = new mongoose.Schema({
     userScores: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserScore"
+    }],
+    powerUps: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PowerupData" 
     }]
 });
 
@@ -129,7 +134,10 @@ schema.method({
                     return "Already have a score Obj"
                 }
             })
-            .then(function(scoreObj) {
+            .then(function(scoreObj){
+                return self.addPowerupData(userId);
+            })
+            .then(function(powerUp) {
                 return self.constructor.findById(self._id)
                     .populate('users')
                     .populate('userScores')
@@ -161,6 +169,38 @@ schema.method({
             .then((room) => {
                 return this.constructor.findById(this._id).populate('users');
             });
+    },
+    addPowerupData: function(userId) {
+        console.log('About to add power up data')
+        console.log('THIS', this)
+        PowerupData.findOne({user: userId, room: this._id})
+        .then(powerupData => {
+            if(!powerupData) {
+                return PowerupData.create({user: userId, room: this._id})
+                .then(powerupData=> {
+                        self.powerUps.push(powerupData);
+                        self.save();
+                     })
+            }
+            else {
+                return "Already have a power up Obj"
+            }
+        })
+
+
+        // let powerUpObj = this.powerUps.filter(currentPowerUp => {
+        //         console.log('Current power up', currentPowerUp)
+        //             return currentPowerUp.user.toString() === userId.toString();
+        //         })[0];
+        //         if (!powerUpObj) {
+        //              return PowerupData.create({user: userId, room: this._id})
+        //              .then(powerupData=> {
+        //                 self.powerUps.push(powerupData);
+        //                 self.save();
+        //              })
+        //         } else {
+        //             return "Already have a power up Obj"
+        //         }
     }
 });
 
