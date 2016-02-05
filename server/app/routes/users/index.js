@@ -1,6 +1,7 @@
 'use strict';
 var router = require('express').Router();
 var User = require('mongoose').model('User');
+var Powerup = require('mongoose').model('PowerupData');
 module.exports = router;
 
 router.route('/')
@@ -21,7 +22,7 @@ router.route('/')
 
 router.route('/:id')
 	.get(function(req,res,next){
-		User.find({})
+		// User.find({})
 		User.findById(req.params.id)
 		.then(function(user){
 			res.json(user);
@@ -36,3 +37,13 @@ router.route('/:id')
 			res.status(201).send(user)
 		})
 	})
+
+router.route('/:userId/:roomId/powerup')
+	.get(function(req,res,next){
+		Powerup.findOne({user: req.params.userId, room: req.params.roomId})
+		.then(function(powerUps){
+			res.json(powerUps);
+		})
+		.then(null,next);
+	})
+
