@@ -44,7 +44,6 @@ module.exports = function(server) {
                     return room.addToScore(savedSongData, amount);
                 })
                 .then(room => {
-                    console.log("SAVEDSONGDATA", savedSongData);
                     io.emit('updateVotes', {
                         updatedSong: savedSongData,
                         updatedRoom: room
@@ -91,7 +90,6 @@ module.exports = function(server) {
                 return PowerupData.findOne({room: room._id, user: userId})
             })
             .then(function(powerupData){
-                console.log('POWER UP DATA?', powerupData)
                 return powerupData.addPowerup();
             })
             .then((updatedPowerups)=> {

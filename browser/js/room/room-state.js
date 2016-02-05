@@ -51,8 +51,6 @@ app.config($stateProvider => {
         })
 
          socket.on('updatePowerups', function(updatedPowerups) {
-            console.log('UPDATE POWER UPS OBJ', updatedPowerups);
-            console.log('USER', user);
 
             if(updatedPowerups.user === user._id) {
                 $scope.powerupObj = updatedPowerups;
