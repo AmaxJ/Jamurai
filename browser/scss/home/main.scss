@@ -1,9 +1,4 @@
 #home {
-  fullstack-logo {
-    padding-top: 30px;
-    width: 150px;
-    margin: 0 auto;
-  }
   .row {
     width: 100%;
   }
@@ -14,6 +9,9 @@
   .highlight {
   	color: white;
   	background-color: #00e5e6;
+  }
+  img {
+    max-height: 100%;
   }
 }
 

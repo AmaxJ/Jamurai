@@ -75,4 +75,4 @@ app.controller('userAnalyticsCtrl', ($scope, UserFactory) => {
 			$scope.data.push(shortenedArr[i][1]);
 		}
 	})
-})
+});
