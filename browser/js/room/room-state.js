@@ -31,12 +31,10 @@ app.config($stateProvider => {
         $scope.powerupObj; 
         UserFactory.getPowerUps(user._id, room._id)
         .then(powerups => {
-            console.log('Getting power ups happening')
             $scope.powerupObj = powerups;
         })
 
         $scope.usePowerUp = (powerup,user,room) => {
-            console.log('Reay to user powerup', powerup);
             PowerupFactory.usePowerup(powerup);
             socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
         }

@@ -82,7 +82,10 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
         if(vote > 0) {
             $rootScope.$emit('upvote');
-        };
+        }
+        else {
+            $rootScope.$emit('downvote');
+        }
     };
 
     factory.setPlaylist = function(newPlaylist) {
@@ -108,7 +111,6 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     factory.setUpvoteAmount = (num) => {
         upvoteAmount = num;
-        console.log('new upvote amount', upvoteAmount);
     };
 
     factory.getDownvoteAmount = () => {
