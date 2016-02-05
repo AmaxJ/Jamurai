@@ -1,6 +1,14 @@
 <navbar></navbar>
 <div class="row" id='room'>
-    <div class="col-md-12">
+    <div class="col-md-2">
+            <p ng-repeat='user in room.users'>{{user.username}}</p>
+    </div>
+    <div class="col-md-7">
+        <playlist user='user' room='room' playlist="playlist"></playlist>
+    </div>
+    <div class="col-md-3">
+    </div>
+    <!-- <div class="col-md-12">
         <h1>Welcome to {{room.name}}!</h1>
         <h2>Created by {{room.creator.username}}</h2>
         <h3>This event is being hosted at {{room.location}}</h3>
@@ -27,5 +35,5 @@
             <li ng-repeat="powerup in powerupObj.powerups track by $index" ng-click="usePowerUp(powerup, user, room)"> {{powerup}}
             </li>
         </ul>
-    </div>
+    </div> -->
 </div>
