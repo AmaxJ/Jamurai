@@ -28,4 +28,4 @@ app.factory('PlayerFactory', (PlaylistFactory) => {
 
     return factory;
 
-})
+});

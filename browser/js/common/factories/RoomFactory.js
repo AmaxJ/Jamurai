@@ -42,4 +42,4 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
     }
 
     return factory;
-})
+});

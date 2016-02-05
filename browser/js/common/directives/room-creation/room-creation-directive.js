@@ -36,4 +36,4 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory, $state) {
             // })
     }
 
-})
+});
