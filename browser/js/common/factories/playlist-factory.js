@@ -76,6 +76,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     factory.vote = function($event, song, vote, user, room) {
+        $event.stopPropagation();
         SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
     };
 

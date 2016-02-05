@@ -171,7 +171,36 @@ schema.method({
             });
     },
     addPowerupData: function(userId) {
-        return PowerupData.create({user: userId, room: this._id})
+        console.log('About to add power up data')
+        console.log('THIS', this)
+        PowerupData.findOne({user: userId, room: this._id})
+        .then(powerupData => {
+            if(!powerupData) {
+                return PowerupData.create({user: userId, room: this._id})
+                .then(powerupData=> {
+                        self.powerUps.push(powerupData);
+                        self.save();
+                     })
+            }
+            else {
+                return "Already have a power up Obj"
+            }
+        })
+
+
+        // let powerUpObj = this.powerUps.filter(currentPowerUp => {
+        //         console.log('Current power up', currentPowerUp)
+        //             return currentPowerUp.user.toString() === userId.toString();
+        //         })[0];
+        //         if (!powerUpObj) {
+        //              return PowerupData.create({user: userId, room: this._id})
+        //              .then(powerupData=> {
+        //                 self.powerUps.push(powerupData);
+        //                 self.save();
+        //              })
+        //         } else {
+        //             return "Already have a power up Obj"
+        //         }
     }
 });
 

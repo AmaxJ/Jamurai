@@ -31,6 +31,7 @@ app.config($stateProvider => {
         $scope.powerupObj; 
         UserFactory.getPowerUps(user._id, room._id)
         .then(powerups => {
+            console.log('Getting power ups happening')
             $scope.powerupObj = powerups;
         })
 
@@ -50,8 +51,13 @@ app.config($stateProvider => {
         })
 
          socket.on('updatePowerups', function(updatedPowerups) {
-            $scope.powerupObj = updatedPowerups;
-            $scope.$digest();
+            console.log('UPDATE POWER UPS OBJ', updatedPowerups);
+            console.log('USER', user);
+
+            if(updatedPowerups.user === user._id) {
+                $scope.powerupObj = updatedPowerups;
+                $scope.$digest();    
+            }
         })
 
         $scope.playlist = PlaylistFactory.getPlaylist();

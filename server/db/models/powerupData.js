@@ -24,6 +24,7 @@ schema.method({
         return this.save();
     },
     usePowerup: function(powerUp) {
+        console.log("USE POWERUP", powerUp)
         var powerIndex = this.powerups.indexOf(powerUp);
         this.powerups.splice(powerIndex, 1);
         return this.save();

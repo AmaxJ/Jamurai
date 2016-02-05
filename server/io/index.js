@@ -84,11 +84,14 @@ module.exports = function(server) {
         //Add a powerup
         socket.on('addPowerUp', function(payload){
             var playlist = payload.playlist;
+            var userId = payload.user;
+
             Room.findOne({playlist: playlist})
             .then(function(room){
-                return PowerupData.findOne({room: room._id})
+                return PowerupData.findOne({room: room._id, user: userId})
             })
             .then(function(powerupData){
+                console.log('POWER UP DATA?', powerupData)
                 return powerupData.addPowerup();
             })
             .then((updatedPowerups)=> {
