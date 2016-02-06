@@ -44,16 +44,16 @@ schema.method({
     },
     vote : function(userId, vote) { //vote = 'up' or 'down'
         if (!userId || !vote) return;
-        if (vote === 'up') {
+        if (vote > 0) {
             if (this.upVotes.indexOf(userId) > -1) return;
             cleanVotes(userId,vote, this);
             this.upVotes.push(userId);
-        } else if (vote === 'down') {
+        } else if (vote < 0) {
             if (this.downVotes.indexOf(userId) > -1) return;
             cleanVotes(userId,vote, this);
             this.downVotes.push(userId);
         }
-        this.total = this.upVotes.length - this.downVotes.length;
+        this.total += vote;
         return this.save();
     },
     removeVote: function(userId, vote) {
@@ -69,12 +69,20 @@ schema.method({
 
 function cleanVotes(userId, vote, doc) {
     var index;
-    if (vote === 'up') {
+    if (vote > 0) {
         index = doc.downVotes.indexOf(userId);
-        if (index > -1) doc.downVotes.splice(index, 1)
+        if (index > -1) {
+            doc.downVotes.splice(index, 1);
+            doc.total++;
+            doc.save();
+        }
     } else {
         index = doc.upVotes.indexOf(userId);
-        if (index > -1) doc.upVotes.splice(index, 1)
+        if (index > -1) {
+            doc.upVotes.splice(index, 1)
+            doc.total--;
+            doc.save();
+        }
     }
 }
 
