@@ -14,8 +14,8 @@
 
             <td>{{songObj.song.title}}</td>
             <td>
-                <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, upvoteAmount(), user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, downvoteAmount(),user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, {type: 'up', amount: upvoteAmount()}, user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
             </td>
             <td>{{getVoteValue(songObj)}}</td>
         </tr>

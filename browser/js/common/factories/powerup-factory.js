@@ -7,7 +7,8 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
         'swordOfHonor' : swordOfHonor,
         'swordOfDisgrace' : swordOfDisgrace,
         'swordOfHolyLegend' : swordOfHolyLegend,
-        'swordOfUncertainty' : swordOfUncertainty
+        'swordOfUncertainty' : swordOfUncertainty,
+        'poisonDarts' : poisonDarts
     }
 
     function swordOfHonor () {
@@ -50,7 +51,11 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
     }
 
     function deathStars (user, room) {
-        socket.emit('deathStars', {user: user, room: room});
+        socket.emit('multiPower', {user: user, room: room, strength: -5});
+    }
+
+    function poisonDarts (user, room) {
+        socket.emit('multiPower', {user: user, room: room, strength: -2});
     }
 
     factory.usePowerup = (powerup,user,room) => {

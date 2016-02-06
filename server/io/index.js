@@ -112,16 +112,16 @@ module.exports = function(server) {
             })
         })
         //Death stars powerup
-        socket.on('deathStars', function(payload){
+        socket.on('multiPower', function(payload){
             var user = payload.user;
             var room = payload.room;
-            var starStrength = -3;
+            var strength = payload.strength;
             //Initialize array to track users effected by stars
             var effectedUsers = [];
             return SongData.find({playlist: room.playlist._id, submittedBy: {$ne: user._id}})
             .then(songDataArr => {
                 songDataArr.forEach(songDataDoc => {
-                    songDataDoc.changeScore(starStrength);
+                    songDataDoc.changeScore(strength);
                     //For each song that was hit with a death star, push that users' ID into the effected users array
                     effectedUsers.push(songDataDoc.submittedBy);
                 })
@@ -134,7 +134,7 @@ module.exports = function(server) {
                     //Count the number of instances of this user in the effectedUsers array and multiple that number by the strength of each death star
                     var scoreUpdate = effectedUsers.filter(userId => {
                         return userId = userScoreDoc.user;
-                    }).length * starStrength;
+                    }).length * strength;
                     userScoreDoc.changeScore(scoreUpdate);
                 })
             })
