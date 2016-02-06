@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
+
 var schema = new mongoose.Schema({
 
     playlist: {
@@ -54,6 +55,10 @@ schema.method({
             this.downVotes.push(userId);
         }
         this.total += vote;
+        return this.save();
+    },
+    changeScore: function(amount) {
+        this.total += amount;
         return this.save();
     },
     removeVote: function(userId, vote) {

@@ -1,8 +1,10 @@
-app.factory('PowerupFactory', (PlaylistFactory, $rootScope) => {
+app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
     var factory = {};
+    var socket = SocketFactory.getSocket();
     var powerUps = {
         'superVote': superVote,
-        'downvoteBomb': downvoteBomb
+        'downvoteBomb': downvoteBomb,
+        'deathStars' : deathStars
     }
 
     function superVote () {
@@ -19,8 +21,13 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope) => {
         })
     }
 
-    factory.usePowerup = (powerup) => {
-        powerUps[powerup]();
+    function deathStars (user, room) {
+        socket.emit('deathStars', {user: user, room: room});
+    }
+
+    factory.usePowerup = (powerup,user,room) => {
+        powerUps[powerup](user,room);
+        socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
     }
 
     return factory;

@@ -131,5 +131,11 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         $rootScope.$digest();
     })
 
+    socket.on('updateRoom', updateObj=> {
+        playlist = updateObj.playlist;
+        factory.sort();
+        $rootScope.$digest();
+    })
+
     return factory;
 });

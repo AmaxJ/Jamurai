@@ -18,7 +18,7 @@ var schema = new mongoose.Schema({
 
 schema.method({
     addPowerup : function() {
-        var powerUps =['superVote', 'downvoteBomb'];
+        var powerUps =['superVote', 'downvoteBomb', 'deathStars'];
         var randomPowerUp = powerUps[Math.floor(Math.random()*powerUps.length)];
         this.powerups.push(randomPowerUp);
         return this.save();
