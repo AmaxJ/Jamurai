@@ -22,6 +22,7 @@ module.exports = function(server) {
             var user = payload.user;
             var vote = payload.vote;
             var room = payload.room;
+            var updatedVote;
             var savedSongData;
             var playlist = payload.room.playlist;
             SongData.findOne({
@@ -31,6 +32,7 @@ module.exports = function(server) {
                     return songData.vote(user._id, vote)
                 })
                 .then(function(songData) {
+                    updatedVote =  songData.total - song.total;
                     return SongData.findById(songData._id)
                         .populate('song')
 
@@ -40,8 +42,8 @@ module.exports = function(server) {
                     return Room.findById(room._id)
                 })
                 .then(function(room) {
-                    var amount = vote === 'up' ? 1 : -1;
-                    return room.addToScore(savedSongData, amount);
+                    // var amount = vote === 'up' ? 1 : -1;
+                    return room.addToScore(savedSongData, updatedVote);
                 })
                 .then(room => {
                     io.emit('updateVotes', {
