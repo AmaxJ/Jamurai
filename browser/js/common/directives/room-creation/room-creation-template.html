@@ -13,16 +13,18 @@
                         <input ng-model="newRoom.name" type="text" id="roomName" name="name" required class='form-control'>
                     </div>
                     <p class='error' ng-show="roomForm.name.$invalid && roomForm.name.$dirty">Name is required!</p>
+                    <div class="form-group">
+                        <label for="roomLocation">Location</label>
+                        <input ng-model="newRoom.location" type="text" id="roomLocation" name="location" required class='form-control'>
+                    </div>
                     <div class="checkbox">
                         <label for="roomPrivacy">
                             <input ng-model="newRoom.isPrivate" type="checkbox" id="roomPrivacy" name="privacy">Private
                         </label>
                     </div>
-                    <div class="form-group">
-                        <label for="roomLocation">Location</label>
-                        <input ng-model="newRoom.location" type="text" id="roomLocation" name="location" required class='form-control'>
+                    <div id="submit-button">
+                    <input class="btn btn-success" type="submit"></input>
                     </div>
-                    <input class="btn btn-success" type="submit" id='submitButton'></input>
                 </form>
             </div>
         </div>
