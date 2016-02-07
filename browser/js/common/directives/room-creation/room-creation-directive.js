@@ -18,7 +18,7 @@ app.controller('RoomFormCtrl', function($scope, RoomFactory, $state) {
         return showForm;
     }
     $scope.showForm = () => {
-        showForm = true;
+        showForm = !showForm;
     }
     $scope.createNewRoom = function() {
         $scope.newRoom.isPrivate = $scope.newRoom.isPrivate || false;
