@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <base href="/" />
     <title>TrackShift</title>
@@ -15,15 +16,18 @@
     <script src="/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/angular-ui-bootstrap/ui-bootstrap.js"></script>
     <script src="/angular-ui-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7Qot6QksXmtE2z1P1-yMJ7aeVulZ_Yyw&callback=initMap"
-  type="text/javascript"></script>
-  <script src='/chart.js/Chart.js'></script>
-  <script src="/angular-chart.js/dist/angular-chart.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7Qot6QksXmtE2z1P1-yMJ7aeVulZ_Yyw&callback=initMap" type="text/javascript"></script>
+    <script src='/chart.js/Chart.js'></script>
+    <script src="/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="/socket.io-client/socket.io.js"></script>
     <script src="/main.js"></script>
 </head>
+
 <body ng-app="FullstackGeneratedApp">
-    <div id="main" ui-view></div>
+    <div class="container-fluid">
+        <div id="main" ui-view></div>
+    </div>
 </body>
+
 </html>
