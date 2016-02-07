@@ -9,7 +9,7 @@ navbar {
     font-size: 1.1em;
   }
   span.glyphicon {
-    font-size: 1.5em;
+    font-size: 1.6em;
     margin: auto;
   }
 
@@ -17,11 +17,11 @@ navbar {
     cursor: pointer;
     transition: color 0.2s;
     &.active {
-      color: darken(#f31214, 10%);
+      color: darken(#009dff, 10%);
     }
     &:hover {
       background: none;
-      color: #f31214;
+      color: #009dff;
     }
     &:focus {
       background: none;

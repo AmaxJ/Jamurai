@@ -4,14 +4,30 @@
 	margin: 0 auto;
 	width: 100%;
 	text-align: center;
+    padding-top: 20px;
 	.user-details {
 		margin-top: 30px;
 	}
+    label {
+        font-size: 1.25em;
+    }
+    p {
+        font-size:1.2em;
+    }
 	img {
 		width: 250px;
 		height: 250px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid #5E5E5E;
 	}
 	button {
-		margin-bottom: 30px;
+		margin-bottom: 15px;
 	}
+}
+
+#edit-button {
+    button {
+        padding: 8px 17px 8px 17px;
+    }
 }
