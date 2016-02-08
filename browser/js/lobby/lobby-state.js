@@ -13,13 +13,9 @@ app.config(function($stateProvider) {
             }
         }
     })
-}).controller('LobbyCtrl', ($scope, RoomFactory, user, rooms) => {
+}).controller('LobbyCtrl', ($scope, user, rooms) => {
     $scope.user = user;
     $scope.rooms = rooms;
-    // RoomFactory.getAllRooms()
-    //     .then(rooms => {
-    //         $scope.rooms = rooms;
-    //         console.log(rooms);
-    //     });
+
 });
 

@@ -8,7 +8,6 @@ app.config($stateProvider => {
                         return RoomFactory.getRoomById($stateParams.roomId)
                             .then(room => {
                                 PlaylistFactory.setPlaylist(room.playlist);
-                                console.log(room);
                                 return room;
                             });
                     },
@@ -57,6 +56,7 @@ app.config($stateProvider => {
                 $scope.$digest();    
             }
         })
+
 
         $scope.playlist = PlaylistFactory.getPlaylist();
 
