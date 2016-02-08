@@ -1,7 +1,7 @@
 <navbar></navbar>
 <div class="row" id='room'>
     <div id="left-sidebar" class="col-sm-2">
-        <div id="leader-profile" ng-repeat="user in room.users" class="row">
+        <div id="leader-profile" ng-repeat="user in room.users" title='{{user.username}}' class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <a ui-sref="publicProfile({userId: user._id})">
                     <img class="img-circle profile-img" ng-src="{{user.picture}}" alt="">
