@@ -5,6 +5,7 @@ var Song = require('mongoose').model('Song');
 var Room = require('mongoose').model('Room');
 var SongData = require('mongoose').model('SongData');
 var PowerupData = require('mongoose').model('PowerupData');
+var UserScore = require('mongoose').model('UserScore');
 
 module.exports = function(server) {
 
@@ -42,7 +43,6 @@ module.exports = function(server) {
                     return Room.findById(room._id)
                 })
                 .then(function(room) {
-                    // var amount = vote === 'up' ? 1 : -1;
                     return room.addToScore(savedSongData, updatedVote);
                 })
                 .then(room => {
@@ -109,6 +109,62 @@ module.exports = function(server) {
             })
             .then((updatedPowerups)=> {
                 io.emit('updatePowerups', updatedPowerups)
+            })
+        })
+        //Death stars powerup
+        socket.on('multiPower', function(payload){
+            var user = payload.user;
+            var room = payload.room;
+            var strength = payload.strength;
+            //Initialize array to track users effected by stars
+            var effectedUsers = [];
+            return SongData.find({playlist: room.playlist._id, submittedBy: {$ne: user._id}})
+            .then(songDataArr => {
+                songDataArr.forEach(songDataDoc => {
+                    songDataDoc.changeScore(strength);
+                    //For each song that was hit with a death star, push that users' ID into the effected users array
+                    effectedUsers.push(songDataDoc.submittedBy);
+                })
+            })
+            .then(()=> {
+                return UserScore.find({user: {$ne: user._id}})
+            })
+            .then(userScoreArr => {
+                userScoreArr.forEach(userScoreDoc => {
+                    //Count the number of instances of this user in the effectedUsers array and multiple that number by the strength of each death star
+                    var scoreUpdate = effectedUsers.filter(userId => {
+                        return userId = userScoreDoc.user;
+                    }).length * strength;
+                    userScoreDoc.changeScore(scoreUpdate);
+                })
+            })
+            .then(()=> {
+                return Room.findById(room._id)
+                    .populate('users')
+                    .populate({
+                        path: 'userScores',
+                        model: 'UserScore',
+                        populate: {
+                            path: "user",
+                            model: "User"
+                        }
+                    })
+                    .populate({
+                        path: 'playlist',
+                        model: 'Playlist',
+                        populate: {
+                            path: 'songs',
+                            model: 'SongData',
+                            populate: {
+                                path: 'song',
+                                model: 'Song'
+                            }
+                        }
+                    })
+            })
+            .then(updatedRoom => {
+                var playlist = updatedRoom.playlist;
+                io.emit('updateRoom', {room: updatedRoom, playlist: playlist});
             })
         })
     });

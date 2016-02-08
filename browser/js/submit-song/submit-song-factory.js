@@ -22,8 +22,10 @@ app.factory('SubmitSongFactory', ($http)=>{
 	factory.getSearchResults = () => {
 		return searchResults;
 	}
-
+	console.log('test');
 	return factory;
 });
+
+
 
 

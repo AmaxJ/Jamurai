@@ -1,5 +1,6 @@
 'use strict'
 var mongoose = require('mongoose');
+var SongData = mongoose.model("SongData");
 
 var schema = new mongoose.Schema({
     user : {
@@ -16,21 +17,13 @@ var schema = new mongoose.Schema({
     }
 });
 
-// schema.statics.createAndAddToRoom = function(userId, roomId) {
-//     var userScoreId;
-//     this.create({
-//         user : userId,
-//         room : roomId
-//     })
-//     .then(function(userScoreObj) {
-//         userScoreId = userScoreObj._id
-//         return Room.findById(roomId);
-//     })
-//     .then(function(room) {
-//         room.userScores.addToSet(userScoreId);
-//         return room.save();
-//     });
-// };
+schema.method({
+    changeScore: function(amount) {
+        this.score += amount;
+        return this.save();
+    }
+});
+
 
 
 mongoose.model('UserScore', schema);
