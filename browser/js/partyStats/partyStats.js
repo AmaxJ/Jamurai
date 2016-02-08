@@ -42,12 +42,12 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 	}
 
 	var data1 = {
-		series: ['parties requested in'],
+		series: ['# requests per party'],
 		data: []
 	}
 
 	var data2 = {
-		series: ['overall number of requests'],
+		series: ['overall # of requests'],
 		data: []
 	}
 
@@ -101,34 +101,12 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 			}
 		}
 	}
-	for(var u=0; u<masterSongList.length; u++)
-	{
-		var thisSongPopularity = masterSongList[u][1];
-		for(var v=u+1; v<masterSongList.length; v++)
-		{
-			var otherSongPopularity = masterSongList[v][1];
-			if(otherSongPopularity>thisSongPopularity)
-			{
-				var temp = masterSongList[u];
-				masterSongList[u] = masterSongList[v];
-				masterSongList[v] = temp;
-			}
-		}
-	}
-	for(var u=0; u<overallMasterVzn.length; u++)
-	{
-		var thisSongPopularity = overallMasterVzn[u][1];
-		for(var v=u+1; v<overallMasterVzn.length; v++)
-		{
-			var otherSongPopularity = overallMasterVzn[v][1];
-			if(otherSongPopularity>thisSongPopularity)
-			{
-				var temp = overallMasterVzn[u];
-				overallMasterVzn[u] = overallMasterVzn[v];
-				overallMasterVzn[v] = temp;
-			}
-		}
-	}
+    masterSongList.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+    overallMasterVzn.sort(function(a, b) {
+        return b[1] - a[1];
+    });
 	if(masterSongList.length > 10)
 	{
 		masterSongList = masterSongList.slice(0,10);
