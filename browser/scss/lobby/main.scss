@@ -1,4 +1,14 @@
 #lobby {
-	background: #fff;
-	height: 100%;
+    background: #fff;
+    height: 100%;
+    padding-top: 40px;
+    #room-table {
+        opacity: 0.85;
+        th {
+            font-size: 1.3em;
+        }
+    }
+    #room-table:hover {
+        opacity: 1;
+    }
 }

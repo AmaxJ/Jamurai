@@ -1,7 +1,6 @@
 <navbar></navbar>
 <div class="col-md-6 col-md-offset-3" id='searchAdd'>
-    <div class="row">
-    <br><br>
+    <div class="row" id="search-input">
         <div class="col-md-8 col-md-offset-2">
             <form ng-submit="search(text)">
                 <div class="form-group">
@@ -24,7 +23,7 @@
                 </tr>
                 <tr ng-repeat='result in searchResults'>
                     <td>{{result.snippet.title}}</td>
-                    <td><img ng-src='{{result.snippet.thumbnails.default.url}}' /></td>
+                    <td><img height="90" width="120" ng-src='{{result.snippet.thumbnails.default.url}}' /></td>
                     <td>
                         <button class="btn btn-primary btn-sm" ng-click='add(result, user)' ui-sref='room({roomId: room._id})'>Add</button>
                     </td>

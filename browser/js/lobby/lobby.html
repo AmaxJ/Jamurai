@@ -1,13 +1,34 @@
-<section id="lobby">
-	<navbar></navbar>
-	<create-room></create-room>
-	<div class='container-fluid'>
-		<div class='col-md-6' ng-repeat='room in rooms'>
-			<h2 ui-sref='room({roomId: room._id})'><a>{{room.name}}</a></h2>
-			<h3>Created by:</h3><a ui-sref="publicProfile({userId: room.creator._id})"><h3>{{room.creator.username}}</h3></a>
-			<h3>Location: {{room.location}}</h3>
-			<button type='button' class='btn btn-success' ui-sref='room({roomId: room._id})'>Join {{room.name}}</button>
-			<hr>
-		</div>
-	</div>
-</section>
+<navbar></navbar>
+<div class="row" id="lobby">
+    <div class="col-sm-6 col-sm-offset-2">
+        <table class="table table-striped table-responsive" id="room-table">
+            <tr>
+                <th>Room Name</th>
+                <th>Creator</th>
+                <th>Join</th>
+            </tr>
+            <tr ng-repeat="room in rooms">
+                <td>{{room.name}}</td>
+                <td><a ui-sref="publicProfile({userId: room.creator._id})">{{room.creator.username}}</a></td>
+                <td>
+                    <button type='button' class='btn btn-success' ui-sref='room({roomId: room._id})'>Join</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-3">
+        <create-room></create-room>
+    </div>
+</div>
+<!-- <section id="lobby">
+    <navbar></navbar>
+    <div class='container-fluid'>
+        <div class='col-md-6' ng-repeat='room in rooms'>
+            <h2 ui-sref='room({roomId: room._id})'><a>{{room.name}}</a></h2>
+            <h3>Created by:</h3><a ui-sref="publicProfile({userId: room.creator._id})"><h3>{{room.creator.username}}</h3></a>
+            <h3>Location: {{room.location}}</h3>
+            <button type='button' class='btn btn-success' ui-sref='room({roomId: room._id})'>Join {{room.name}}</button>
+            <hr>
+        </div>
+    </div>
+</section> -->

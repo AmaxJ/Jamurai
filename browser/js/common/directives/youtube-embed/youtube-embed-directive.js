@@ -8,14 +8,14 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, 
             videoid: "@"
         },
 
-        template: '<div id="player"></div>',
+        templateUrl: 'js/common/directives/youtube-embed/youtube-embed.html',
 
         link: function(scope, element) {
 
             var youtubePlayer = PlayerFactory.getPlayer();
             var socket = SocketFactory.getSocket();
             //Loads player and attaches to DOM
-            function stateChange(event) { 
+            function stateChange(event) {
               if(event.data === 0) {
                 var currentSong = PlaylistFactory.getCurrentSong();
                 PlayerFactory.playNextSong(currentSong);
