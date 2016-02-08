@@ -4,13 +4,18 @@
         <div id="leader-profile" ng-repeat="user in room.users" class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <img class="img-circle profile-img" ng-src="{{user.picture}}" alt="">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 score-data">
+                        <p class="score-card">Score: <span>{{score.score}}</span></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-8">
-        <playlist user='user' room='room' playlist="playlist"></playlist>
+    <div class="col-sm-7">
+        <playlist user='user' room='room' playlist="playlist()"></playlist>
     </div>
-    <div class="col-sm-2" id="right-sidebar">
+    <div class="col-sm-3" id="right-sidebar">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <h4>PowerUps</h4>
