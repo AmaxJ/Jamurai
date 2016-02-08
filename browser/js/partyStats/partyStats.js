@@ -64,7 +64,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 			var thisSong = thisRoom.playlist.songs[y].song.title
 			if(thisSong.length > 25)
 			{
-				thisSong = thisSong.substring(0,25);
+				thisSong = thisSong.substring(0,20);
 			}
 			var idx = nonRepeatingPlaylist.indexOf(thisSong);
 			if(idx === -1)
