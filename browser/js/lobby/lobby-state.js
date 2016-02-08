@@ -23,11 +23,11 @@ app.config(function($stateProvider) {
         }
     })
 }).controller('LobbyCtrl', ($scope, RoomFactory, user, rooms, UserFactory) => {
-    geo.getCurrentPosition(function(position){
-        console.log('woo woo');
-        var coords = [position.coords.latitude,position.coords.longitude];
-        return UserFactory.updateUser(user._id,{coordinates: coords})
-    })
+    // geo.getCurrentPosition(function(position){
+    //     console.log('woo woo');
+    //     var coords = [position.coords.latitude,position.coords.longitude];
+    //     return UserFactory.updateUser(user._id,{coordinates: coords})
+    // })
     $scope.user = user;
     console.log('usr',$scope.user);
     $scope.rooms = rooms;

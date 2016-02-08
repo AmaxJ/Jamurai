@@ -27,6 +27,7 @@ app.config($stateProvider => {
     .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory) => {
 
         var socket = SocketFactory.getSocket();
+        console.log('boom');
         geo.getCurrentPosition(function(position){
         console.log('woot woot');
         var coords = [position.coords.latitude,position.coords.longitude];
