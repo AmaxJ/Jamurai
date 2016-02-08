@@ -18,13 +18,12 @@ var schema = new mongoose.Schema({
 
 schema.method({
     addPowerup : function() {
-        var powerUps =['superVote', 'resetSong'];
+        var powerUps =['swordOfHonor', 'swordOfCertainDeath', 'deathStars', 'swordOfDisgrace', 'swordOfHolyLegend', 'swordOfUncertainty', 'poisonDarts'];
         var randomPowerUp = powerUps[Math.floor(Math.random()*powerUps.length)];
         this.powerups.push(randomPowerUp);
         return this.save();
     },
     usePowerup: function(powerUp) {
-        console.log("USE POWERUP", powerUp)
         var powerIndex = this.powerups.indexOf(powerUp);
         this.powerups.splice(powerIndex, 1);
         return this.save();
