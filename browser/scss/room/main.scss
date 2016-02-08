@@ -15,12 +15,13 @@
         }
     }
     #right-sidebar {}
+    .ranking {
+        text-align: right;
+    }
     .score-data {
         text-align: center;
     }
     .score-card {
-        margin-top: 2px;
-        line-height: 50%;
         font-size: 1.2em;
         font-weight: bold;
         span {
