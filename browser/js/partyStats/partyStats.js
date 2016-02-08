@@ -60,6 +60,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 		var thisRoom = $scope.rooms[x];
 		for(var y=0; y<thisRoom.playlist.songs.length; y++)
 		{
+			console.log('dat song',thisRoom.playlist.songs[y]);
 			var thisSong = thisRoom.playlist.songs[y].song.title
 			if(thisSong.length > 25)
 			{
@@ -74,7 +75,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 				{
 					if(masterSongList[i][0]===thisSong)
 					{
-						masterSongList[i][1]++
+						masterSongList[i][1]++;
 						foundInMaster = true;
 						break;
 					}
@@ -88,14 +89,14 @@ app.controller('partyStats', ($scope, RoomFactory, rooms) => {
 				{
 					if(overallMasterVzn[j][0]===thisSong)
 					{
-						overallMasterVzn[j][1]++;
+						overallMasterVzn[j][1]+= thisRoom.playlist.songs[y].total;
 						foundInMasterVzn = true;
 						break;
 					}
 				}
 				if(!foundInMasterVzn)
 				{
-					overallMasterVzn.push([thisSong,1]);
+					overallMasterVzn.push([thisSong,thisRoom.playlist.songs[y].total]);
 				}
 			}
 		}
