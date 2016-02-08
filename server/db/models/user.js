@@ -236,53 +236,7 @@ schema.pre('save', function (next) {
 
 });
 
-schema.pre('update', function(next) {
-    console.log('doom');
-    var doc = this;
 
-    if (doc.isModified('password')) 
-    {
-        doc.salt = doc.constructor.generateSalt();
-        doc.password = doc.constructor.encryptPassword(doc.password, doc.salt);
-    }
-    if(doc.DOB)
-    {
-        doc.age = getAge(doc.DOB)
-    }
-    if(doc.location)
-    {
-        return getCoords(doc.location)
-        .then(function(coordinates){
-            console.log('coors',coordinates)
-            doc.coordinates = coordinates;
-            if(coordinates)
-            {
-                return getNormLoc(doc.coordinates);
-            }
-            else
-            {
-                next();
-            }
-        })
-        .then(function(normLoc){
-            doc.normalizedLocation = normLoc;
-            next();
-        })
-        .then(null,next)
-    }
-    else if(doc.coordinates)
-    {
-        console.log('boom');
-        return getNormLoc(doc.coordinates)
-        .then(function(normLoc){
-            doc.normalizedLocation = normLoc;
-            next()
-        })
-        .then(null,next)
-    }
-
-    next();
-})
 
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;
