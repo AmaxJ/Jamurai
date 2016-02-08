@@ -1,14 +1,11 @@
 <navbar></navbar>
 <div class="row" id='room'>
     <div id="left-sidebar" class="col-sm-2">
-        <div id="leader-profile" ng-repeat="score in room.userScores" class="row">
-            <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2">
-                        <h4>{{$index + 1}}</h4>
-                        <img class="img-circle profile-img" ng-src="{{score.user.picture}}" alt="">
-                    </div>
-                </div>
+        <div id="leader-profile" ng-repeat="user in room.users" class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <a ui-sref="publicProfile({userId: user._id})">
+                    <img class="img-circle profile-img" ng-src="{{user.picture}}" alt="">
+                </a>
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 score-data">
                         <p class="score-card">Score: <span>{{score.score}}</span></p>
