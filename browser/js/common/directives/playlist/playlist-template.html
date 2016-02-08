@@ -1,23 +1,26 @@
-<div class='col-md-3'></div>
-<div id="playlist-table" class='col-md-6'>
-    <button ui-sref="submit-song" class="btn-default btn">Add a Song!!!!!</button>
-    <br>
-    <br>
-    <table class='table'>
-        <tr>
-            <th>Video</th>
-            <th>Vote</th>
-            <th>Score</th>
-        </tr>
-
-        <tr ng-repeat='songObj in playlist.songs track by $index' ng-click="loadVideoById(songObj)" ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
-
-            <td>{{songObj.song.title}}</td>
-            <td>
-                <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, upvoteAmount, user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, downvoteAmount,user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
-            </td>
-            <td>{{getVoteValue(songObj)}}</td>
-        </tr>
-    </table>
+<div id="playlist" class='col-md-12 col-sm-12'>
+    <div class="row" id="playlist-table">
+        <div class="col-md-12 col-sm-12">
+            <table class='table'>
+                <tr>
+                    <th>Video</th>
+                    <th>Vote</th>
+                    <th>Score</th>
+                </tr>
+                <tr ng-repeat='songObj in playlist.songs track by $index' ng-click="loadVideoById(songObj)" ng-class='{highlight: hover}' ng-mouseenter="hover=true" ng-mouseleave="hover=false">
+                    <td>{{songObj.song.title}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, upvoteAmount, user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, downvoteAmount, user, room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                    </td>
+                    <td>{{getVoteValue(songObj)}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-md-offset-4">
+            <button ui-sref="submit-song" class="btn-primary btn">Add a Song!!!!!</button>
+        </div>
+    </div>
 </div>

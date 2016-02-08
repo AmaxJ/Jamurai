@@ -21,15 +21,15 @@ var notify = require('gulp-notify');
 // --------------------------------------------------------------
 
 // Live reload business.
-gulp.task('reload', function () {
+gulp.task('reload', function() {
     livereload.reload();
 });
 
-gulp.task('reloadCSS', function () {
+gulp.task('reloadCSS', function() {
     return gulp.src('./public/style.css').pipe(livereload());
 });
 
-gulp.task('lintJS', function () {
+gulp.task('lintJS', function() {
 
     return gulp.src(['./browser/js/**/*.js', './server/**/*.js'])
         .pipe(plumber({
@@ -41,7 +41,7 @@ gulp.task('lintJS', function () {
 
 });
 
-gulp.task('buildJS', ['lintJS'], function () {
+gulp.task('buildJS', ['lintJS'], function() {
     return gulp.src(['./browser/js/app.js', './browser/js/**/*.js'])
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -51,22 +51,28 @@ gulp.task('buildJS', ['lintJS'], function () {
         .pipe(gulp.dest('./public'));
 });
 
-gulp.task('testServerJS', function () {
+gulp.task('testServerJS', function() {
     require('babel/register');
-	return gulp.src('./tests/server/**/*.js', {
-		read: false
-	}).pipe(mocha({ reporter: 'spec' }));
+    return gulp.src('./tests/server/**/*.js', {
+        read: false
+    }).pipe(mocha({
+        reporter: 'spec'
+    }));
 });
 
-gulp.task('testServerJSWithCoverage', function (done) {
+gulp.task('testServerJSWithCoverage', function(done) {
     gulp.src('./server/**/*.js')
         .pipe(istanbul({
             includeUntested: true
         }))
         .pipe(istanbul.hookRequire())
-        .on('finish', function () {
-            gulp.src('./tests/server/**/*.js', {read: false})
-                .pipe(mocha({reporter: 'spec'}))
+        .on('finish', function() {
+            gulp.src('./tests/server/**/*.js', {
+                    read: false
+                })
+                .pipe(mocha({
+                    reporter: 'spec'
+                }))
                 .pipe(istanbul.writeReports({
                     dir: './coverage/server/',
                     reporters: ['html', 'text']
@@ -75,14 +81,14 @@ gulp.task('testServerJSWithCoverage', function (done) {
         });
 });
 
-gulp.task('testBrowserJS', function (done) {
+gulp.task('testBrowserJS', function(done) {
     karma.start({
         configFile: __dirname + '/tests/browser/karma.conf.js',
         singleRun: true
     }, done);
 });
 
-gulp.task('buildCSS', function () {
+gulp.task('buildCSS', function() {
 
     var sassCompilation = sass();
     sassCompilation.on('error', console.error.bind(console));
@@ -99,7 +105,7 @@ gulp.task('buildCSS', function () {
 // Production tasks
 // --------------------------------------------------------------
 
-gulp.task('buildCSSProduction', function () {
+gulp.task('buildCSSProduction', function() {
     return gulp.src('./browser/scss/main.scss')
         .pipe(sass())
         .pipe(rename('style.css'))
@@ -107,7 +113,7 @@ gulp.task('buildCSSProduction', function () {
         .pipe(gulp.dest('./public'))
 });
 
-gulp.task('buildJSProduction', function () {
+gulp.task('buildJSProduction', function() {
     return gulp.src(['./browser/js/app.js', './browser/js/**/*.js'])
         .pipe(concat('main.js'))
         .pipe(babel())
@@ -121,7 +127,7 @@ gulp.task('buildProduction', ['buildCSSProduction', 'buildJSProduction']);
 // Composed tasks
 // --------------------------------------------------------------
 
-gulp.task('build', function () {
+gulp.task('build', function() {
     if (process.env.NODE_ENV === 'production') {
         runSeq(['buildJSProduction', 'buildCSSProduction']);
     } else {
@@ -130,22 +136,28 @@ gulp.task('build', function () {
 });
 
 gulp.task('end', ['testServerJSWithCoverage'], function() {
-  process.exit(0);
+    process.exit(0);
 });
 
-gulp.task('travis', ['lintJS','buildJS','buildCSS','testServerJSWithCoverage','end']);
+gulp.task('travis', ['lintJS', 'buildJS', 'buildCSS', 'testServerJSWithCoverage', 'end']);
 
-gulp.task('default', function () {
+gulp.task('watchCss', function() {
+    gulp.watch('browser/scss/**', function() {
+        runSeq('buildCSS', 'reloadCSS');
+    });
+})
+
+gulp.task('default', function() {
 
     gulp.start('build');
 
     // Run when anything inside of browser/js changes.
-    gulp.watch('browser/js/**', function () {
+    gulp.watch('browser/js/**', function() {
         runSeq('buildJS', 'reload');
     });
 
     // Run when anything inside of browser/scss changes.
-    gulp.watch('browser/scss/**', function () {
+    gulp.watch('browser/scss/**', function() {
         runSeq('buildCSS', 'reloadCSS');
     });
 
