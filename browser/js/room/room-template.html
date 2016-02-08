@@ -1,9 +1,9 @@
 <navbar></navbar>
 <div class="row" id='room'>
     <div id="left-sidebar" class="col-sm-2">
-        <div id="leader-profile" ng-repeat="score in room.userScores" class="row">
+        <div id="leader-profile" ng-repeat="user in room.users" class="row">
             <div class="col-sm-8 col-sm-offset-2">
-                <img class="img-circle profile-img" ng-src="{{score.user.picture}}" alt="">
+                <img class="img-circle profile-img" ng-src="{{user.picture}}" alt="">
             </div>
         </div>
     </div>
