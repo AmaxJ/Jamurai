@@ -23,7 +23,13 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory) => {
+    .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory) => {
+
+        let sortScores = () => {
+            $scope.room.userScores.sort((a, b) => {
+                return b.score - a.score;
+            });
+        }
 
         var socket = SocketFactory.getSocket();
         console.log('boom');
@@ -35,25 +41,25 @@ app.config($stateProvider => {
         $scope.room = room;
         $scope.user = user;
 
-        $scope.powerupObj; 
+        $scope.powerupObj;
         UserFactory.getPowerUps(user._id, room._id)
         .then(powerups => {
-            console.log('Getting power ups happening')
             $scope.powerupObj = powerups;
         })
 
         $scope.usePowerUp = (powerup,user,room) => {
-            console.log('Ready to emit powerup', powerup)
-            socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
+            PowerupFactory.usePowerup(powerup,user,room);
         }
 
         socket.on('updateUsers', function(room) {
             $scope.room = room;
-            $scope.$digest();
+            sortScores();
+            $rootScope.$digest();
         })
 
         socket.on('updateVotes', function(updateObj) {
             $scope.room = updateObj.updatedRoom;
+            sortScores();
             $scope.$digest();
         })
 
@@ -61,12 +67,17 @@ app.config($stateProvider => {
 
             if(updatedPowerups.user === user._id) {
                 $scope.powerupObj = updatedPowerups;
-                $scope.$digest();    
+                $scope.$digest();
             }
         })
 
+         socket.on('updateRoom', updateObj => {
+            var room = updateObj.room;
+            $scope.room = room;
+            $scope.$digest();
+         })
 
-        $scope.playlist = PlaylistFactory.getPlaylist();
+        $scope.playlist = PlaylistFactory.getPlaylist;
 
         RoomFactory.addUserEmit(room._id, user._id);
 

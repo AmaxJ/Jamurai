@@ -13,8 +13,8 @@ app.directive('playlist', function() {
             $scope.getVoteValue = (song) => {
                 return song.total;
             }
-            $scope.upvoteAmount = 1;
-            $scope.downvoteAmount = -1;
+            $scope.upvoteAmount = PlaylistFactory.getUpvoteAmount;
+            $scope.downvoteAmount = PlaylistFactory.getDownvoteAmount;
         }
     }
 });
