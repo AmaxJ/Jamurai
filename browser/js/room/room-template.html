@@ -1,6 +1,45 @@
 <navbar></navbar>
 <div class="row" id='room'>
     <div id="left-sidebar" class="col-sm-2">
+        <div id="leader-profile" ng-repeat="score in room.userScores" class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h4>{{$index + 1}}</h4>
+                        <a ui-sref="publicProfile({userId: score.user._id})">
+                        <img class="img-circle profile-img" ng-src="{{score.user.picture}}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 score-data">
+                        <p class="score-card">Score: <span>{{score.score}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <playlist user='user' room='room' playlist="playlist()"></playlist>
+    </div>
+    <div class="col-sm-3" id="right-sidebar">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h4>PowerUps</h4>
+                <div class="list-group">
+                    <button ng-repeat="powerup in powerupObj.powerups track by $index" class="list-group-item" ng-click="usePowerUp(powerup, user, room)">{{powerup}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="player-bar" class="row">
+    <youtube-embed></youtube-embed>
+</div>
+
+<!-- <navbar></navbar>
+<div class="row" id='room'>
+    <div id="left-sidebar" class="col-sm-2">
         <div id="leader-profile" ng-repeat="user in room.users" class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <a ui-sref="publicProfile({userId: user._id})">
@@ -31,3 +70,4 @@
 <div id="player-bar" class="row">
     <youtube-embed></youtube-embed>
 </div>
+ -->
