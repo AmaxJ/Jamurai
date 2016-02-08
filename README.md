@@ -1,3 +1,3 @@
-[![Build Status](https://travis-ci.org/AmaxJ/capstone.svg?branch=master)](https://travis-ci.org/AmaxJ/capstone)
+[![Build Status](https://travis-ci.org/AmaxJ/Jamurai.svg?branch=master)](https://travis-ci.org/AmaxJ/Jamurai)
 
-# Track Shift (Tentative Name)
+# Jamurai
