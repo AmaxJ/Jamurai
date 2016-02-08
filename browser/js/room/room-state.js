@@ -21,11 +21,12 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory) => {
+    .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
 
         var socket = SocketFactory.getSocket();
         $scope.room = room;
         $scope.user = user;
+        $scope.startPlaylist = PlayerFactory.startPlaylist;
 
         $scope.powerupObj; 
         UserFactory.getPowerUps(user._id, room._id)

@@ -6,6 +6,8 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     var downvoteAmount = -1;
     var socket = SocketFactory.getSocket();
 
+    
+
     //Called when new room is created
     factory.createPlaylist = function() {
         return $http.post('/api/playlists', {})

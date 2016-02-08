@@ -2,6 +2,14 @@ app.factory('PlayerFactory', (PlaylistFactory) => {
     var youtubePlayer;
     var factory = {};
 
+    factory.startPlaylist = () => {
+        console.log('FIRST SONG',PlaylistFactory.getPlaylist().songs[0])
+        var playlist = PlaylistFactory.getPlaylist().songs;
+        factory.loadVideoById(playlist[0]);
+        playlist.shift();
+
+    }
+
     factory.loadVideoById = (songObj) => {
         var songID = songObj.song.youTubeId;
         PlaylistFactory.setCurrentSong(songObj);
