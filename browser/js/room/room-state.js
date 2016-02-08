@@ -23,11 +23,17 @@ app.config($stateProvider => {
     })
     .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory) => {
 
+        let sortScores = () => {
+            $scope.room.userScores.sort((a, b) => {
+                return b.score - a.score;
+            });
+        }
+
         var socket = SocketFactory.getSocket();
         $scope.room = room;
         $scope.user = user;
 
-        $scope.powerupObj; 
+        $scope.powerupObj;
         UserFactory.getPowerUps(user._id, room._id)
         .then(powerups => {
             $scope.powerupObj = powerups;
@@ -39,12 +45,13 @@ app.config($stateProvider => {
 
         socket.on('updateUsers', function(room) {
             $scope.room = room;
+            sortScores();
             $rootScope.$digest();
         })
 
         socket.on('updateVotes', function(updateObj) {
-
             $scope.room = updateObj.updatedRoom;
+            sortScores();
             $scope.$digest();
         })
 
@@ -52,7 +59,7 @@ app.config($stateProvider => {
 
             if(updatedPowerups.user === user._id) {
                 $scope.powerupObj = updatedPowerups;
-                $scope.$digest();    
+                $scope.$digest();
             }
         })
 
