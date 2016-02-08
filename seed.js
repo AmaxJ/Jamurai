@@ -21,7 +21,6 @@ var seedUsers = function () {
         username: "Testing",
         location: 'Albany, NY',
         DOB: '1/1/1999',
-        username: "Testing"
     }, {
         email: "Donald@gmail.com",
         username: "Donald Trum",

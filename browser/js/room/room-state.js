@@ -1,3 +1,5 @@
+var geo = navigator.geolocation;
+
 app.config($stateProvider => {
         $stateProvider.state('room', {
             url: '/room/:roomId',
@@ -25,6 +27,11 @@ app.config($stateProvider => {
     .controller('RoomCtrl', ($scope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory) => {
 
         var socket = SocketFactory.getSocket();
+        geo.getCurrentPosition(function(position){
+        console.log('woot woot');
+        var coords = [position.coords.latitude,position.coords.longitude];
+        return UserFactory.updateUser(user._id,{coordinates: coords})
+        })
         $scope.room = room;
         $scope.user = user;
 

@@ -9,6 +9,7 @@ app.config(function($stateProvider) {
 app.controller('AnalyticsCtrl', ($scope) => {
 	$scope.items = [
 		{ label: 'User Analytics', state: 'userAnalytics' },
-		{ label: 'Song Analytics', state: 'songAnalytics'}
+		{ label: 'Song Analytics', state: 'songAnalytics' },
+		{ label: 'Party Stats', state: 'partyStats'}
 	]
 });

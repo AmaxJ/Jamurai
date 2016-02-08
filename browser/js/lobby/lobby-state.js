@@ -1,3 +1,5 @@
+var geo = navigator.geolocation;
+
 app.config(function($stateProvider) {
     $stateProvider.state('lobby', {
         url: '/lobby',
@@ -6,15 +8,28 @@ app.config(function($stateProvider) {
         resolve: {
         	user: function (AuthService) {
         		return AuthService.getLoggedInUser()
-        				.then(user=> user)
+        				// .then(function(user){
+                        //     geo.getCurrentPosition(function(position){
+                        //         console.log('poz',position);
+                        //         var coords = [position.coords.latitude,position.coords.longitude];
+                        //         return UserFactory.updateUser(user._id,{coordinates: coords})
+
+                        //     })
+                        // })
         	},
             rooms: function (RoomFactory) {
                 return RoomFactory.getAllRooms();
             }
         }
     })
-}).controller('LobbyCtrl', ($scope, RoomFactory, user, rooms) => {
+}).controller('LobbyCtrl', ($scope, RoomFactory, user, rooms, UserFactory) => {
+    geo.getCurrentPosition(function(position){
+        console.log('woo woo');
+        var coords = [position.coords.latitude,position.coords.longitude];
+        return UserFactory.updateUser(user._id,{coordinates: coords})
+    })
     $scope.user = user;
+    console.log('usr',$scope.user);
     $scope.rooms = rooms;
     // RoomFactory.getAllRooms()
     //     .then(rooms => {
