@@ -11,6 +11,18 @@ app.factory('UserFactory', function($http){
 		})
 	}
 
+	factory.updateUser = (id,data) => {
+		return $http({
+			method: 'PUT',
+			url: '/api/users/' + id,
+			data: data
+		})
+		.then((response) => {
+			console.log('resp',response.data);
+			return response.data;
+		})
+	}
+
 	factory.getAllUsers = (id) => {
 		return $http({
 			method: 'GET',
