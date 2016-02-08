@@ -14,12 +14,14 @@
             margin-top: 10px;
         }
     }
-    #right-sidebar {
-        #player {
-            position: fixed;
-            bottom: 0px;
-            width: 100%;
-            height: 60%;
-        }
-    }
+    #right-sidebar {}
+}
+
+#player-bar {
+    z-index: -1;
+    opacity: 0.0;
+    position: fixed;
+    bottom: 0px;
+    width: 50%;
+    height: 60%;
 }
