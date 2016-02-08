@@ -2,6 +2,8 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     var factory = {};
     var playlist;
     var currentSong;
+    var upvoteAmount = 1;
+    var downvoteAmount = -1;
     var socket = SocketFactory.getSocket();
 
     //Called when new room is created
@@ -78,6 +80,12 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     factory.vote = function($event, song, vote, user, room) {
         $event.stopPropagation();
         SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
+        if(vote.type === 'up') {
+            $rootScope.$emit('upvote');
+        }
+        else {
+            $rootScope.$emit('downvote');
+        }
     };
 
     factory.setPlaylist = function(newPlaylist) {
@@ -97,12 +105,34 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         return currentSong;
     };
 
+    factory.getUpvoteAmount = () => {
+        return upvoteAmount;
+    };
+
+    factory.setUpvoteAmount = (num) => {
+        upvoteAmount = num;
+    };
+
+    factory.getDownvoteAmount = () => {
+        return downvoteAmount;
+    };
+
+    factory.setDownvoteAmount = (num) => {
+        downvoteAmount = num;
+    };
+
     socket.on('updateVotes', function(updatedObj) {
         var songToUpdate = _.find(playlist.songs, function(o) {
                 return o.song.title === updatedObj.updatedSong.song.title;
             })
         var updateIndex = playlist.songs.indexOf(songToUpdate)
         playlist.songs[updateIndex] = updatedObj.updatedSong;
+        factory.sort();
+        $rootScope.$digest();
+    })
+
+    socket.on('updateRoom', updateObj=> {
+        playlist = updateObj.playlist;
         factory.sort();
         $rootScope.$digest();
     })

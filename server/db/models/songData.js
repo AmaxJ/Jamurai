@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
+
 var schema = new mongoose.Schema({
 
     playlist: {
@@ -44,16 +45,20 @@ schema.method({
     },
     vote : function(userId, vote) { //vote = 'up' or 'down'
         if (!userId || !vote) return;
-        if (vote > 0) {
+        if (vote.type === 'up') {
             if (this.upVotes.indexOf(userId) > -1) return;
             cleanVotes(userId,vote, this);
             this.upVotes.push(userId);
-        } else if (vote < 0) {
+        } else if (vote.type === 'down') {
             if (this.downVotes.indexOf(userId) > -1) return;
             cleanVotes(userId,vote, this);
             this.downVotes.push(userId);
         }
-        this.total += vote;
+        this.total += vote.amount;
+        return this.save();
+    },
+    changeScore: function(amount) {
+        this.total += amount;
         return this.save();
     },
     removeVote: function(userId, vote) {
@@ -69,7 +74,7 @@ schema.method({
 
 function cleanVotes(userId, vote, doc) {
     var index;
-    if (vote > 0) {
+    if (vote.type === 'up') {
         index = doc.downVotes.indexOf(userId);
         if (index > -1) {
             doc.downVotes.splice(index, 1);
