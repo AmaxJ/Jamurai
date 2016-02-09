@@ -115,7 +115,6 @@ var getNormLoc = function(coords) {
     return rp(url)
     .then(function(results) {
         var objRes = JSON.parse(results);
-        console.log('obz',objRes.results)
         if(objRes.results.length > 0)
         {
             for(var y=0; y<objRes.results[0].address_components.length; y++)
@@ -151,7 +150,6 @@ var getNormLoc = function(coords) {
                 }
             }
             var normalizedLocationString = city+', '+state;
-            console.log('normstr',normalizedLocationString);
             return normalizedLocationString;
         }
         else
@@ -203,7 +201,6 @@ schema.pre('save', function (next) {
     {
         return getCoords(doc.location)
         .then(function(coordinates){
-            console.log('coors',coordinates)
             doc.coordinates = coordinates;
             if(coordinates)
             {
@@ -222,7 +219,6 @@ schema.pre('save', function (next) {
     }
     else if(doc.coordinates)
     {
-        console.log('boom');
         return getNormLoc(doc.coordinates)
         .then(function(normLoc){
             doc.normalizedLocation = normLoc;

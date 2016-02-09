@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var UserScore = mongoose.model("UserScore");
 var PowerupData = mongoose.model("PowerupData");
+var rp = require('request-promise');
 
 var schema = new mongoose.Schema({
     creator: {
@@ -17,7 +18,17 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    coords: {
+        type: [Number],
+    },
+    initiated: {
+        type: Boolean,
+        default: false
+    },
     location: {
+        type: String
+    },
+    normalo: {
         type: String
     },
     creationDate: {
@@ -74,6 +85,59 @@ schema.statics.getRoomSongs = function getRoomSongs() {
         .exec()
 };
 
+var getNormLoc = function(doc,coords) {
+    console.log('doc',doc);
+    console.log('coords',coords);
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+coords[0]+','+coords[1]+'&key=AIzaSyBOwi-4AsRFS8G0SYIAv5ysZpGU-LnOpgY';
+    return rp(url)
+    .then(function(results) {
+        var objRes = JSON.parse(results);
+        if(objRes.results.length > 0)
+        {
+            for(var y=0; y<objRes.results[0].address_components.length; y++)
+            {
+                var typeArr = objRes.results[0].address_components[y].types;
+                var useThisForCity = false;
+                var useThisForState = false;
+                for(var z=0; z<typeArr.length; z++)
+                {
+                    if(typeArr[z]==='sublocality_level_1')
+                    {
+                        useThisForCity = true;
+                        break;
+                    }
+                    else if(typeArr[z]==='locality')
+                    {
+                        useThisForCity = true;
+                        break;
+                    }
+                    else if(typeArr[z]==='administrative_area_level_1')
+                    {
+                        useThisForState = true;
+                        break;
+                    }
+                }
+                if(useThisForCity)
+                {
+                    var city = objRes.results[0].address_components[y].long_name;
+                }
+                else if(useThisForState)
+                {
+                    var state = objRes.results[0].address_components[y].short_name;
+                }
+            }
+            var normalizedLocationString = city+', '+state;
+            console.log('welcome to my house party at ', normalizedLocationString);
+            return [doc,normalizedLocationString];
+        }
+        else
+        {
+            return;
+        }
+        
+    })
+}
+
 schema.method({
     addToScore: function(songData, amount) {
         var self = this;
@@ -128,6 +192,10 @@ schema.method({
                 let userScoreObj = room.userScores.filter(scoreObj => {
                     return scoreObj.user.toString() === userId.toString();
                 })[0];
+                //insert code here
+                //******
+                console.log('date',room.creationDate.valueOf());
+                console.log('now', Date.now());
                 if (!userScoreObj) {
                     return self.constructor.createScoreObj(self._id, userId);
                 } else {
@@ -161,6 +229,37 @@ schema.method({
                             }
                         }
                     })
+            })
+            .then(function(doc){
+                if(doc.users.length > 5)
+                {
+                    doc.initiated = true;
+                }
+                if(!doc.initiated)
+                {
+                    var coordArr = [0,0]
+                    for(var x=0; x<self.users.length; x++)
+                    {
+                        coordArr[0]+=doc.users[x].coordinates[0];
+                        coordArr[1]+=doc.users[x].coordinates[1];
+                    }
+                    coordArr[0] = coordArr[0]/doc.users.length;
+                    coordArr[1] = coordArr[1]/doc.users.length;
+                    doc.coords = coordArr;
+                    return getNormLoc(doc,doc.coords)
+                }
+                else
+                {
+                    return;
+                }
+            })
+            .then(function(returnData){
+                var doc = returnData[0];
+                var normLoc = returnData[1];
+                console.log('enddoc',doc);
+                console.log('normloc',normLoc);
+                doc.normalo = normLoc;
+                return doc.save();
             })
     },
     removeUser: function(userId) {
