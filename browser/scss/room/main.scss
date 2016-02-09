@@ -19,6 +19,13 @@
         #powerup-icon {
             width: 95px;
         }
+        #powerup-icon:hover {
+            -ms-transform: scale(1.2);
+            /* IE 9 */
+            -webkit-transform: scale(1.2);
+            /* Safari */
+            transform: scale(1.2);
+        }
         #power-name {
             font-size: 1.2em;
             font-weight: bold;
