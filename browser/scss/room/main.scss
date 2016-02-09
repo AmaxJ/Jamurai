@@ -14,7 +14,16 @@
             margin-top: 10px;
         }
     }
-    #right-sidebar {}
+    #right-sidebar {
+        text-align: center;
+        #powerup-icon {
+            width: 95px;
+        }
+        #power-name {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    }
     .ranking {
         text-align: right;
     }
