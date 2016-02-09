@@ -13,6 +13,7 @@
                     </div>
                 </div>
                 <div class="row">
+                    
                     <div class="col-sm-8 col-sm-offset-2 score-data">
                         <p class="score-card">Score: <span>{{score.score}}</span></p>
                     </div>
@@ -21,6 +22,8 @@
         </div>
     </div>
     <div class="col-sm-7">
+        <button ng-click="startPlaylist()" class=".btn .btn-default">Start the jamz</button>
+        <h4 ng-show="currentlyPlaying()">Currently Playing:</h4><p>{{currentlyPlaying().song.title}}</p>
         <playlist user='user' room='room' playlist="playlist()"></playlist>
     </div>
     <div class="col-sm-3" id="right-sidebar">
@@ -33,43 +36,5 @@
             </div>
         </div>
     </div>
-</div>
-<div id="player-bar" class="row">
-    <youtube-embed></youtube-embed>
 </div>
 
-<!-- <navbar></navbar>
-<div class="row" id='room'>
-    <div id="left-sidebar" class="col-sm-2">
-        <div id="leader-profile" ng-repeat="user in room.users" class="row">
->>>>>>> master
-            <div class="col-sm-8 col-sm-offset-2">
-                <a ui-sref="publicProfile({userId: user._id})">
-                    <img class="img-circle profile-img" ng-src="{{user.picture}}" alt="">
-                </a>
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 score-data">
-                        <p class="score-card">Score: <span>{{score.score}}</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-7">
-        <playlist user='user' room='room' playlist="playlist()"></playlist>
-    </div>
-    <div class="col-sm-3" id="right-sidebar">
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
-                <h4>PowerUps</h4>
-                <div class="list-group">
-                    <button ng-repeat="powerup in powerupObj.powerups track by $index" class="list-group-item" ng-click="usePowerUp(powerup, user, room)">{{powerup}}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="player-bar" class="row">
-    <youtube-embed></youtube-embed>
-</div>
- -->

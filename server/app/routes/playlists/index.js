@@ -78,3 +78,16 @@ router.route('/:playlistId/songData')
             })
             .then(null, next);
     });
+
+router.route('/:playlistId/:songId')
+    .delete((req, res, next) => {
+        Playlist.findById(req.params.playlistId)
+            .then(playlist => {
+                return playlist.removeSong(req.params.songId);
+            })
+            .then( playlist => {
+                console.log('Updated playlist?', playlist)
+                res.status(204).json(playlist);
+            })
+            .then(null, next);
+    });
