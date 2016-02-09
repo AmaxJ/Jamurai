@@ -185,6 +185,12 @@ schema.method({
             }
         })
 
+    },
+    removeSongFromPlaylist: function(song) {
+        console.log('SONG TO REMOVE', song);
+        // var index = this.playlist.indexOf(song);
+        // this.playlist.splice(index, 1);
+        // this.save;
     }
 });
 
