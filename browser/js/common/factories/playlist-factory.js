@@ -100,10 +100,13 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     factory.setCurrentSong = function(newSong) {
+
         currentSong = newSong;
     };
 
     factory.getCurrentSong = function() {
+        if(!currentSong) return null;
+        console.log("CURRENT SONG", currentSong)
         return currentSong;
     };
 
