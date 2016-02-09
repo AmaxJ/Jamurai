@@ -1,7 +1,9 @@
 'use strict';
 var router = require('express').Router();
 var Room = require('mongoose').model('Room');
-var Playlist = require('mongoose').model('Playlist')
+var Playlist = require('mongoose').model('Playlist');
+var User = require('mongoose').model('User');
+var Song = require('mongoose').model('Song');
 module.exports = router;
 
 router.route('/')
@@ -27,6 +29,10 @@ router.route('/')
                     populate: {
                         path: 'song',
                         model: 'Song'
+                    },
+                    populate: {
+                        path: 'submittedBy',
+                        model: 'User'
                     }
                 }
             })
@@ -50,6 +56,7 @@ router.route('/')
 
 
 router.route('/:roomId')
+
     .get((req, res, next) => {
         Room.findById(req.params.roomId)
             .populate('songs')
@@ -69,10 +76,12 @@ router.route('/:roomId')
                 populate: {
                     path: 'songs',
                     model: 'SongData',
-                    populate: {
-                        path: 'song',
-                        model: 'Song'
-                    }
+                    populate: [
+                        {path: 'song',
+                        model: 'Song'},
+                        {path: 'submittedBy',
+                        model: 'User'}
+                    ]
                 }
             })
             .then(room => {

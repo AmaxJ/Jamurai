@@ -10,11 +10,13 @@
         <div class="col-md-12 col-sm-12">
             <table class='table'>
                 <tr>
+                    <th>Submitter</th>
                     <th>Song</th>
                     <th>Vote</th>
                     <th>Honor</th>
                 </tr>
                 <tr ng-repeat='songObj in playlist.songs' ng-click="loadVideoById(songObj)">
+                    <td><img id="submittedBy-image" src="{{songObj.submittedBy.picture}}" alt=""></td>
                     <td>{{songObj.song.title}}</td>
                     <td>
                         <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, {type: 'up', amount: upvoteAmount()}, user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
