@@ -23,7 +23,7 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory) => {
+    .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
 
         let sortScores = () => {
             $scope.room.userScores.sort((a, b) => {
@@ -40,6 +40,9 @@ app.config($stateProvider => {
         });
         $scope.room = room;
         $scope.user = user;
+        $scope.startPlaylist = PlayerFactory.startPlaylist;
+
+        $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         $scope.powerupObj;
         UserFactory.getPowerUps(user._id, room._id)
