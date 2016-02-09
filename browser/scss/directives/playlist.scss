@@ -15,9 +15,14 @@
 
   tr.ng-move,
   tr.ng-enter,
-  tr.ng-leave {
-    -webkit-transition:all linear 0.5s;
-    transition:all linear 0.5s;
+   {
+    -webkit-transition:all ease 0.6s;
+    transition:all ease 0.6s;
+  }
+
+  tr.ng-leave{
+    -webkit-transition:all ease 0.3s;
+    transition:all ease 0.3s;
   }
 
   tr.ng-leave.ng-leave-active,
