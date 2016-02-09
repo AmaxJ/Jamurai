@@ -1,3 +1,5 @@
+var geo = navigator.geolocation;
+
 app.config($stateProvider => {
         $stateProvider.state('room', {
             url: '/room/:roomId',
@@ -30,17 +32,23 @@ app.config($stateProvider => {
         }
 
         var socket = SocketFactory.getSocket();
+        geo.getCurrentPosition(function(position) {
+            var coords = [position.coords.latitude, position.coords.longitude];
+            return UserFactory.updateUser(user._id, {
+                coordinates: coords
+            })
+        });
         $scope.room = room;
         $scope.user = user;
 
         $scope.powerupObj;
         UserFactory.getPowerUps(user._id, room._id)
-        .then(powerups => {
-            $scope.powerupObj = powerups;
-        })
+            .then(powerups => {
+                $scope.powerupObj = powerups;
+            })
 
-        $scope.usePowerUp = (powerup,user,room) => {
-            PowerupFactory.usePowerup(powerup,user,room);
+        $scope.usePowerUp = (powerup, user, room) => {
+            PowerupFactory.usePowerup(powerup, user, room);
         }
 
         socket.on('updateUsers', function(room) {
@@ -55,19 +63,19 @@ app.config($stateProvider => {
             $scope.$digest();
         })
 
-         socket.on('updatePowerups', function(updatedPowerups) {
+        socket.on('updatePowerups', function(updatedPowerups) {
 
-            if(updatedPowerups.user === user._id) {
+            if (updatedPowerups.user === user._id) {
                 $scope.powerupObj = updatedPowerups;
                 $scope.$digest();
             }
         })
 
-         socket.on('updateRoom', updateObj => {
+        socket.on('updateRoom', updateObj => {
             var room = updateObj.room;
             $scope.room = room;
             $scope.$digest();
-         })
+        })
 
         $scope.playlist = PlaylistFactory.getPlaylist;
 

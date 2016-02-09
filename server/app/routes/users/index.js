@@ -34,8 +34,11 @@ router.route('/:id')
 		var update = req.body;
 		User.findByIdAndUpdate(userId, update, { 'new': true}).exec()
 		.then(function(user){
+			// res.status(201).send(user)
+			return user.save()
+		}).then(function(user){
 			res.status(201).send(user)
-		})
+		}).then(null,next)
 	})
 
 router.route('/:userId/:roomId/powerup')
