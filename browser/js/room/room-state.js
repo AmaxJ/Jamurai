@@ -31,6 +31,15 @@ app.config($stateProvider => {
             });
         }
 
+        let formatPowerUps = powerUpObj => {
+            return powerUpObj.powerups.map(powerup => {
+                let pwrUp = {};
+                pwrUp.name = powerup;
+                pwrUp.icon = powerUpIcons[powerup];
+                return pwrUp;
+            });
+        }
+
         var socket = SocketFactory.getSocket();
         geo.getCurrentPosition(function(position) {
             var coords = [position.coords.latitude, position.coords.longitude];
@@ -44,10 +53,20 @@ app.config($stateProvider => {
 
         $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
-        $scope.powerupObj;
+        let powerUpIcons = {
+            'swordOfHonor': '/daggerSolid.svg',
+            'swordOfCertainDeath': '/darts.svg',
+            'deathStars': '/discipline.svg',
+            'swordOfDisgrace': '/food.svg',
+            'swordOfHolyLegend': '/hat.svg',
+            'swordOfUncertainty': '/sword.svg',
+            'poisonDarts': '/twoswords.svg'
+        }
+
+        $scope.powerUps;
         UserFactory.getPowerUps(user._id, room._id)
-            .then(powerups => {
-                $scope.powerupObj = powerups;
+            .then(powerUpObj => {
+                $scope.powerUps = formatPowerUps(powerUpObj)
             })
 
         $scope.usePowerUp = (powerup, user, room) => {
@@ -69,7 +88,7 @@ app.config($stateProvider => {
         socket.on('updatePowerups', function(updatedPowerups) {
 
             if (updatedPowerups.user === user._id) {
-                $scope.powerupObj = updatedPowerups;
+                $scope.powerUps = formatPowerUps(updatedPowerups);
                 $scope.$digest();
             }
         })

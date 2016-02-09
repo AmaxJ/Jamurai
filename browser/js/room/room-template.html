@@ -7,12 +7,12 @@
                     <div class="col-sm-8 col-sm-offset-2">
                         <h4>{{$index + 1}}</h4>
                         <a ui-sref="publicProfile({userId: score.user._id})">
-                        <img class="img-circle profile-img" ng-src="{{score.user.picture}}" alt="">
+                            <img class="img-circle profile-img" ng-src="{{score.user.picture}}" alt="">
                         </a>
                     </div>
                 </div>
                 <div class="row">
-                    
+
                     <div class="col-sm-8 col-sm-offset-2 score-data">
                         <p class="score-card">Score: <span>{{score.score}}</span></p>
                     </div>
@@ -29,11 +29,11 @@
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <h4>PowerUps</h4>
-                <div class="list-group">
-                    <button ng-repeat="powerup in powerupObj.powerups track by $index" class="list-group-item" ng-click="usePowerUp(powerup, user, room)">{{powerup}}</button>
+                <div ng-repeat="powerup in powerUps track by $index" class="list-group">
+                    <a href="" ng-click="usePowerUp(powerup.name, user, room)"><img id="powerup-icon" ng-src="{{powerup.icon}}"></a>
+                    <p id="power-name">{{powerup.name}}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
