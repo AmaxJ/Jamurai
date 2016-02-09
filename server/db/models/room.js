@@ -103,14 +103,12 @@ schema.method({
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: {
-                                path: 'song',
-                                model: 'Song'
-                            },
-                            populate: {
-                                path: 'submittedBy',
-                                model: 'User'
-                            }
+                            populate: [
+                                {path: 'song',
+                                model: 'Song'},
+                                {path: 'submittedBy',
+                                model: 'User'}
+                            ]
                         }
                     })
             })
@@ -160,10 +158,12 @@ schema.method({
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: {
-                                path: 'song',
-                                model: 'Song'
-                            }
+                            populate: [
+                                {path: 'song',
+                                model: 'Song'},
+                                {path: 'submittedBy',
+                                model: 'User'}
+                            ]
                         }
                     })
             })
