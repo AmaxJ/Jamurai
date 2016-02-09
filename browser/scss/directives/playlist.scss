@@ -11,4 +11,26 @@
     #playlist-table {
         padding-bottom: 30px;
     }
+
+
+  tr.ng-move,
+  tr.ng-enter,
+  tr.ng-leave {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+  }
+
+  tr.ng-leave.ng-leave-active,
+  tr.ng-move,
+  tr.ng-enter {
+    opacity:0;
+    max-height:0;
+  }
+
+  tr.ng-leave,
+  tr.ng-move.ng-move-active,
+  tr.ng-enter.ng-enter-active {
+    opacity:1;
+    max-height:40px;
+  }
 }
