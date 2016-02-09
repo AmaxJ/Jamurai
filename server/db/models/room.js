@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var UserScore = mongoose.model("UserScore");
 var PowerupData = mongoose.model("PowerupData");
+var User = mongoose.model("User");
 
 var schema = new mongoose.Schema({
     creator: {
@@ -102,10 +103,12 @@ schema.method({
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: {
-                                path: 'song',
-                                model: 'Song'
-                            }
+                            populate: [
+                                {path: 'song',
+                                model: 'Song'},
+                                {path: 'submittedBy',
+                                model: 'User'}
+                            ]
                         }
                     })
             })
@@ -155,10 +158,12 @@ schema.method({
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: {
-                                path: 'song',
-                                model: 'Song'
-                            }
+                            populate: [
+                                {path: 'song',
+                                model: 'Song'},
+                                {path: 'submittedBy',
+                                model: 'User'}
+                            ]
                         }
                     })
             })
