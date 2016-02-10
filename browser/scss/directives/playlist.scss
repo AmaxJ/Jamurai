@@ -34,13 +34,13 @@
   tr.ng-move,
   tr.ng-enter,
    {
-    -webkit-transition:all ease 0.6s;
-    transition:all ease 0.6s;
+    -webkit-transition:all ease 0.8s;
+    transition:all ease 0.8s;
   }
 
   tr.ng-leave{
-    -webkit-transition:all ease 0.3s;
-    transition:all ease 0.3s;
+    -webkit-transition:all ease 0.4s;
+    transition:all ease 0.4s;
   }
 
   tr.ng-leave.ng-leave-active,
@@ -74,4 +74,5 @@
 #submittedBy-image {
   height: 75px;
   width: 75px;
+
 }
