@@ -57,18 +57,30 @@
     max-height:40px;
   }
 
-    .spacer {
-      margin-bottom: 4%;
+  .spacer {
+    margin-bottom: 4%;
+  }
+
+  .upVoted {
+      &:hover {
+          background-color: $button-hover-color;
+          border-color: $button-hover-border-color;
+      }
+      span {
+        color: #08CAB0;
+      }
+  }
+
+  .downVoted {
+    &:hover {
+        background-color: $button-hover-color;
+        border-color: $button-hover-border-color;
     }
+    span {
+      color: #D21E48;
+    }
+  }
 
-}
-
-.checker {
-  color: #08CAB0;
-}
-
-.x {
-  color: #D21E48;
 }
 
 #submittedBy-image {

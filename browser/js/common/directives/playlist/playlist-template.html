@@ -24,14 +24,14 @@
                     <td><img class="img-circle" id="submittedBy-image" src="{{songObj.submittedBy.picture}}" alt=""></td>
                     <td>{{songObj.song.title}}</td>
                     <td>
-                        <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, {type: 'up', amount: upvoteAmount()}, user, room)"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                        <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, {type: 'up', amount: upvoteAmount()}, user, room)" ng-disabled='{{ checkUserVote(user, songObj) === "upVote" }}' ng-class="{upVoted: {{ checkUserVote(user, songObj) === 'upVote' }} }"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)" ng-disabled='{{ checkUserVote(user, songObj) === "downVote" }}' ng-class="{downVoted: {{ checkUserVote(user, songObj) === 'downVote'}} }"><span class="glyphicon glyphicon-arrow-down"></span></button>
                     </td>
                     <td>{{getVoteValue(songObj)}}</td>
-                    <td>
+                 <!--    <td>
                         <span ng-hide="{{ checkIfUserVoted(user, songObj) === false || checkIfUserVoted(user, songObj) === undefined }}" class='glyphicon glyphicon-ok checker'></span>
                          <span ng-hide="{{ checkIfUserVoted(user, songObj) === true || checkIfUserVoted(user, songObj) === undefined }}" class='glyphicon glyphicon-remove x'></span>
-                    </td>
+                    </td> -->
                 </tr>
             </table>
         </div>
