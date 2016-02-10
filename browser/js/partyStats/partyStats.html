@@ -1,6 +1,3 @@
-<!-- <div ng-repeat='room in rooms'>
-    {{room}}
-</div> -->
 <navbar></navbar>
 <div class="row">
     <div class="col-sm-8 col-sm-offset-1">
@@ -11,7 +8,23 @@
 <div class="row">
     <div class="col-sm-2 col-sm-offset-5 graph-buttons">
         <h5>Switch to:</h5>
-        <button class="btn btn-primary" ng-show='singular' ng-click='getOverallPopularity()'>Overall Song Popularity</button>
-        <button class="btn btn-primary" ng-show='overall' ng-click='getSingularPopularity()'>Song Popularity By Party</button>
+        <button class="btn btn-primary" ng-click='getOverallPopularity()'>Most Loved Songs</button>
+        <button class="btn btn-primary" ng-click='getSingularPopularity()'>Song Popularity By Party</button>
+        <button class="btn btn-primary" ng-click='getHatedSongs()'>Most Hated Songs</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-1">
+        <div data-ac-chart="'bar'" data-ac-data="data2" data-ac-config="config2" class="chart" id="chart2">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2 col-sm-offset-5 graph-buttons">
+        <h5>Switch to:</h5>
+        <div class="btn-group" role="group">
+        <button class="btn btn-primary" ng-click='getUserLocPop()'>Popularity by User Location</button>
+        <button class="btn btn-primary" ng-click='getRoomLocPop()'>Popularity by Room Location</button>
     </div>
 </div>

@@ -22,7 +22,7 @@ app.factory('UserFactory', function($http){
 		})
 	}
 
-	factory.getAllUsers = id => {
+	factory.getAllUsers = () => {
 		return $http({
 			method: 'GET',
 			url: '/api/users'

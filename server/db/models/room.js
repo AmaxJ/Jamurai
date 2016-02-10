@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var UserScore = mongoose.model("UserScore");
 var PowerupData = mongoose.model("PowerupData");
+var rp = require('request-promise');
 var User = mongoose.model("User");
 
 var schema = new mongoose.Schema({
@@ -18,7 +19,17 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    coords: {
+        type: [Number],
+    },
+    initiated: {
+        type: Boolean,
+        default: false
+    },
     location: {
+        type: String
+    },
+    normalLocation: {
         type: String
     },
     creationDate: {
@@ -74,6 +85,41 @@ schema.statics.getRoomSongs = function getRoomSongs() {
         .select('songs')
         .exec()
 };
+
+var getNormLoc = function(doc,coords) {
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+coords[0]+','+coords[1]+'&key=AIzaSyBOwi-4AsRFS8G0SYIAv5ysZpGU-LnOpgY';
+    return rp(url)
+    .then(function(results) {
+        var objRes = JSON.parse(results);
+        if(objRes.results.length > 0)
+        {   
+            for(var y=0; y<objRes.results[0].address_components.length; y++)
+            {
+                var typeArr = objRes.results[0].address_components[y].types;
+                var sublocality = typeArr.indexOf('sublocality_level_1');
+                var locality = typeArr.indexOf('locality');
+                var adminArea = typeArr.indexOf('administrative_area_level_1');
+
+                if(sublocality >= 0 || locality >= 0)
+                {
+                    var city = objRes.results[0].address_components[y].long_name;
+                }
+
+                else if(adminArea >= 0)
+                {
+                    var state = objRes.results[0].address_components[y].short_name;
+                }
+            }
+            var normalizedLocationString = city+', '+state;
+            return [doc,normalizedLocationString];
+        }
+        else
+        {
+            return;
+        }
+        
+    })
+}
 
 schema.method({
     addToScore: function(songData, amount) {
@@ -166,6 +212,35 @@ schema.method({
                             ]
                         }
                     })
+            })
+            .then(function(doc){
+                if(doc.users.length > 5)
+                {
+                    doc.initiated = true;
+                }
+                if(!doc.initiated)
+                {
+                    var coordArr = [0,0]
+                    for(var x=0; x<self.users.length; x++)
+                    {
+                        coordArr[0]+=doc.users[x].coordinates[0];
+                        coordArr[1]+=doc.users[x].coordinates[1];
+                    }
+                    coordArr[0] = coordArr[0]/doc.users.length;
+                    coordArr[1] = coordArr[1]/doc.users.length;
+                    doc.coords = coordArr;
+                    return getNormLoc(doc,doc.coords)
+                }
+                else
+                {
+                    return;
+                }
+            })
+            .then(function(returnData){
+                var doc = returnData[0];
+                var normLoc = returnData[1];
+                doc.normalLocation = normLoc;
+                return doc.save();
             })
     },
     removeUser: function(userId) {
