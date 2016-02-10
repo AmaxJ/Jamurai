@@ -33,7 +33,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	}
 
 	var config2 = {
-		title: 'Overall Song Popularity',
+		title: 'Most Loved Songs',
 		tooltips: true,
 		labels: false,
 		mouseover: function(){},
@@ -72,7 +72,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	}
 
 	var config5 = {
-    	title: 'Most hated songs',
+    	title: 'Most Hated Songs',
     	tooltips: true,
     	labels: false,
     	mouseover: function() {},
@@ -90,7 +90,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	}
 
 	var data2 = {
-		series: ['overall # of requests'],
+		series: ['vote score'],
 		data: []
 	}
 
@@ -104,8 +104,14 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		data: []
 	}
 
+	var data5 = {
+		series: ['vote score'],
+		data: []
+	}
+
 
 	var masterSongList = [];
+	var hateCopy = [];
 	var overallMasterVzn = [];
 	var roomLocList = [];
 	for(var x=0; x<$scope.rooms.length; x++)
@@ -172,6 +178,10 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 			}
 		}
 	}
+	for(var m=0; m<overallMasterVzn.length; m++)
+	{
+		hateCopy.push(overallMasterVzn[m]);
+	}
 	var userLocList = [];
 	for(var t=0; t<$scope.users.length; t++)
 	{
@@ -192,6 +202,9 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		}
 
 	}
+	hateCopy.sort(function(a, b) {
+		return a[1] - b[1];
+	})
     masterSongList.sort(function(a, b) {
         return b[1] - a[1];
     });
@@ -204,6 +217,10 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
     userLocList.sort(function(a, b) {
     	return b[1] - a[1];
     });
+    if(hateCopy.length > 10)
+    {
+    	hateCopy = hateCopy.slice(0,10);
+    }
 	if(masterSongList.length > 10)
 	{
 		masterSongList = masterSongList.slice(0,10);
@@ -230,6 +247,14 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		data1.data.push(obj);
 	}
 
+	for(var g=0; g<hateCopy.length; g++)
+	{
+		var obj = {};
+		obj.x = hateCopy[g][0];
+		obj.y = [hateCopy[g][1]];
+		data5.data.push(obj);
+	}
+
 	for(var h=0; h<overallMasterVzn.length; h++)
 	{
 		var obj = {};
@@ -253,37 +278,40 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		obj.y = [userLocList[i][1]];
 		data4.data.push(obj);
 	}
+	console.log('d1',masterSongList);
+	console.log('d5',hateCopy);
 
 	$scope.getOverallPopularity = function() {
 		$scope.data = data2;
 		$scope.config = config2;
-		$scope.overall = true;
-		$scope.singular = false;
+		// $scope.overall = true;
+		// $scope.singular = false;
 	}
 
 	$scope.getSingularPopularity = function() {
 		$scope.data = data1;
 		$scope.config = config1;
-		$scope.singular = true;
-		$scope.overall = false;
+		// $scope.singular = true;
+		// $scope.overall = false;
 	}
 
 	$scope.getHatedSongs = function() {
-		
+		$scope.data = data5;
+		$scope.config = config5;
 	}
 
 	$scope.getRoomLocPop = function() {
 		$scope.data2 = data3;
 		$scope.config2 = config3;
-		$scope.roomVzn = true;
-		$scope.userVzn = false;
+		// $scope.roomVzn = true;
+		// $scope.userVzn = false;
 	}
 
 	$scope.getUserLocPop = function() {
 		$scope.data2 = data4;
 		$scope.config2 = config4;
-		$scope.userVzn = true;
-		$scope.roomVzn = false;
+		// $scope.userVzn = true;
+		// $scope.roomVzn = false;
 	}
 
 	$scope.getSingularPopularity();
