@@ -49,9 +49,9 @@ app.config($stateProvider => {
         });
         $scope.room = room;
         $scope.user = user;
-        $scope.startPlaylist = PlayerFactory.startPlaylist;
+        // $scope.startPlaylist = PlayerFactory.startPlaylist;
 
-        $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
+        // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         let powerUpIcons = {
             'swordOfHonor': '/daggerSolid.svg',
