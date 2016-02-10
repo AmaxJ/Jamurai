@@ -1,5 +1,5 @@
 .profile-details {
-	background: #fff;
+	background: $main-content-background;
 	height: 100%;
 	margin: 0 auto;
 	width: 100%;
@@ -19,7 +19,7 @@
 		height: 250px;
         margin-bottom: 20px;
         border-radius: 10px;
-        border: 1px solid #5E5E5E;
+        border: 1px solid $border-color;
 	}
 	button {
 		margin-bottom: 15px;

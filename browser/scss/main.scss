@@ -1,14 +1,48 @@
+@import 'variables/main';
+
+/*$background-color: black; */
+
 * {
   box-sizing: border-box;
+  color: $primary-text-color;
+  font-family: $font-stack;
+}
+
+
+
+.btn {
+  background-color: $primary-button-color;
+  border-color: $button-border-color;
+  border-radius: 5px;
+  &:hover {
+      background-color: $button-hover-color;
+      border-color: $button-hover-border-color;
+  }
+  &:active {
+    background-color: $button-active-color;
+    border-color: $button-border-color;
+  }
+  &:focus {
+      background: none;
+      color: $button-active-color;
+  }
+  &:visited {
+      background: none;
+      color: $button-active-color;
+  }
+}
+
+p {
+  color: $primary-text-color;
 }
 
 html, body {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-
+  background-color: $background-color;
 }
 
 @mixin clearfix {
