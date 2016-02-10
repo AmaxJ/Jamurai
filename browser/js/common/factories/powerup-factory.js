@@ -2,13 +2,14 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
     var factory = {};
     var socket = SocketFactory.getSocket();
     var powerUps = {
-        'swordsOfCertainDeath': swordsOfCertainDeath,
-        'daggersOfDisdain' : daggersOfDisdain,
-        'chopsticksOfPlenty' : chopsticksOfPlenty,
-        'katanaOfDisgrace' : katanaOfDisgrace,
-        'soundOfEnlightenment' : soundOfEnlightenment,
-        'swordOfUncertainty' : swordOfUncertainty,
-        'poisonDarts' : poisonDarts
+        'Sword of Ultimate Shame': swordsOfCertainDeath,
+        'Daggers of Disdain' : daggersOfDisdain,
+        'Chopsticks of Plenty' : chopsticksOfPlenty,
+        'Katana of Disgrace' : katanaOfDisgrace,
+        'Enlightened Blessing' : soundOfEnlightenment,
+        'Sword of Uncertainty' : swordOfUncertainty,
+        'Poison Darts' : poisonDarts,
+        'The Last Jamurai': theLastJamurai
     }
 
     function chopsticksOfPlenty () {
@@ -56,6 +57,10 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
 
     function poisonDarts (user, room) {
         socket.emit('multiPower', {user: user, room: room, strength: -2});
+    }
+
+    function theLastJamurai (user, room) {
+        socket.emit('multiPower', {user: user, room: room, strength: -1000});
     }
 
     factory.usePowerup = (powerup,user,room) => {
