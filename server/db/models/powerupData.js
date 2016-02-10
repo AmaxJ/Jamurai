@@ -18,7 +18,7 @@ var schema = new mongoose.Schema({
 
 schema.method({
     addPowerup : function() {
-        var powerUps =['swordOfHonor', 'swordOfCertainDeath', 'deathStars', 'swordOfDisgrace', 'swordOfHolyLegend', 'swordOfUncertainty', 'poisonDarts'];
+        var powerUps =['chopsticksOfPlenty', 'swordsOfCertainDeath', 'daggersOfDisdain', 'katanaOfDisgrace', 'soundOfEnlightenment', 'swordOfUncertainty', 'poisonDarts'];
         var randomPowerUp = powerUps[Math.floor(Math.random()*powerUps.length)];
         this.powerups.push(randomPowerUp);
         return this.save();

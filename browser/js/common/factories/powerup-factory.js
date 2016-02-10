@@ -2,37 +2,37 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
     var factory = {};
     var socket = SocketFactory.getSocket();
     var powerUps = {
-        'swordOfCertainDeath': swordOfCertainDeath,
-        'deathStars' : deathStars,
-        'swordOfHonor' : swordOfHonor,
-        'swordOfDisgrace' : swordOfDisgrace,
-        'swordOfHolyLegend' : swordOfHolyLegend,
+        'swordsOfCertainDeath': swordsOfCertainDeath,
+        'daggersOfDisdain' : daggersOfDisdain,
+        'chopsticksOfPlenty' : chopsticksOfPlenty,
+        'katanaOfDisgrace' : katanaOfDisgrace,
+        'soundOfEnlightenment' : soundOfEnlightenment,
         'swordOfUncertainty' : swordOfUncertainty,
         'poisonDarts' : poisonDarts
     }
 
-    function swordOfHonor () {
+    function chopsticksOfPlenty () {
         PlaylistFactory.setUpvoteAmount(10);
         $rootScope.$on('upvote', ()=> {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
-    function swordOfHolyLegend () {
+    function soundOfEnlightenment () {
         PlaylistFactory.setUpvoteAmount(100);
-        $rootScope.$on('upvote', ()=> {
+        $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
-    function swordOfCertainDeath () {
+    function swordsOfCertainDeath () {
         PlaylistFactory.setDownvoteAmount(-100);
         $rootScope.$on('downvote', ()=> {
             PlaylistFactory.setDownvoteAmount(-1);
         })
     }
 
-    function swordOfDisgrace () {
+    function katanaOfDisgrace () {
         PlaylistFactory.setDownvoteAmount(-10);
         $rootScope.$on('downvote', ()=> {
             PlaylistFactory.setDownvoteAmount(-1);
@@ -50,7 +50,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
         })
     }
 
-    function deathStars (user, room) {
+    function daggersOfDisdain (user, room) {
         socket.emit('multiPower', {user: user, room: room, strength: -5});
     }
 
