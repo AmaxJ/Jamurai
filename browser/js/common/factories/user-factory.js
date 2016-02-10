@@ -1,12 +1,12 @@
 app.factory('UserFactory', function($http){
 	var factory = {};
 
-	factory.getUserById = (id) => {
+	factory.getUserById = id => {
 		return $http({
 			method: 'GET',
 			url: '/api/users/' + id
 		})
-		.then((response) => {
+		.then(response => {
 			return response.data;
 		})
 	}
@@ -17,8 +17,7 @@ app.factory('UserFactory', function($http){
 			url: '/api/users/' + id,
 			data: data
 		})
-		.then((response) => {
-			console.log('resp',response.data);
+		.then(response => {
 			return response.data;
 		})
 	}
@@ -28,7 +27,7 @@ app.factory('UserFactory', function($http){
 			method: 'GET',
 			url: '/api/users'
 		})
-		.then((response) => {
+		.then(response => {
 			return response.data;
 		})
 	}
@@ -39,7 +38,6 @@ app.factory('UserFactory', function($http){
 			url: `/api/users/${userId}/${roomId}/powerup`
 		})
 		.then(response => {
-			console.log('POWER UPS?', response.data)
 			return response.data
 		});
 	}

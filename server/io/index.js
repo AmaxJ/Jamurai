@@ -36,6 +36,12 @@ module.exports = function(server) {
                     updatedVote =  songData.total - song.total;
                     return SongData.findById(songData._id)
                         .populate('song')
+                        .populate([
+                            {path: 'song',
+                            model: 'Song'},
+                            {path: 'submittedBy',
+                            model: 'User'}
+                        ])
 
                 })
                 .then(function(songDataObj) {
@@ -155,10 +161,12 @@ module.exports = function(server) {
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: {
-                                path: 'song',
-                                model: 'Song'
-                            }
+                            populate: [
+                                {path: 'song',
+                                model: 'Song'},
+                                {path: 'submittedBy',
+                                model: 'User'}
+                            ]
                         }
                     })
             })
