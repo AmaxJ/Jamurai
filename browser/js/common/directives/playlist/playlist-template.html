@@ -1,7 +1,11 @@
 <div id="playlist" class='col-md-12 col-sm-12'>
      <div class="row">
-        <div class="col-md-2 col-md-offset-4">
-            <button ui-sref="submit-song({roomId: room._id})" class="btn-success btn">Add a Song!!!!!</button>
+        <div class="playlist-header col-md-6 col-md-offset-3">
+            <button ng-click="startPlaylist()" class="btn playlist-button">Start the jamz</button>
+            <button ui-sref="submit-song({roomId: room._id})" class="btn-success btn playlist-button">Add a Song!!!!!</button>
+            <div class="currently-playing">
+                <h4 id="currently-playing" ng-show="currentlyPlaying()">Currently Playing:</h4><p>{{currentlyPlaying().song.title}}</p>
+            </div>
         </div>
     </div>
     <div class='spacer'>
@@ -14,6 +18,7 @@
                     <th>Song</th>
                     <th>Vote</th>
                     <th>Honor</th>
+                    <th></th>
                 </tr>
                 <tr ng-repeat='songObj in playlist.songs' ng-click="loadVideoById(songObj)">
                     <td><img class="img-circle" id="submittedBy-image" src="{{songObj.submittedBy.picture}}" alt=""></td>
@@ -23,6 +28,10 @@
                         <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
                     </td>
                     <td>{{getVoteValue(songObj)}}</td>
+                    <td>
+                        <span ng-hide="{{ checkIfUserVoted(user, songObj) === false || checkIfUserVoted(user, songObj) === undefined }}" class='glyphicon glyphicon-ok checker'></span>
+                         <span ng-hide="{{ checkIfUserVoted(user, songObj) === true || checkIfUserVoted(user, songObj) === undefined }}" class='glyphicon glyphicon-remove x'></span>
+                    </td>
                 </tr>
             </table>
         </div>

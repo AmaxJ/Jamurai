@@ -49,18 +49,18 @@ app.config($stateProvider => {
         });
         $scope.room = room;
         $scope.user = user;
-        $scope.startPlaylist = PlayerFactory.startPlaylist;
+        // $scope.startPlaylist = PlayerFactory.startPlaylist;
 
-        $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
+        // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         let powerUpIcons = {
-            'swordOfHonor': '/daggerSolid.svg',
-            'swordOfCertainDeath': '/darts.svg',
-            'deathStars': '/discipline.svg',
-            'swordOfDisgrace': '/food.svg',
-            'swordOfHolyLegend': '/hat.svg',
-            'swordOfUncertainty': '/sword.svg',
-            'poisonDarts': '/twoswords.svg'
+            'chopsticksOfPlenty': '/food.svg',
+            'swordsOfCertainDeath': '/twoswords.svg',
+            'daggersOfDisdain': '/daggerSolid.svg',
+            'katanaOfDisgrace': '/sword.svg',
+            'soundOfEnlightenment': '/discipline.svg',
+            'swordOfUncertainty': '/yinyang.svg',
+            'poisonDarts': '/darts.svg'
         }
 
         $scope.powerUps;

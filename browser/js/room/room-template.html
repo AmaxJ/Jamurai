@@ -22,14 +22,14 @@
         </div>
     </div>
     <div class="col-sm-7">
-        <button ng-click="startPlaylist()" class=".btn .btn-default">Start the jamz</button>
-        <h4 ng-show="currentlyPlaying()">Currently Playing:</h4><p>{{currentlyPlaying().song.title}}</p>
+        
+       
         <playlist user='user' room='room' playlist="playlist()"></playlist>
     </div>
     <div class="col-sm-3" id="right-sidebar">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-                <h4>PowerUps</h4>
+                <h4 id="power-ups-label">Power Ups</h4>
                 <div ng-repeat="powerup in powerUps track by $index" class="list-group">
                     <a href="" ng-click="usePowerUp(powerup.name, user, room)"><img id="powerup-icon" ng-src="{{powerup.icon}}"></a>
                     <p id="power-name">{{powerup.name}}</p>

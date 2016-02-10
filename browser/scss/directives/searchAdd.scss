@@ -1,8 +1,11 @@
 #searchAdd {
-	background: #fff;
+	background: $main-content-background;
 	height: 100%;
-    #search-input {
+	#search-input {
         padding-top: 20px;
         padding-bottom: 20px;
-    }
+        background: $main-content-background;
+  }
 }
+
+

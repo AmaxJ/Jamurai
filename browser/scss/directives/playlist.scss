@@ -1,13 +1,31 @@
-#playlist {
+.currently-playing {
+  padding-top: 20px;
+  color: $highlight-color;
+  p {
+    font-size: 18px;
+  }
+}
 
+.playlist-header {
+  text-align: center;
+}
+
+#playlist {
+    margin-left: 33%;
     table {
         opacity: 0.85;
+        border-color: $table-border-color;
     }
+    
     table:hover {
         opacity: 1;
     }
+    td {
+       border-color: $table-border-color;
+    }
     th {
         font-size: 1.3em;
+        border-color: red;
     }
     #playlist-table {
         padding-bottom: 30px;
@@ -43,6 +61,14 @@
       margin-bottom: 4%;
     }
 
+}
+
+.checker {
+  color: #08CAB0;
+}
+
+.x {
+  color: #D21E48;
 }
 
 #submittedBy-image {
