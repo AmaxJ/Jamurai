@@ -1,24 +1,29 @@
+/*Imported Fonts*/
 @font-face {
     font-family: ninjaFont;
-    src: url(lastninja.ttf);
+    src: url(/lastninja.ttf);
 }
 
-/*Text colors*/
+/*Colors*/
+$red: #FF4136;
+
+/*Text*/
 $primary-text-color: white;
-$font-stack: Helvetica neue;
-$highlight-color: red;
+$font-stack: ninjaFont;
+$secondary-font-stack: Helvetica;
+$highlight-color: $red;
 
 /*Border colors*/
-$navbar-border-color: red;
+$navbar-border-color: $red;
 $border-color: black;
-$table-border-color: red;
+$table-border-color: $red;
 
 /*Buttons*/
 $primary-button-color: black;
-$button-border-color: red;
-$button-hover-color: red;
-$button-hover-border-color: red;
-$button-active-color: red;
+$button-border-color: $red;
+$button-hover-color: $red;
+$button-hover-border-color: $red;
+$button-active-color: $red;
 
 /*Background*/
 $background-color: black;

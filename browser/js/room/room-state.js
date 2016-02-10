@@ -54,13 +54,14 @@ app.config($stateProvider => {
         // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         let powerUpIcons = {
-            'chopsticksOfPlenty': '/food.svg',
-            'swordsOfCertainDeath': '/twoswords.svg',
-            'daggersOfDisdain': '/daggerSolid.svg',
-            'katanaOfDisgrace': '/sword.svg',
-            'soundOfEnlightenment': '/discipline.svg',
-            'swordOfUncertainty': '/yinyang.svg',
-            'poisonDarts': '/darts.svg'
+            'Chopsticks of Plenty': '/food.svg',
+            'Sword of Ultimate Shame': '/twoswords.svg',
+            'Daggers of Disdain': '/daggerSolid.svg',
+            'Katana of Disgrace': '/sword.svg',
+            'Enlightened Blessing': '/discipline.svg',
+            'Sword of Uncertainty': '/yinyang.svg',
+            'Poison Darts': '/darts.svg',
+            'The Last Jamurai': '/helmet.svg'
         }
 
         $scope.powerUps;
