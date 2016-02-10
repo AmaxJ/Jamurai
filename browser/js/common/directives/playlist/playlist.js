@@ -15,6 +15,7 @@ app.directive('playlist', function() {
             }
             $scope.upvoteAmount = PlaylistFactory.getUpvoteAmount;
             $scope.downvoteAmount = PlaylistFactory.getDownvoteAmount;
+            $scope.checkIfUserVoted = PlaylistFactory.checkIfUserVoted;
         }
     }
 });

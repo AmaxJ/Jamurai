@@ -18,17 +18,40 @@
         text-align: center;
         #powerup-icon {
             width: 95px;
-        }
-        #powerup-icon:hover {
-            -ms-transform: scale(1.2);
-            /* IE 9 */
-            -webkit-transform: scale(1.2);
-            /* Safari */
-            transform: scale(1.2);
+            &:hover {
+                animation: bounce 0.7s ease-in-out;
+            }
+            &:active {
+                -ms-transform: scale(0.8);
+                /* IE 9 */
+                -webkit-transform: scale(0.8);
+                /* Safari */
+                transform: scale(0.8);
+            }
         }
         #power-name {
             font-size: 1.2em;
             font-weight: bold;
+            &:hover {
+                -ms-transform: scale(1.1);
+                /* IE 9 */
+                -webkit-transform: scale(1.1);
+                /* Safari */
+                transform: scale(1.1);
+            }
+        }
+        @keyframes bounce {
+            0% { transform: scale(1.0); }
+           10% { transform: scale(1.2); }
+           20% { transform: scale(1.3); }
+           30% { transform: scale(1.2); }
+           40% { transform: scale(1.0); }
+           50% { transform: scale(1.1); }
+           60% { transform: scale(1.0); }
+           70% { transform: scale(1.05);}
+           80% { transform: scale(1.0); }
+           90% { transform: scale(1.02);}
+          100% { transform: scale(1.0); }
         }
     }
     .ranking {
