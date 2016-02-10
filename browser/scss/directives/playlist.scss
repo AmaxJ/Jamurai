@@ -4,6 +4,9 @@
   p {
     font-size: 18px;
   }
+  #currently-playing-title {
+    font-family: $secondary-font-stack;
+  }
 }
 
 .playlist-header {
@@ -11,7 +14,16 @@
 }
 
 #playlist {
-    margin-left: 33%;
+    /*margin-left: 33%;*/
+    .song-honor {
+      font-size: 22px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .song-title {
+      font-size: 18px;
+      font-family: $secondary-font-stack;
+    }
     table {
         opacity: 0.85;
         border-color: $table-border-color;
