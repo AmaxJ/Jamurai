@@ -126,6 +126,12 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         downvoteAmount = num;
     };
 
+    factory.checkIfUserVoted = (user, song) => {
+        if (song.downVotes.indexOf(user._id) > -1) return true;
+        else if (song.upVotes.indexOf(user._id) > -1) return true;
+        return false;
+    }
+
     socket.on('updateVotes', function(updatedObj) {
         var songToUpdate = _.find(playlist.songs, function(o) {
                 return o.song.title === updatedObj.updatedSong.song.title;

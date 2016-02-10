@@ -23,6 +23,9 @@
                         <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)"><span class="glyphicon glyphicon-arrow-down"></span></button>
                     </td>
                     <td>{{getVoteValue(songObj)}}</td>
+                    <td>
+                        <span ng-show="{{checkIfUserVoted(user, songObj)}}" class='glyphicon glyphicon-ok checker'></span>
+                    </td>
                 </tr>
             </table>
         </div>
