@@ -8,6 +8,8 @@ app.directive('playlist', function() {
             user: '='
         },
         controller: function($scope, PlayerFactory, PlaylistFactory) {
+            $scope.startPlaylist = PlayerFactory.startPlaylist;
+            $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
             $scope.loadVideoById = PlayerFactory.loadVideoById;
             $scope.vote = PlaylistFactory.vote;
             $scope.getVoteValue = (song) => {
