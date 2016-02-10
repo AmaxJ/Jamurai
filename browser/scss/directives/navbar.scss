@@ -1,4 +1,9 @@
 #navbar {
+  #nav-logo {
+    float: left;
+    height: 200%;
+    margin-bottom: 10px;
+  }
   background-color: $navbar-background-color;
   border-color: $navbar-border-color;
   .container {
