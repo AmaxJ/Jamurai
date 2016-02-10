@@ -71,6 +71,19 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		}
 	}
 
+	var config5 = {
+    	title: 'Most hated songs',
+    	tooltips: true,
+    	labels: false,
+    	mouseover: function() {},
+    	mouseout: function() {},
+    	click: function() {},
+    	legend: {
+      		display: true,
+      		position: 'right'
+		}
+	}
+
 	var data1 = {
 		series: ['# requests per party'],
 		data: []
@@ -99,8 +112,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	{
 		var nonRepeatingPlaylist = [];
 		var thisRoom = $scope.rooms[x];
-		var thisLoc = $scope.rooms[x].normalo;
-		console.log('loccc',thisLoc);
+		var thisLoc = $scope.rooms[x].normalLocation;
 		var locExists = false;
 		if(thisLoc)
 		{
@@ -209,6 +221,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		userLoc = userLocList.slice(0,10);
 	}
 
+
 	for(var g=0; g<masterSongList.length; g++)
 	{
 		var obj = {};
@@ -253,6 +266,10 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 		$scope.config = config1;
 		$scope.singular = true;
 		$scope.overall = false;
+	}
+
+	$scope.getHatedSongs = function() {
+		
 	}
 
 	$scope.getRoomLocPop = function() {
