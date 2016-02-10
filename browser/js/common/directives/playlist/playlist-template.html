@@ -24,7 +24,8 @@
                     </td>
                     <td>{{getVoteValue(songObj)}}</td>
                     <td>
-                        <span ng-show="{{checkIfUserVoted(user, songObj)}}" class='glyphicon glyphicon-ok checker'></span>
+                        <span ng-hide="{{ checkIfUserVoted(user, songObj) === false || checkIfUserVoted(user, songObj) === undefined }}" class='glyphicon glyphicon-ok checker'></span>
+                         <span ng-hide="{{ checkIfUserVoted(user, songObj) === true || checkIfUserVoted(user, songObj) === undefined }}" class='glyphicon glyphicon-remove x'></span>
                     </td>
                 </tr>
             </table>

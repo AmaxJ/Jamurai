@@ -127,9 +127,9 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     factory.checkIfUserVoted = (user, song) => {
-        if (song.downVotes.indexOf(user._id) > -1) return true;
+        if (song.downVotes.indexOf(user._id) > -1) return false;
         else if (song.upVotes.indexOf(user._id) > -1) return true;
-        return false;
+        return undefined;
     }
 
     socket.on('updateVotes', function(updatedObj) {
