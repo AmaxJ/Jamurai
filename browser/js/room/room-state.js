@@ -49,8 +49,11 @@ app.config($stateProvider => {
         });
         $scope.room = room;
         $scope.user = user;
+        $scope.showPlaylist = true;
+        $scope.toggleShowPlaylist = boolean => {
+            $scope.showPlaylist = boolean;
+        }
         // $scope.startPlaylist = PlayerFactory.startPlaylist;
-
         // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         let powerUpIcons = {
