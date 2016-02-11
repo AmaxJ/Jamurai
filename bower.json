@@ -21,5 +21,8 @@
   ],
   "dependencies": {
     "angular-charts": "~0.2.7"
+  },
+  "resolutions": {
+    "d3": "^3.3.13"
   }
 }
