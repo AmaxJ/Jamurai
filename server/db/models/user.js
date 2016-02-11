@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var rp = require('request-promise');
+var PowerupData = mongoose.model('PowerupData');
 
 var schema = new mongoose.Schema({
     username: {
@@ -56,13 +57,25 @@ var schema = new mongoose.Schema({
     },
     picture: {
         type: String
-    }
+    },
+    powerups: [{
+        type: [String]
+    }]
 });
 
 // method to remove sensitive information from user objects before sending them out
 schema.methods.sanitize =  function () {
     return _.omit(this.toJSON(), ['password', 'salt']);
 };
+
+//adds a powerup to user 
+schema.statics.savePowerup = (powerup, user) => {
+    user.powerups.addToSet(powerup.powerup);
+    return user.save()
+    .then((user) => {
+        return user;
+    })
+}
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

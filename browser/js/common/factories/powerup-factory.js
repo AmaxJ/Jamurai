@@ -1,4 +1,4 @@
-app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
+app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http) => {
     var factory = {};
     var socket = SocketFactory.getSocket();
     var powerUps = {
@@ -64,8 +64,14 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
     }
 
     factory.usePowerup = (powerup,user,room) => {
+        console.log('using the powerup in factory', user._id);
         powerUps[powerup](user,room);
         socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
+        return $http({
+            method: 'PUT',
+            url: '/api/users/' + user._id + '/addpowerup',
+            data: {powerup: powerup}
+        }) 
     }
 
     return factory;

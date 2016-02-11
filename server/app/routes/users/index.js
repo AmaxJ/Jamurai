@@ -49,4 +49,12 @@ router.route('/:userId/:roomId/powerup')
 		})
 		.then(null,next);
 	})
-
+	
+router.route('/:userId/addpowerup')
+	.put(function(req, res, next) {
+		User.findOne({_id: req.params.userId})
+		.then(function(user){
+			User.savePowerup(req.body, user)
+		})
+		.then(null, next)
+	})
