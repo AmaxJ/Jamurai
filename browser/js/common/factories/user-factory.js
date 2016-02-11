@@ -42,5 +42,15 @@ app.factory('UserFactory', function($http){
 		});
 	}
 
+	factory.getPowerupsByUser = (userId) => {
+		return $http({
+			method: 'GET',
+			url: '/api/users/' + userId + '/powerup'
+		})
+		.then(response => {
+			return response.data;
+		})
+	}
+
 	return factory;
 });

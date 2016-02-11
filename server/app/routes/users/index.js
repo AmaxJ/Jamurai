@@ -50,7 +50,15 @@ router.route('/:userId/:roomId/powerup')
 		.then(null,next);
 	})
 	
-router.route('/:userId/addpowerup')
+router.route('/:userId/powerup')
+	.get(function(req, res, next) {
+		User.findById(req.params.userId)
+		.then(function(user){
+			let powerups = user.powerups;
+			res.status(200).json(powerups);
+		})
+		.then(null, next);
+	})
 	.put(function(req, res, next) {
 		User.findOne({_id: req.params.userId})
 		.then(function(user){

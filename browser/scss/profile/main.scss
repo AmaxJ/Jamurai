@@ -39,3 +39,15 @@
 #public-photo {
     text-align: center;
 }
+
+
+//public profile power up bar
+.powerupDiv {
+	#public-powerup-label {
+		font-size: .9em;
+		color: $highlight-color;
+	}
+	img {
+		max-width: 45%;
+		}
+}
