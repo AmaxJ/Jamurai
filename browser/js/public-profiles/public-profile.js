@@ -6,11 +6,11 @@ app.config(function ($stateProvider) {
 		resolve: {
 			publicUser: (UserFactory, $stateParams) => {
 				return UserFactory.getUserById($stateParams.userId)
-						.then((user) => {
+						.then(user => {
 							return user;
 						});
 			},
-			userPowerups: (publicUser) => {
+			userPowerups: (publicUser, UserFactory) => {
 				let powerUpIcons = {
 				    'Chopsticks of Plenty': '/food.svg',
 				    'Sword of Ultimate Shame': '/twoswords.svg',
@@ -20,7 +20,7 @@ app.config(function ($stateProvider) {
 				    'Sword of Uncertainty': '/yinyang.svg',
 				    'Poison Darts': '/darts.svg',
 				    'The Last Jamurai': '/helmet.svg'
-				}
+				};
 
 				let formatPowerUps = powerUpObj => {
 			        return powerUpObj.map(powerup => {
@@ -29,18 +29,23 @@ app.config(function ($stateProvider) {
 			            pwrUp.icon = powerUpIcons[powerup];
 			            return pwrUp;
 			        });
-			    }
+			    };
 
-				UserFactory.getPowerupsByUser(publicUser._id)
+				return UserFactory.getPowerupsByUser(publicUser._id)
 				.then(powerups => {
-					return formatPowerUps(powerups);
+					console.log('poqwer resolve', powerups);
+					if (powerups.length > 0) {
+						return formatPowerUps(powerups);
+					}
+					else {
+						return [];
+					}
 				})
 			}
 		}
 	})
 })
 .controller('PublicProfileCtrl', function($scope, publicUser, UserFactory, userPowerups){
-
 	$scope.publicUser = publicUser;
 	$scope.userPowerups = userPowerups;
 
