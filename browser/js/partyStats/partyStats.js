@@ -423,7 +423,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	$scope.getOverallPopularity = function() {
 		$scope.data = data2;
 		$scope.options = options2;
-		console.log('scope.data',$scope.data)
 	}
 
 	$scope.getSingularPopularity = function() {
