@@ -6,7 +6,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     var downvoteAmount = -1;
     var socket = SocketFactory.getSocket();
 
-    
+
 
     //Called when new room is created
     factory.createPlaylist = function() {
@@ -106,7 +106,6 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     factory.getCurrentSong = function() {
         if(!currentSong) return null;
-        console.log("CURRENT SONG", currentSong)
         return currentSong;
     };
 
