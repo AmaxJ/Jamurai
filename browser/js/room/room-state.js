@@ -54,38 +54,12 @@ app.config($stateProvider => {
         $scope.startPlaylist = PlayerFactory.startPlaylist;
 
         $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
-
-
-        // PowerupFactory.getPowerups(user._id, room._id)
-        // .then(powerUpObj => {
-        //     $scope.powerUps = formatPowerUps(powerUpObj)
-        // })
-        // $scope.powerUps = formatPowerUps(PowerupFactory.getActivePowerups());
         
 
         $scope.usePowerUp = (powerup, user, room) => {
             PowerupFactory.usePowerup(powerup, user, room);
         }
 
-        // socket.on('updateUsers', function(room) {
-        //     $scope.room = room;
-        //     sortScores();
-        //     $rootScope.$digest();
-        // })
-
-        socket.on('updateVotes', function(updateObj) {
-            $scope.room = updateObj.updatedRoom;
-            sortScores();
-            $scope.$digest();
-        })
-
-        // socket.on('updatePowerups', function(updatedPowerups) {
-
-        //     if (updatedPowerups.user === user._id) {
-        //         $scope.powerUps = formatPowerUps(updatedPowerups);
-        //         $scope.$digest();
-        //     }
-        // })
 
         socket.on('updateRoom', updateObj => {
             var room = updateObj.room;

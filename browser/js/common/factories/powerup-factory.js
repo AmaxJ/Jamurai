@@ -1,6 +1,8 @@
 app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http) => {
     var factory = {};
     var socket = SocketFactory.getSocket();
+    var activePowerups;
+    
     var powerUps = {
         'Sword of Ultimate Shame': swordsOfCertainDeath,
         'Daggers of Disdain' : daggersOfDisdain,
@@ -84,7 +86,6 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         socket.emit('multiPower', {user: user, room: room, strength: -1000});
     }
 
-    var activePowerups;
 
     factory.getPowerups = (userId, roomId) => {
         return $http({

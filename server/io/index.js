@@ -90,35 +90,7 @@ module.exports = function(server) {
                     io.emit('updateRoom', {room: room});
                 })
         })
-        //Add a powerup
-        socket.on('addPowerUp', function(payload){
-            var playlist = payload.playlist;
-            var userId = payload.user;
 
-            Room.findOne({playlist: playlist})
-            .then(function(room){
-                return PowerupData.findOne({room: room._id, user: userId})
-            })
-            .then(function(powerupData){
-                return powerupData.addPowerup();
-            })
-            .then((updatedPowerups)=> {
-                io.emit('updatePowerups', updatedPowerups)
-            })
-        })
-        //Use a powerup
-        socket.on('usePowerUp', function(payload){
-            var powerup = payload.powerup;
-            var user = payload.user;
-            var room = payload.room;
-            PowerupData.findOne({room: room._id, user: user._id})
-            .then((powerupData)=> {
-                return powerupData.usePowerup(powerup);
-            })
-            .then((updatedPowerups)=> {
-                io.emit('updatePowerups', updatedPowerups)
-            })
-        })
         //Death stars powerup
         socket.on('multiPower', function(payload){
             var user = payload.user;
