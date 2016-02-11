@@ -53,3 +53,19 @@ router.route('/:playlistId/:userId')
             .then(null, next);
     });
 
+router.route('/use-powerup/:userId/:roomId/')
+    .post(function(req, res, next) {
+        var userId = req.params.userId;
+        var roomId = req.params.roomId;
+        var powerup = req.body.powerup;
+        return PowerupData.findOne({user: userId, room: roomId})
+            .then((powerupData) =>{
+                return powerupData.usePowerup(powerup);
+            })
+            .then(function(powerups) {
+                console.log('Powerups to delet', powerups)
+                res.json(powerups);
+            })
+            .then(null, next);
+    })
+

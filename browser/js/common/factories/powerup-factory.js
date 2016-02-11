@@ -24,6 +24,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         }
 
     let formatPowerUps = powerUpObj => {
+        if(!powerUpObj.powerups) return null;
         return powerUpObj.powerups.map(powerup => {
             let pwrUp = {};
             pwrUp.name = powerup;
@@ -91,7 +92,9 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
             url: `/api/powerups/${userId}/${roomId}`
         })
         .then(response => {
-            activePowerups = formatPowerUps(response.data);
+            if(response.data) {
+                activePowerups = formatPowerUps(response.data);
+            }   
             return response.data;
         });
     }
@@ -108,13 +111,19 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         })
         .then(response => {
             activePowerups = formatPowerUps(response.data);
-            console.log('Updated powerups in power up factory',response.data)
         })
     }
 
     factory.usePowerup = (powerup,user,room) => {
         powerUps[powerup](user,room);
-        socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
+        return $http({
+            method: 'POST',
+            url: `/api/powerups/use-powerup/${user._id}/${room._id}`,
+            data: {powerup: powerup}
+        })
+        .then(response => {
+            activePowerups = formatPowerUps(response.data);
+        })
     }
 
     return factory;

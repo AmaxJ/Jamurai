@@ -35,25 +35,6 @@ app.config($stateProvider => {
             });
         }
 
-        let powerUpIcons = {
-            'Chopsticks of Plenty': '/food.svg',
-            'Sword of Ultimate Shame': '/twoswords.svg',
-            'Daggers of Disdain': '/daggerSolid.svg',
-            'Katana of Disgrace': '/sword.svg',
-            'Enlightened Blessing': '/discipline.svg',
-            'Sword of Uncertainty': '/yinyang.svg',
-            'Poison Darts': '/darts.svg',
-            'The Last Jamurai': '/helmet.svg'
-        }
-
-        let formatPowerUps = powerUpObj => {
-            return powerUpObj.powerups.map(powerup => {
-                let pwrUp = {};
-                pwrUp.name = powerup;
-                pwrUp.icon = powerUpIcons[powerup];
-                return pwrUp;
-            });
-        }
 
         var socket = SocketFactory.getSocket();
         geo.getCurrentPosition(function(position) {
@@ -98,13 +79,13 @@ app.config($stateProvider => {
             $scope.$digest();
         })
 
-        socket.on('updatePowerups', function(updatedPowerups) {
+        // socket.on('updatePowerups', function(updatedPowerups) {
 
-            if (updatedPowerups.user === user._id) {
-                $scope.powerUps = formatPowerUps(updatedPowerups);
-                $scope.$digest();
-            }
-        })
+        //     if (updatedPowerups.user === user._id) {
+        //         $scope.powerUps = formatPowerUps(updatedPowerups);
+        //         $scope.$digest();
+        //     }
+        // })
 
         socket.on('updateRoom', updateObj => {
             var room = updateObj.room;
