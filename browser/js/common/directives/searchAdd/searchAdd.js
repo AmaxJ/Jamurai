@@ -1,4 +1,4 @@
-app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory) {
+app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory, SocketFactory, RoomFactory) {
 
     return {
         restrict: 'E',
@@ -12,10 +12,17 @@ app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory) {
                     scope.showSearchResults = true;
                 })
             }
+            let socket = SocketFactory.getSocket();
             scope.entry = "A-team";
             scope.add = function(result, user) {
-                PlaylistFactory.addSong(result, user);
+                PlaylistFactory.addSong(result, user)
+                    .then(response => {
+                        socket.emit("songAdded", {
+                            roomId: scope.room._id
+                        });
+                    });
                 scope.toggleShowPlaylist(true);
+
             }
         }
 

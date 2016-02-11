@@ -99,6 +99,7 @@ app.config($stateProvider => {
         })
 
         socket.on('updateRoom', updateObj => {
+            console.log("ROOM UPDATING..", updateObj.room);
             var room = updateObj.room;
             $scope.room = room;
             $scope.$digest();
