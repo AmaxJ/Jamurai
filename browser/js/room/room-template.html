@@ -1,7 +1,6 @@
 <navbar></navbar>
 <div class="row" id='room'>
     <div id="left-sidebar" class="col-sm-2">
-        <div id="leader-profile" ng-repeat="user in room.users" title='{{user.username}}' class="row">
         <div id="leader-profile" ng-repeat="score in room.userScores" class="row">
             <div class="col-sm-12">
                 <div class="row">
@@ -15,21 +14,21 @@
                 <div class="row">
 
                     <div class="col-sm-8 col-sm-offset-2 score-data">
-                        <p class="score-card">Score: <span>{{score.score}}</span></p>
+                        <p class="score-card">Score: <span id="leaderboard-score">{{score.score}}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-7">
-        
-       
+
+
         <playlist user='user' room='room' playlist="playlist()"></playlist>
     </div>
     <div class="col-sm-3" id="right-sidebar">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-                <h4 id="power-ups-label">Power Ups</h4>
+                <div><h4 id="power-ups-label"><span class="ninja-symbol">+</span> Power Ups <span class="ninja-symbol">+</span></h4></div>
                 <div ng-repeat="powerup in powerUps track by $index" class="list-group">
                     <a href="" ng-click="usePowerUp(powerup.name, user, room)"><img id="powerup-icon" ng-src="{{powerup.icon}}"></a>
                     <p id="power-name">{{powerup.name}}</p>

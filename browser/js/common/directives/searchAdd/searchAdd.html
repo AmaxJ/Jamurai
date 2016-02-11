@@ -22,7 +22,7 @@
                     <th>Add</th>
                 </tr>
                 <tr ng-repeat='result in searchResults'>
-                    <td>{{result.snippet.title}}</td>
+                    <td id="song-search-title">{{result.snippet.title}}</td>
                     <td><img height="90" width="120" ng-src='{{result.snippet.thumbnails.default.url}}' /></td>
                     <td>
                         <button class="btn btn-primary btn-sm" ng-click='add(result, user)' ui-sref='room({roomId: room._id})'>Add</button>

@@ -12,14 +12,17 @@
 }
 
 #room {
+    .ninja-symbol {
+        color: $primary-text-color;
+    }
     height: 100%;
     padding-top: 30px;
     #left-sidebar {
         text-align: center;
-        position: fixed;
+        /*position: fixed;
         left: 0;
         height: 100%;
-        overflow: scroll;
+        overflow: scroll;*/
         .profile-img {
             width: 95%;
             border: 1px solid $border-color;
@@ -31,13 +34,16 @@
         #leader-profile {
             margin-top: 10px;
         }
+        #leaderboard-score {
+            font-family: $font-stack;
+        }
     }
     #right-sidebar {
         text-align: center;
-        position: fixed;
+      /*  position: fixed;
         right: 0;
         height: 100%;
-        overflow: scroll;
+        overflow: scroll;*/
         #powerup-icon {
             width: 95px;
             &:hover {
@@ -52,7 +58,8 @@
             }
         }
         #power-name {
-            font-size: 1.2em;
+            margin-top: 20px;
+            font-size: 1em;
             font-weight: bold;
             &:hover {
                 -ms-transform: scale(1.1);
@@ -83,7 +90,8 @@
         text-align: center;
     }
     .score-card {
-        font-size: 1.2em;
+        margin-top: 20px;
+        font-size: 1em;
         font-weight: bold;
         span {
             font-weight: normal;
