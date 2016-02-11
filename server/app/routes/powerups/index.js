@@ -17,28 +17,10 @@ router.route('/:userId/:roomId')
     })
 
 
-
-// router.route('/:songId')
-//     .get(function(req, res, next) {
-//         Song.findById(req.params.songId)
-//             .then(function(song) {
-//                 res.json(song);
-//             }).then(null, next);
-//     })
-//     .put(function(req, res, next) {
-//         Song.findByIdAndUpdate(req.params.songId, req.body, {new: true}
-//             )
-//             .then(function(song) {
-//                 res.status(204).json(song);
-//             }).then(null, next);
-//     });
-
-
 router.route('/:playlistId/:userId')
     .post(function(req, res, next) {
             var playlistId = req.params.playlistId;
             var userId = req.params.userId;
-            console.log(playlistId, userId)
             Room.findOne({playlist: playlistId})
             .then(function(room){
                 return PowerupData.findOne({room: room._id, user: userId})
@@ -47,7 +29,6 @@ router.route('/:playlistId/:userId')
                 return powerupData.addPowerup();
             })
             .then((updatedPowerups)=> {
-                console.log('Updated powerups?', updatedPowerups);
                 res.status(201).send(updatedPowerups);
             })
             .then(null, next);
@@ -63,7 +44,6 @@ router.route('/use-powerup/:userId/:roomId/')
                 return powerupData.usePowerup(powerup);
             })
             .then(function(powerups) {
-                console.log('Powerups to delet', powerups)
                 res.json(powerups);
             })
             .then(null, next);

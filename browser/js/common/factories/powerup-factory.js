@@ -1,7 +1,12 @@
-app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http) => {
+app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http, AuthService) => {
     var factory = {};
     var socket = SocketFactory.getSocket();
     var activePowerups;
+    var loggedInUser;
+    AuthService.getLoggedInUser()
+    .then(user=> {
+        loggedInUser = user;
+    })
     
     var powerUps = {
         'Sword of Ultimate Shame': swordsOfCertainDeath,
@@ -106,13 +111,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
 
 
     factory.addPowerup = (playlistId, userId) => {
-        return $http({
-            method: 'POST',
-            url: `/api/powerups/${playlistId}/${userId}`
-        })
-        .then(response => {
-            activePowerups = formatPowerUps(response.data);
-        })
+        socket.emit('addPowerUp', {user: userId, playlist: playlistId});
     }
 
     factory.usePowerup = (powerup,user,room) => {
@@ -126,6 +125,13 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
             activePowerups = formatPowerUps(response.data);
         })
     }
+
+    socket.on('updatePowerups', function(updatedPowerups) {        
+        if(updatedPowerups.user === loggedInUser._id) {
+            activePowerups = formatPowerUps(updatedPowerups);
+            $rootScope.$digest();     
+        }   
+    })
 
     return factory;
 

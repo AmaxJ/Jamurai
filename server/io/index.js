@@ -43,87 +43,119 @@ module.exports = function(server) {
                                 path: 'submittedBy',
                                 model: 'User'
                             }])
-                })
-                .then(function(songDataObj) {
-                    savedSongData = songDataObj;
-                    return Room.findById(room._id)
-                })
-                .then(function(room) {
-                    return room.addToScore(savedSongData, updatedVote);
-                })
-                .then(room => {
-                    var playlist = room.playlist;
-                    io.emit('updateRoom', {
-                        playlist: playlist,
-                        room: room
-                    });
-                })
-                .then(null, function(err) {
-                    console.log('Something went wrong with songData', err);
-                })
+
+                    })
+                    .then(function(songDataObj) {
+                        savedSongData = songDataObj;
+                        return Room.findById(room._id)
+                    })
+                    .then(function(room) {
+                        return room.addToScore(savedSongData, updatedVote);
+                    })
+                    .then(room => {
+                        console.log('Updated playlist?', room.playlist)
+                        var playlist = room.playlist;
+                        io.emit('updateRoom', {
+                            playlist: playlist,
+                            room: room
+                        });
+                    })
+                    .then(null, function(err) {
+                        console.log('Something went wrong with songData', err);
+                    })
+
             })
-        //User leaves room
+            //User leaves room
         socket.on('userLeft', function(data) {
-            let roomId = data.roomId;
-            let userId = data.userId;
-            Room.findById(roomId)
-                .then((room) => {
-                    return room.removeUser(userId);
-                })
-                .then((room) => {
-                    io.emit('updateRoom', {room: room});
-                })
-        })
-        //User enters room
+                let roomId = data.roomId;
+                let userId = data.userId;
+
+                Room.findById(roomId)
+                    .then((room) => {
+                        return room.removeUser(userId);
+                    })
+                    .then((room) => {
+                        io.emit('updateRoom', {
+                            room: room
+                        });
+                    })
+            })
+            //User enters room
         socket.on('userEntered', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
+
             Room.findById(roomId)
                 .then((room) => {
                     return room.addUser(userId);
                 })
                 .then((room) => {
-                    io.emit('updateRoom', {room: room});
+                    io.emit('updateRoom', {
+                        room: room
+                    });
                 })
         })
- 
-            //Add a song
+
+        //Add a song
         socket.on('songAdded', function(payload) {
-                Room.findById(payload.roomId)
-                    .populate('users')
-                    .populate({
-                        path: 'userScores',
-                        model: 'UserScore',
-                        populate: {
-                            path: "user",
-                            model: "User"
-                        }
-                    })
-                    .populate({
-                        path: 'playlist',
-                        model: 'Playlist',
-                        populate: {
-                            path: 'songs',
-                            model: 'SongData',
-                            populate: [{
-                                path: 'song',
-                                model: 'Song'
-                            }, {
-                                path: 'submittedBy',
-                                model: 'User'
-                            }]
-                        }
-                    })
-                    .then(function(updatedRoom) {
-                        var playlist = updatedRoom.playlist;
-                        io.emit('updateRoom', {
-                            room: updatedRoom,
-                            playlist: playlist
-                        });
+            Room.findById(payload.roomId)
+                .populate('users')
+                .populate({
+                    path: 'userScores',
+                    model: 'UserScore',
+                    populate: {
+                        path: "user",
+                        model: "User"
+                    }
+                })
+                .populate({
+                    path: 'playlist',
+                    model: 'Playlist',
+                    populate: {
+                        path: 'songs',
+                        model: 'SongData',
+                        populate: [{
+                            path: 'song',
+                            model: 'Song'
+                        }, {
+                            path: 'submittedBy',
+                            model: 'User'
+                        }]
+                    }
+                })
+                .then(function(updatedRoom) {
+                    var playlist = updatedRoom.playlist;
+                    io.emit('updateRoom', {
+                        room: updatedRoom,
+                        playlist: playlist
                     });
+                });
+        })
+
+
+        //Add a powerup
+        socket.on('addPowerUp', function(payload) {
+                var playlist = payload.playlist;
+                var userId = payload.user;
+
+                Room.findOne({
+                        playlist: playlist
+                    })
+                    .then(function(room) {
+                        return PowerupData.findOne({
+                            room: room._id,
+                            user: userId
+                        })
+                    })
+                    .then(function(powerupData) {
+                        return powerupData.addPowerup();
+                    })
+                    .then((updatedPowerups) => {
+                        io.emit('updatePowerups', updatedPowerups)
+                    })
             })
- 
-            //Death stars powerup
+   
+        //Death stars powerup
         socket.on('multiPower', function(payload) {
             var user = payload.user;
             var room = payload.room;
