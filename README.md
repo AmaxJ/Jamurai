@@ -6,12 +6,14 @@ Jamurai is a realtime collaborative playlist application for
 crowd-sourcing music selection at parties. 
 
 ###Features
-Users can create rooms (called "Dojos") where songs are submitted to construct a playlist. Other users can then vote on submissions, determining
-the order in which the songs will play.
+Users can create rooms (called "Dojos") where songs are submitted to construct a playlist. Other 
+users can then vote on submissions, determining the order in which the songs will play.
 
 When a song submitted by a user is played, they are rewarded
 with "power ups" which give their up or down votes more
 weight.
+
+###Images
 
 ![alt text](http://www.jamurai.com/dojo.png "Dojo")
 
