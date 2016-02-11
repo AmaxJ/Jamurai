@@ -19,30 +19,30 @@ module.exports = function(server) {
         console.log('Someone connected!!!');
         //Vote functions
         socket.on('vote', function(payload) {
-            var song = payload.song;
-            var user = payload.user;
-            var vote = payload.vote;
-            var room = payload.room;
-            var updatedVote;
-            var savedSongData;
-            var playlist = payload.room.playlist;
-            SongData.findOne({
-                    _id: song._id
-                })
-                .then(function(songData) {
-                    return songData.vote(user._id, vote)
-                })
-                .then(function(songData) {
-                    updatedVote =  songData.total - song.total;
-                    return SongData.findById(songData._id)
-                        .populate('song')
-                        .populate([
-                            {path: 'song',
-                            model: 'Song'},
-                            {path: 'submittedBy',
-                            model: 'User'}
-                        ])
-
+                var song = payload.song;
+                var user = payload.user;
+                var vote = payload.vote;
+                var room = payload.room;
+                var updatedVote;
+                var savedSongData;
+                var playlist = payload.room.playlist;
+                SongData.findOne({
+                        _id: song._id
+                    })
+                    .then(function(songData) {
+                        return songData.vote(user._id, vote)
+                    })
+                    .then(function(songData) {
+                        updatedVote = songData.total - song.total;
+                        return SongData.findById(songData._id)
+                            .populate('song')
+                            .populate([{
+                                path: 'song',
+                                model: 'Song'
+                            }, {
+                                path: 'submittedBy',
+                                model: 'User'
+                            }])
                 })
                 .then(function(songDataObj) {
                     savedSongData = songDataObj;
@@ -52,7 +52,6 @@ module.exports = function(server) {
                     return room.addToScore(savedSongData, updatedVote);
                 })
                 .then(room => {
-                    console.log('Updated playlist?', room.playlist)
                     var playlist = room.playlist;
                     io.emit('updateRoom', {
                         playlist: playlist,
@@ -62,13 +61,11 @@ module.exports = function(server) {
                 .then(null, function(err) {
                     console.log('Something went wrong with songData', err);
                 })
-
-        })
+            })
         //User leaves room
         socket.on('userLeft', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
-
             Room.findById(roomId)
                 .then((room) => {
                     return room.removeUser(userId);
@@ -81,7 +78,6 @@ module.exports = function(server) {
         socket.on('userEntered', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
-
             Room.findById(roomId)
                 .then((room) => {
                     return room.addUser(userId);
@@ -90,36 +86,10 @@ module.exports = function(server) {
                     io.emit('updateRoom', {room: room});
                 })
         })
-
-        //Death stars powerup
-        socket.on('multiPower', function(payload){
-            var user = payload.user;
-            var room = payload.room;
-            var strength = payload.strength;
-            //Initialize array to track users effected by stars
-            var effectedUsers = [];
-            return SongData.find({playlist: room.playlist._id, submittedBy: {$ne: user._id}})
-            .then(songDataArr => {
-                songDataArr.forEach(songDataDoc => {
-                    songDataDoc.changeScore(strength);
-                    //For each song that was hit with a death star, push that users' ID into the effected users array
-                    effectedUsers.push(songDataDoc.submittedBy);
-                })
-            })
-            .then(()=> {
-                return UserScore.find({user: {$ne: user._id}})
-            })
-            .then(userScoreArr => {
-                userScoreArr.forEach(userScoreDoc => {
-                    //Count the number of instances of this user in the effectedUsers array and multiple that number by the strength of each death star
-                    var scoreUpdate = effectedUsers.filter(userId => {
-                        return userId = userScoreDoc.user;
-                    }).length * strength;
-                    userScoreDoc.changeScore(scoreUpdate);
-                })
-            })
-            .then(()=> {
-                return Room.findById(room._id)
+ 
+            //Add a song
+        socket.on('songAdded', function(payload) {
+                Room.findById(payload.roomId)
                     .populate('users')
                     .populate({
                         path: 'userScores',
@@ -135,19 +105,94 @@ module.exports = function(server) {
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: [
-                                {path: 'song',
-                                model: 'Song'},
-                                {path: 'submittedBy',
-                                model: 'User'}
-                            ]
+                            populate: [{
+                                path: 'song',
+                                model: 'Song'
+                            }, {
+                                path: 'submittedBy',
+                                model: 'User'
+                            }]
                         }
                     })
+                    .then(function(updatedRoom) {
+                        var playlist = updatedRoom.playlist;
+                        io.emit('updateRoom', {
+                            room: updatedRoom,
+                            playlist: playlist
+                        });
+                    });
             })
-            .then(updatedRoom => {
-                var playlist = updatedRoom.playlist;
-                io.emit('updateRoom', {room: updatedRoom, playlist: playlist});
-            })
+ 
+            //Death stars powerup
+        socket.on('multiPower', function(payload) {
+            var user = payload.user;
+            var room = payload.room;
+            var strength = payload.strength;
+            //Initialize array to track users effected by stars
+            var effectedUsers = [];
+            return SongData.find({
+                    playlist: room.playlist._id,
+                    submittedBy: {
+                        $ne: user._id
+                    }
+                })
+                .then(songDataArr => {
+                    songDataArr.forEach(songDataDoc => {
+                        songDataDoc.changeScore(strength);
+                        //For each song that was hit with a death star, push that users' ID into the effected users array
+                        effectedUsers.push(songDataDoc.submittedBy);
+                    })
+                })
+                .then(() => {
+                    return UserScore.find({
+                        user: {
+                            $ne: user._id
+                        }
+                    })
+                })
+                .then(userScoreArr => {
+                    userScoreArr.forEach(userScoreDoc => {
+                        //Count the number of instances of this user in the effectedUsers array and multiple that number by the strength of each death star
+                        var scoreUpdate = effectedUsers.filter(userId => {
+                            return userId = userScoreDoc.user;
+                        }).length * strength;
+                        userScoreDoc.changeScore(scoreUpdate);
+                    })
+                })
+                .then(() => {
+                    return Room.findById(room._id)
+                        .populate('users')
+                        .populate({
+                            path: 'userScores',
+                            model: 'UserScore',
+                            populate: {
+                                path: "user",
+                                model: "User"
+                            }
+                        })
+                        .populate({
+                            path: 'playlist',
+                            model: 'Playlist',
+                            populate: {
+                                path: 'songs',
+                                model: 'SongData',
+                                populate: [{
+                                    path: 'song',
+                                    model: 'Song'
+                                }, {
+                                    path: 'submittedBy',
+                                    model: 'User'
+                                }]
+                            }
+                        })
+                })
+                .then(updatedRoom => {
+                    var playlist = updatedRoom.playlist;
+                    io.emit('updateRoom', {
+                        room: updatedRoom,
+                        playlist: playlist
+                    });
+                })
         })
     });
 

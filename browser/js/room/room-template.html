@@ -12,7 +12,6 @@
                     </div>
                 </div>
                 <div class="row">
-
                     <div class="col-sm-8 col-sm-offset-2 score-data">
                         <p class="score-card">Score: <span id="leaderboard-score">{{score.score}}</span></p>
                     </div>
@@ -21,9 +20,8 @@
         </div>
     </div>
     <div class="col-sm-7">
-
-
-        <playlist user='user' room='room' playlist="playlist()"></playlist>
+        <playlist ng-show="showPlaylist" user='user' room='room' playlist="playlist()" toggle="toggleShowPlaylist"></playlist>
+        <search-add ng-show="!showPlaylist"><search-add>
     </div>
     <div class="col-sm-3" id="right-sidebar">
         <div class="row">

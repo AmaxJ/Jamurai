@@ -48,8 +48,11 @@ app.config($stateProvider => {
         $scope.user = user;
         $scope.powerups = PowerupFactory.getActivePowerups;
 
+        $scope.showPlaylist = true;
+        $scope.toggleShowPlaylist = boolean => {
+            $scope.showPlaylist = boolean;
+        }
 
-        console.log('Scope powerups', $scope.powerups)
 
         $scope.startPlaylist = PlayerFactory.startPlaylist;
 
