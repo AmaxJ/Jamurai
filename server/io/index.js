@@ -52,9 +52,11 @@ module.exports = function(server) {
                     return room.addToScore(savedSongData, updatedVote);
                 })
                 .then(room => {
-                    io.emit('updateVotes', {
-                        updatedSong: savedSongData,
-                        updatedRoom: room
+                    console.log('Updated playlist?', room.playlist)
+                    var playlist = room.playlist;
+                    io.emit('updateRoom', {
+                        playlist: playlist,
+                        room: room
                     });
                 })
                 .then(null, function(err) {
@@ -72,7 +74,7 @@ module.exports = function(server) {
                     return room.removeUser(userId);
                 })
                 .then((room) => {
-                    io.emit('updateUsers', room);
+                    io.emit('updateRoom', {room: room});
                 })
         })
         //User enters room
@@ -85,7 +87,7 @@ module.exports = function(server) {
                     return room.addUser(userId);
                 })
                 .then((room) => {
-                    io.emit('updateUsers', room);
+                    io.emit('updateRoom', {room: room});
                 })
         })
         //Add a powerup

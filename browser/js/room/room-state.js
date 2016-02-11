@@ -74,11 +74,11 @@ app.config($stateProvider => {
             PowerupFactory.usePowerup(powerup, user, room);
         }
 
-        socket.on('updateUsers', function(room) {
-            $scope.room = room;
-            sortScores();
-            $rootScope.$digest();
-        })
+        // socket.on('updateUsers', function(room) {
+        //     $scope.room = room;
+        //     sortScores();
+        //     $rootScope.$digest();
+        // })
 
         socket.on('updateVotes', function(updateObj) {
             $scope.room = updateObj.updatedRoom;
