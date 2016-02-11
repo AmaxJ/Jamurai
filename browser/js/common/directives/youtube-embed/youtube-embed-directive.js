@@ -1,4 +1,4 @@
-app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, SocketFactory) {
+app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, SocketFactory, PowerupFactory) {
     return {
         restrict: "E",
 
@@ -22,9 +22,11 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, 
               };
               if(event.data === 1){
                 var currentSong = PlaylistFactory.getCurrentSong();
-                console.log('CURRENT SONG', currentSong);
-                var userToPowerUp = currentSong.submittedBy;
-                socket.emit('addPowerUp', {user: userToPowerUp, playlist: currentSong.playlist});
+                var playlistId = currentSong.playlist;
+                var userToPowerUp = currentSong.submittedBy._id;
+                console.log('User to power up', userToPowerUp)
+                PowerupFactory.addPowerup(playlistId, userToPowerUp)
+                // socket.emit('addPowerUp', {user: userToPowerUp, playlist: currentSong.playlist});
 
               }
             }

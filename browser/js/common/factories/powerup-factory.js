@@ -1,4 +1,4 @@
-app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
+app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http) => {
     var factory = {};
     var socket = SocketFactory.getSocket();
     var powerUps = {
@@ -61,6 +61,16 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory) => {
 
     function theLastJamurai (user, room) {
         socket.emit('multiPower', {user: user, room: room, strength: -1000});
+    }
+
+    factory.addPowerup = (playlistId, userId) => {
+        return $http({
+            method: 'POST',
+            url: `/api/powerups/${playlistId}/${userId}`
+        })
+        .then(response => {
+            console.log('Updated powerups in power up factory',response.data)
+        })
     }
 
     factory.usePowerup = (powerup,user,room) => {
