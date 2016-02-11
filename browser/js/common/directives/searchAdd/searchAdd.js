@@ -13,7 +13,10 @@ app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory) {
                 })
             }
             scope.entry = "A-team";
-            scope.add = PlaylistFactory.addSong;   
+            scope.add = function(result, user) {
+                PlaylistFactory.addSong(result, user);
+                scope.toggleShowPlaylist(true);
+            }
         }
 
     };
