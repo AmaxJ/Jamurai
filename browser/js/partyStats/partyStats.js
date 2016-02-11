@@ -284,15 +284,11 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	$scope.getOverallPopularity = function() {
 		$scope.data = data2;
 		$scope.config = config2;
-		// $scope.overall = true;
-		// $scope.singular = false;
 	}
 
 	$scope.getSingularPopularity = function() {
 		$scope.data = data1;
 		$scope.config = config1;
-		// $scope.singular = true;
-		// $scope.overall = false;
 	}
 
 	$scope.getHatedSongs = function() {
@@ -303,15 +299,11 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	$scope.getRoomLocPop = function() {
 		$scope.data2 = data3;
 		$scope.config2 = config3;
-		// $scope.roomVzn = true;
-		// $scope.userVzn = false;
 	}
 
 	$scope.getUserLocPop = function() {
 		$scope.data2 = data4;
 		$scope.config2 = config4;
-		// $scope.userVzn = true;
-		// $scope.roomVzn = false;
 	}
 
 	$scope.getSingularPopularity();
