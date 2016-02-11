@@ -5,21 +5,17 @@ var Room = require('mongoose').model('Room');
 var PowerupData = require('mongoose').model('PowerupData');
 module.exports = router;
 
-// router.route('/')
-//     .get(function(req, res, next) {
-//         Song.find({})
-//             .then(function(songs) {
-//                 res.json(songs);
-//             })
-//             .then(null, next);
-//     })
-//     .post(function(req, res, next) {
-//         Song.create(req.body)
-//             .then(function(song) {
-//                 res.status(201).json(song);
-//             })
-//             .then(null, next);
-//     })
+router.route('/:userId/:roomId')
+    .get(function(req, res, next) {
+        var userId = req.params.userId;
+        var roomId = req.params.roomId;
+        PowerupData.findOne({user: userId, room: roomId})
+            .then(function(powerups) {
+                res.json(powerups);
+            })
+            .then(null, next);
+    })
+
 
 
 // router.route('/:songId')
@@ -52,7 +48,7 @@ router.route('/:playlistId/:userId')
             })
             .then((updatedPowerups)=> {
                 console.log('Updated powerups?', updatedPowerups);
-                res.status(200).send(updatedPowerups);
+                res.status(201).send(updatedPowerups);
             })
             .then(null, next);
     });

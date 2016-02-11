@@ -12,6 +12,26 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         'The Last Jamurai': theLastJamurai
     }
 
+    let powerUpIcons = {
+            'Chopsticks of Plenty': '/food.svg',
+            'Sword of Ultimate Shame': '/twoswords.svg',
+            'Daggers of Disdain': '/daggerSolid.svg',
+            'Katana of Disgrace': '/sword.svg',
+            'Enlightened Blessing': '/discipline.svg',
+            'Sword of Uncertainty': '/yinyang.svg',
+            'Poison Darts': '/darts.svg',
+            'The Last Jamurai': '/helmet.svg'
+        }
+
+    let formatPowerUps = powerUpObj => {
+        return powerUpObj.powerups.map(powerup => {
+            let pwrUp = {};
+            pwrUp.name = powerup;
+            pwrUp.icon = powerUpIcons[powerup];
+            return pwrUp;
+        });
+    }
+
     function chopsticksOfPlenty () {
         PlaylistFactory.setUpvoteAmount(10);
         $rootScope.$on('upvote', ()=> {
@@ -63,12 +83,31 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         socket.emit('multiPower', {user: user, room: room, strength: -1000});
     }
 
+    var activePowerups;
+
+    factory.getPowerups = (userId, roomId) => {
+        return $http({
+            method: 'GET',
+            url: `/api/powerups/${userId}/${roomId}`
+        })
+        .then(response => {
+            activePowerups = formatPowerUps(response.data);
+            return response.data;
+        });
+    }
+
+    factory.getActivePowerups = () => {
+        return activePowerups;
+    }
+
+
     factory.addPowerup = (playlistId, userId) => {
         return $http({
             method: 'POST',
             url: `/api/powerups/${playlistId}/${userId}`
         })
         .then(response => {
+            activePowerups = formatPowerUps(response.data);
             console.log('Updated powerups in power up factory',response.data)
         })
     }

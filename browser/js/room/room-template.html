@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <div><h4 id="power-ups-label"><span class="ninja-symbol">+</span> Power Ups <span class="ninja-symbol">+</span></h4></div>
-                <div ng-repeat="powerup in powerUps track by $index" class="list-group">
+                <div ng-repeat="powerup in powerups() track by $index" class="list-group">
                     <a href="" ng-click="usePowerUp(powerup.name, user, room)"><img id="powerup-icon" ng-src="{{powerup.icon}}"></a>
                     <p id="power-name">{{powerup.name}}</p>
                 </div>

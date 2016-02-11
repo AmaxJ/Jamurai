@@ -1,4 +1,4 @@
-app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, SocketFactory, PowerupFactory) {
+app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, SocketFactory, PowerupFactory, $rootScope) {
     return {
         restrict: "E",
 
@@ -24,9 +24,7 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, 
                 var currentSong = PlaylistFactory.getCurrentSong();
                 var playlistId = currentSong.playlist;
                 var userToPowerUp = currentSong.submittedBy._id;
-                console.log('User to power up', userToPowerUp)
                 PowerupFactory.addPowerup(playlistId, userToPowerUp)
-                // socket.emit('addPowerUp', {user: userToPowerUp, playlist: currentSong.playlist});
 
               }
             }
