@@ -5,7 +5,8 @@ app.directive('playlist', function() {
         scope: {
             playlist: '=',
             room: '=',
-            user: '='
+            user: '=',
+            'toggle': '=',
         },
         controller: function($scope, PlayerFactory, PlaylistFactory) {
             $scope.startPlaylist = PlayerFactory.startPlaylist;
