@@ -115,43 +115,26 @@ var getNormLoc = function(coords) {
     return rp(url)
     .then(function(results) {
         var objRes = JSON.parse(results);
-        console.log('obz',objRes.results)
         if(objRes.results.length > 0)
         {
             for(var y=0; y<objRes.results[0].address_components.length; y++)
             {
                 var typeArr = objRes.results[0].address_components[y].types;
-                var useThisForCity = false;
-                var useThisForState = false;
-                for(var z=0; z<typeArr.length; z++)
-                {
-                    if(typeArr[z]==='sublocality_level_1')
-                    {
-                        useThisForCity = true;
-                        break;
-                    }
-                    else if(typeArr[z]==='locality')
-                    {
-                        useThisForCity = true;
-                        break;
-                    }
-                    else if(typeArr[z]==='administrative_area_level_1')
-                    {
-                        useThisForState = true;
-                        break;
-                    }
-                }
-                if(useThisForCity)
+                var sublocality = typeArr.indexOf('sublocality_level_1');
+                var locality = typeArr.indexOf('locality');
+                var adminArea = typeArr.indexOf('administrative_area_level_1');
+
+                if(sublocality >= 0 || locality >= 0)
                 {
                     var city = objRes.results[0].address_components[y].long_name;
                 }
-                else if(useThisForState)
+
+                else if(adminArea >= 0)
                 {
                     var state = objRes.results[0].address_components[y].short_name;
                 }
             }
             var normalizedLocationString = city+', '+state;
-            console.log('normstr',normalizedLocationString);
             return normalizedLocationString;
         }
         else
@@ -203,7 +186,6 @@ schema.pre('save', function (next) {
     {
         return getCoords(doc.location)
         .then(function(coordinates){
-            console.log('coors',coordinates)
             doc.coordinates = coordinates;
             if(coordinates)
             {
@@ -222,7 +204,6 @@ schema.pre('save', function (next) {
     }
     else if(doc.coordinates)
     {
-        console.log('boom');
         return getNormLoc(doc.coordinates)
         .then(function(normLoc){
             doc.normalizedLocation = normLoc;
