@@ -51,7 +51,6 @@ app.config($stateProvider => {
         $scope.user = user;
         $scope.showPlaylist = true;
         $scope.toggleShowPlaylist = boolean => {
-            console.log("I WAS CALLED With,", boolean);
             $scope.showPlaylist = boolean;
         }
         // $scope.startPlaylist = PlayerFactory.startPlaylist;
@@ -99,7 +98,6 @@ app.config($stateProvider => {
         })
 
         socket.on('updateRoom', updateObj => {
-            console.log("ROOM UPDATING..", updateObj.room);
             var room = updateObj.room;
             $scope.room = room;
             $scope.$digest();

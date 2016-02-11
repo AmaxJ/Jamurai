@@ -1,20 +1,20 @@
-app.directive('searchAdd', function (SubmitSongFactory, PlaylistFactory, SocketFactory, RoomFactory) {
+app.directive('searchAdd', (SubmitSongFactory, PlaylistFactory, SocketFactory) => {
 
     return {
         restrict: 'E',
         templateUrl: 'js/common/directives/searchAdd/searchAdd.html',
-        link: function (scope) {
+        link(scope) {
             scope.showSearchResults = false;
             scope.search = function(text) {
                 return SubmitSongFactory.searchYoutube(text)
-                .then(function(searchResults){
+                .then(searchResults =>{
                     scope.searchResults = SubmitSongFactory.getSearchResults();
                     scope.showSearchResults = true;
                 })
             }
             let socket = SocketFactory.getSocket();
             scope.entry = "A-team";
-            scope.add = function(result, user) {
+            scope.add = (result, user) => {
                 PlaylistFactory.addSong(result, user)
                     .then(response => {
                         socket.emit("songAdded", {
