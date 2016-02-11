@@ -59,7 +59,8 @@ var schema = new mongoose.Schema({
         type: String
     },
     powerups: [{
-        type: [String]
+        type: [String],
+        enum: ['Chopsticks of Plenty', 'Sword of Ultimate Shame', 'Daggers of Disdain', 'Katana of Disgrace', 'Enlightened Blessing', 'Sword of Uncertainty', 'Poison Darts', 'The Last Jamurai']
     }]
 });
 
