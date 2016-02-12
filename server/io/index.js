@@ -50,7 +50,6 @@ module.exports = function(server) {
                         return room.addToScore(savedSongData, updatedVote);
                     })
                     .then(room => {
-                        console.log('Updated playlist?', room.playlist)
                         var playlist = room.playlist;
                         io.emit('updateRoom', {
                             playlist: playlist,
