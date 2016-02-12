@@ -21,12 +21,13 @@
     </div>
     <div class="col-sm-7">
         <playlist ng-show="showPlaylist" user='user' room='room' playlist="playlist()" toggle="toggleShowPlaylist"></playlist>
-        <search-add ng-show="!showPlaylist"><search-add>
+        <search-add ng-show="!showPlaylist"></search-add>
     </div>
     <div class="col-sm-3" id="right-sidebar">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-                <div><h4 id="power-ups-label"><span class="ninja-symbol">+</span> Power Ups <span class="ninja-symbol">+</span></h4></div>
+                <div>
+                    <h4 id="power-ups-label"><span class="ninja-symbol">+</span> Power Ups <span class="ninja-symbol">+</span></h4></div>
                 <div ng-repeat="powerup in powerups() track by $index" class="list-group">
                     <a href="" ng-click="usePowerUp(powerup.name, user, room)"><img id="powerup-icon" ng-src="{{powerup.icon}}"></a>
                     <p id="power-name">{{powerup.name}}</p>
@@ -34,4 +35,7 @@
             </div>
         </div>
     </div>
+</div>
+<div id="player-bar" class="row">
+    <youtube-embed></youtube-embed>
 </div>

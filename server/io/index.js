@@ -14,9 +14,6 @@ module.exports = function(server) {
     io = socketio(server);
 
     io.on('connection', function(socket) {
-        //TODO when a user joins a CREATE A USERSCORE OBJ!
-        // Now have access to socket, wowzers!
-        console.log('Someone connected!!!');
         //Vote functions
         socket.on('vote', function(payload) {
                 var song = payload.song;
@@ -69,34 +66,36 @@ module.exports = function(server) {
         socket.on('userLeft', function(data) {
                 let roomId = data.roomId;
                 let userId = data.userId;
-
+                let scoreObjId = data.scoreObjId;
                 Room.findById(roomId)
-                    .then((room) => {
-                        return room.removeUser(userId);
+                    .then(room => {
+                        return room.removeUser(userId, scoreObjId);
                     })
-                    .then((room) => {
+                    .then(updatedRoom => {
+                        let playlist = updatedRoom.playlist;
                         io.emit('updateRoom', {
-                            room: room
+                            room: updatedRoom,
+                            playlist: playlist
                         });
-                    })
+                    });
             })
             //User enters room
         socket.on('userEntered', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
-
             Room.findById(roomId)
-                .then((room) => {
+                .then(room => {
                     return room.addUser(userId);
                 })
-                .then((room) => {
+                .then(updatedRoom => {
+                    let playlist = updatedRoom.playlist;
                     io.emit('updateRoom', {
-                        room: room
+                        room: updatedRoom,
+                        playlist: playlist
                     });
-                })
+                });
         })
-
-        //Add a song
+            //Add a song
         socket.on('songAdded', function(payload) {
             Room.findById(payload.roomId)
                 .populate('users')
@@ -135,26 +134,26 @@ module.exports = function(server) {
 
         //Add a powerup
         socket.on('addPowerUp', function(payload) {
-                var playlist = payload.playlist;
-                var userId = payload.user;
+            var playlist = payload.playlist;
+            var userId = payload.user;
 
-                Room.findOne({
-                        playlist: playlist
+            Room.findOne({
+                    playlist: playlist
+                })
+                .then(function(room) {
+                    return PowerupData.findOne({
+                        room: room._id,
+                        user: userId
                     })
-                    .then(function(room) {
-                        return PowerupData.findOne({
-                            room: room._id,
-                            user: userId
-                        })
-                    })
-                    .then(function(powerupData) {
-                        return powerupData.addPowerup();
-                    })
-                    .then((updatedPowerups) => {
-                        io.emit('updatePowerups', updatedPowerups)
-                    })
-            })
-   
+                })
+                .then(function(powerupData) {
+                    return powerupData.addPowerup();
+                })
+                .then((updatedPowerups) => {
+                    io.emit('updatePowerups', updatedPowerups)
+                })
+        })
+
         //Death stars powerup
         socket.on('multiPower', function(payload) {
             var user = payload.user;

@@ -50,26 +50,27 @@ var schema = new mongoose.Schema({
     }],
     powerUps: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "PowerupData" 
+        ref: "PowerupData"
     }]
 });
 
-schema.statics.createScoreObj = function(roomId, userId) {
+schema.statics.findOrCreateScoreObj = function(userId, roomId) {
     var savedRoom;
-    this.findById(roomId)
+     return this.findById(roomId)
         .then(function(room) {
             savedRoom = room;
-            return UserScore.create({
-                user: userId,
-                room: roomId
-            });
+            return UserScore.findOrCreate(userId, roomId);
         })
         .then(function(scoreObj) {
             savedRoom.userScores.addToSet(scoreObj._id);
             return savedRoom.save();
         })
-
-
+        .then(function(room) {
+            return room;
+        })
+        .then(null, error => {
+            console.log("error in Room.findOrCreateScoreObj:", error);
+        });
 };
 
 schema.statics.getRoomUsers = function getRoomUsers() {
@@ -86,39 +87,31 @@ schema.statics.getRoomSongs = function getRoomSongs() {
         .exec()
 };
 
-var getNormLoc = function(doc,coords) {
-    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+coords[0]+','+coords[1]+'&key=AIzaSyBOwi-4AsRFS8G0SYIAv5ysZpGU-LnOpgY';
+var getNormLoc = function(doc, coords) {
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coords[0] + ',' + coords[1] + '&key=AIzaSyBOwi-4AsRFS8G0SYIAv5ysZpGU-LnOpgY';
     return rp(url)
-    .then(function(results) {
-        var objRes = JSON.parse(results);
-        if(objRes.results.length > 0)
-        {   
-            for(var y=0; y<objRes.results[0].address_components.length; y++)
-            {
-                var typeArr = objRes.results[0].address_components[y].types;
-                var sublocality = typeArr.indexOf('sublocality_level_1');
-                var locality = typeArr.indexOf('locality');
-                var adminArea = typeArr.indexOf('administrative_area_level_1');
+        .then(function(results) {
+            var objRes = JSON.parse(results);
+            if (objRes.results.length > 0) {
+                for (var y = 0; y < objRes.results[0].address_components.length; y++) {
+                    var typeArr = objRes.results[0].address_components[y].types;
+                    var sublocality = typeArr.indexOf('sublocality_level_1');
+                    var locality = typeArr.indexOf('locality');
+                    var adminArea = typeArr.indexOf('administrative_area_level_1');
 
-                if(sublocality >= 0 || locality >= 0)
-                {
-                    var city = objRes.results[0].address_components[y].long_name;
+                    if (sublocality >= 0 || locality >= 0) {
+                        var city = objRes.results[0].address_components[y].long_name;
+                    } else if (adminArea >= 0) {
+                        var state = objRes.results[0].address_components[y].short_name;
+                    }
                 }
-
-                else if(adminArea >= 0)
-                {
-                    var state = objRes.results[0].address_components[y].short_name;
-                }
+                var normalizedLocationString = city + ', ' + state;
+                return [doc, normalizedLocationString];
+            } else {
+                return;
             }
-            var normalizedLocationString = city+', '+state;
-            return [doc,normalizedLocationString];
-        }
-        else
-        {
-            return;
-        }
-        
-    })
+
+        })
 }
 
 schema.method({
@@ -149,12 +142,13 @@ schema.method({
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: [
-                                {path: 'song',
-                                model: 'Song'},
-                                {path: 'submittedBy',
-                                model: 'User'}
-                            ]
+                            populate: [{
+                                path: 'song',
+                                model: 'Song'
+                            }, {
+                                path: 'submittedBy',
+                                model: 'User'
+                            }]
                         }
                     })
             })
@@ -178,12 +172,12 @@ schema.method({
                     return scoreObj.user.toString() === userId.toString();
                 })[0];
                 if (!userScoreObj) {
-                    return self.constructor.createScoreObj(self._id, userId);
+                    return self.constructor.findOrCreateScoreObj(userId, room._id);
                 } else {
                     return "Already have a score Obj"
                 }
             })
-            .then(function(scoreObj){
+            .then(function(room) {
                 return self.addPowerupData(userId);
             })
             .then(function(powerUp) {
@@ -204,66 +198,77 @@ schema.method({
                         populate: {
                             path: 'songs',
                             model: 'SongData',
-                            populate: [
-                                {path: 'song',
-                                model: 'Song'},
-                                {path: 'submittedBy',
-                                model: 'User'}
-                            ]
+                            populate: [{
+                                path: 'song',
+                                model: 'Song'
+                            }, {
+                                path: 'submittedBy',
+                                model: 'User'
+                            }]
                         }
                     })
             })
-            .then(function(doc){
-                if(doc.users.length > 5)
-                {
-                    doc.initiated = true;
-                }
-                if(!doc.initiated)
-                {
-                    var coordArr = [0,0]
-                    for(var x=0; x<self.users.length; x++)
-                    {
-                        coordArr[0]+=doc.users[x].coordinates[0];
-                        coordArr[1]+=doc.users[x].coordinates[1];
-                    }
-                    coordArr[0] = coordArr[0]/doc.users.length;
-                    coordArr[1] = coordArr[1]/doc.users.length;
-                    doc.coords = coordArr;
-                    return getNormLoc(doc,doc.coords)
-                }
-                else
-                {
-                    return;
-                }
-            })
-            .then(function(returnData){
-                var doc = returnData[0];
-                var normLoc = returnData[1];
-                doc.normalLocation = normLoc;
-                return doc.save();
-            })
+            .then(null, error => {
+                console.log("error in Room.addUser: ", error);
+            });
     },
-    removeUser: function(userId) {
+    removeUser: function(userId, scoreObjId) {
+        let self = this;
         this.users.pull(userId);
+        this.userScores.pull(scoreObjId);
         return this.save()
-            .then((room) => {
-                return this.constructor.findById(this._id).populate('users');
+            .then(room => {
+                return self.constructor.findById(self._id)
+                    .populate('users')
+                    .populate('userScores')
+                    .populate({
+                        path: 'userScores',
+                        model: 'UserScore',
+                        populate: {
+                            path: "user",
+                            model: "User"
+                        }
+                    })
+                    .populate({
+                        path: 'playlist',
+                        model: 'Playlist',
+                        populate: {
+                            path: 'songs',
+                            model: 'SongData',
+                            populate: [{
+                                path: 'song',
+                                model: 'Song'
+                            }, {
+                                path: 'submittedBy',
+                                model: 'User'
+                            }]
+                        }
+                    })
             });
     },
     addPowerupData: function(userId) {
-        PowerupData.findOne({user: userId, room: this._id})
-        .then(powerupData => {
-            if(!powerupData) {
-                return PowerupData.create({user: userId, room: this._id})
-                .then(powerupData=> {
-                        self.powerUps.push(powerupData);
-                        self.save();
-                     })
-            }
-            else {
-                return "Already have a power up Obj"
-            }
-        })
+        let self = this;
+        return PowerupData.findOne({
+                user: userId,
+                room: this._id
+            })
+            .then(powerupData => {
+                if (!powerupData) {
+                    return PowerupData.create({
+                            user: userId,
+                            room: this._id
+                        })
+                        .then(powerupData => {
+                            self.powerUps.push(powerupData);
+                            self.save();
+                        })
+                } else {
+                    return "Already have a power up Obj"
+                }
+            })
+            .then(null, error => {
+                console.log("error in addPowerupData: ", error);
+            })
 
     },
     removeSongFromPlaylist: function(song) {
