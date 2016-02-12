@@ -6,8 +6,8 @@ services:
 install:
  - npm install
 before_script:
- - npm install -g gulp
  - npm install -g bower
+ - npm install -g gulp
  - bower install -f
 script:
  - gulp travis
