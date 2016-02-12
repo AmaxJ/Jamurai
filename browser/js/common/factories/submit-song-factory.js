@@ -1,7 +1,7 @@
 app.factory('SubmitSongFactory', ($http)=>{
-	var factory = {};
+	let factory = {};
 
-	var searchResults;
+	let searchResults;
 	factory.searchYoutube = (searchParams)=>{
 		return $http({
 			method: 'GET',
