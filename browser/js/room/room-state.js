@@ -19,11 +19,14 @@ app.config($stateProvider => {
                     }
             },
             onExit: function(user, room, RoomFactory) {
-                RoomFactory.removeUserEmit(room._id, user._id);
+                let scoreObj = findUserScoreObj(room, user._id)
+                RoomFactory.removeUser(room._id, user._id, scoreObj._id);
             }
         })
     })
     .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
+
+        RoomFactory.addUser(room._id, user._id);
 
         let sortScores = () => {
             $scope.room.userScores.sort((a, b) => {
@@ -70,6 +73,7 @@ app.config($stateProvider => {
         $scope.powerUps;
         UserFactory.getPowerUps(user._id, room._id)
             .then(powerUpObj => {
+                console.log("powerups", powerUpObj)
                 $scope.powerUps = formatPowerUps(powerUpObj)
             })
 
@@ -105,6 +109,10 @@ app.config($stateProvider => {
 
         $scope.playlist = PlaylistFactory.getPlaylist;
 
-        RoomFactory.addUserEmit(room._id, user._id);
-
     });
+
+function findUserScoreObj(room, userId) {
+    return room.userScores.filter(scoreObj => {
+        return scoreObj.user._id === userId;
+    })[0];
+}

@@ -27,5 +27,5 @@ Built by:
 
 Credits:
 
-- Icons made with images from [freepik](www.http://www.freepik.com), [flaticon](www.flaticon.com) available under the creative commons license.
+- Icons made with images from [freepik](www.http://www.freepik.com) , [flaticon](www.flaticon.com) available under the creative commons license.
 - Samurai logo by [Stevan Rodic](https://dribbble.com/Stevan)
