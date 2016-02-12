@@ -87,6 +87,7 @@ module.exports = function(server) {
                         return room.addUser(userId);
                     })
                     .then(updatedRoom => {
+                        console.log("updated room", updatedRoom)
                         let playlist = updatedRoom.playlist;
                         io.emit('updateRoom', {
                             room: updatedRoom,

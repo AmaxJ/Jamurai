@@ -54,22 +54,23 @@ var schema = new mongoose.Schema({
     }]
 });
 
-schema.statics.createScoreObj = function(roomId, userId) {
+schema.statics.findOrCreateScoreObj = function(userId, roomId) {
     var savedRoom;
-    this.findById(roomId)
+     return this.findById(roomId)
         .then(function(room) {
             savedRoom = room;
-            return UserScore.create({
-                user: userId,
-                room: roomId
-            });
+            return UserScore.findOrCreate(userId, roomId);
         })
         .then(function(scoreObj) {
             savedRoom.userScores.addToSet(scoreObj._id);
             return savedRoom.save();
         })
-
-
+        .then(function(room) {
+            return room;
+        })
+        .then(null, error => {
+            console.log("error in Room.findOrCreateScoreObj:", error);
+        });
 };
 
 schema.statics.getRoomUsers = function getRoomUsers() {
@@ -171,13 +172,12 @@ schema.method({
                     return scoreObj.user.toString() === userId.toString();
                 })[0];
                 if (!userScoreObj) {
-                    return UserScore.findOrCreate(userId,room._id);
+                    return self.constructor.findOrCreateScoreObj(userId, room._id);
                 } else {
                     return "Already have a score Obj"
                 }
             })
-            .then(function(scoreObj) {
-                console.log("SCORE OBJ", scoreObj);
+            .then(function(room) {
                 return self.addPowerupData(userId);
             })
             .then(function(powerUp) {
@@ -208,6 +208,9 @@ schema.method({
                         }
                     })
             })
+            .then(null, error => {
+                console.log("error in Room.addUser: ", error);
+            });
     },
     removeUser: function(userId, scoreObjId) {
         let self = this;
@@ -244,7 +247,8 @@ schema.method({
             });
     },
     addPowerupData: function(userId) {
-        PowerupData.findOne({
+        let self = this;
+        return PowerupData.findOne({
                 user: userId,
                 room: this._id
             })
@@ -261,6 +265,9 @@ schema.method({
                 } else {
                     return "Already have a power up Obj"
                 }
+            })
+            .then(null, error => {
+                console.log("error in addPowerupData: ", error);
             })
 
     },

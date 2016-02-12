@@ -18,6 +18,7 @@ var schema = new mongoose.Schema({
 });
 
 schema.statics.findOrCreate = function(userId, roomId) {
+    var self = this;
     var queryObj = {
         user: userId,
         room: roomId
@@ -25,9 +26,12 @@ schema.statics.findOrCreate = function(userId, roomId) {
     return this.findOne(queryObj)
         .then(function(scoreObj) {
             if (!scoreObj) {
-                return ScoreObj.create(queryObj)
+                return self.create(queryObj)
             }
             return scoreObj
+        })
+        .then(null, error => {
+            console.log("Error in UserScore.findOrCreate:", error);
         });
 }
 
@@ -37,7 +41,6 @@ schema.method({
         return this.save();
     }
 });
-
 
 
 mongoose.model('UserScore', schema);

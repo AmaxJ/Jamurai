@@ -38,7 +38,6 @@ app.factory('UserFactory', function($http){
 			url: `/api/users/${userId}/${roomId}/powerup`
 		})
 		.then(response => {
-            console.log("POWERUPS", response.data);
 			return response.data
 		});
 	}

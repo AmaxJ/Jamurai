@@ -19,7 +19,11 @@ app.config($stateProvider => {
                     }
             },
             onExit: function(user, room, RoomFactory) {
-                let scoreObj = findUserScoreObj(room, user._id)
+                let scoreObj = room.userScores.filter(scoreObj => {
+                    return scoreObj.user._id === user._id;
+                })[0];
+                console.log("room.userScores", room.userScores);
+                console.log("scoreObj", scoreObj);
                 RoomFactory.removeUser(room._id, user._id, scoreObj._id);
             }
         })
@@ -54,10 +58,10 @@ app.config($stateProvider => {
         $scope.user = user;
         $scope.showPlaylist = true;
         $scope.toggleShowPlaylist = boolean => {
-            $scope.showPlaylist = boolean;
-        }
-        // $scope.startPlaylist = PlayerFactory.startPlaylist;
-        // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
+                $scope.showPlaylist = boolean;
+            }
+            // $scope.startPlaylist = PlayerFactory.startPlaylist;
+            // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         let powerUpIcons = {
             'Chopsticks of Plenty': '/food.svg',
@@ -73,7 +77,6 @@ app.config($stateProvider => {
         $scope.powerUps;
         UserFactory.getPowerUps(user._id, room._id)
             .then(powerUpObj => {
-                console.log("powerups", powerUpObj)
                 $scope.powerUps = formatPowerUps(powerUpObj)
             })
 
