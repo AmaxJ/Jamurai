@@ -32,15 +32,6 @@ app.factory('UserFactory', function($http){
 		})
 	}
 
-	factory.getPowerUps = (userId, roomId) => {
-		return $http({
-			method: 'GET',
-			url: `/api/users/${userId}/${roomId}/powerup`
-		})
-		.then(response => {
-			return response.data
-		});
-	}
 
 	factory.getPowerupsByUser = (userId) => {
 		return $http({

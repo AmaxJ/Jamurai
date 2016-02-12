@@ -59,10 +59,10 @@ router.route('/:userId/powerup')
 		})
 		.then(null, next);
 	})
-	.put(function(req, res, next) {
-		User.findOne({_id: req.params.userId})
-		.then(function(user){
-			User.savePowerup(req.body, user)
-		})
-		.then(null, next)
-	})
+	// .put(function(req, res, next) {
+	// 	User.findOne({_id: req.params.userId})
+	// 	.then(function(user){
+	// 		User.savePowerup(req.body, user)
+	// 	})
+	// 	.then(null, next)
+	// })
