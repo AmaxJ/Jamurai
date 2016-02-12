@@ -11,7 +11,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     var powerUps = {
         'Sword of Ultimate Shame': swordsOfCertainDeath,
         'Daggers of Disdain' : daggersOfDisdain,
-        'Chopsticks of Plenty' : chopsticksOfPlenty,
+        'Lotus of Generosity' : lotusOfGenerosity,
         'Katana of Disgrace' : katanaOfDisgrace,
         'Enlightened Blessing' : soundOfEnlightenment,
         'Sword of Uncertainty' : swordOfUncertainty,
@@ -20,7 +20,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     }
 
     let powerUpIcons = {
-            'Chopsticks of Plenty': '/food.svg',
+            'Lotus of Generosity': '/lotus.svg',
             'Sword of Ultimate Shame': '/twoswords.svg',
             'Daggers of Disdain': '/daggerSolid.svg',
             'Katana of Disgrace': '/sword.svg',
@@ -40,7 +40,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         });
     }
 
-    function chopsticksOfPlenty () {
+    function lotusOfGenerosity () {
         PlaylistFactory.setUpvoteAmount(10);
         $rootScope.$on('upvote', ()=> {
             PlaylistFactory.setUpvoteAmount(1);
