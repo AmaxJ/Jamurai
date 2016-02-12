@@ -1,14 +1,14 @@
 app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http, AuthService) => {
-    var factory = {};
-    var socket = SocketFactory.getSocket();
-    var activePowerups;
-    var loggedInUser;
+    let factory = {};
+    let socket = SocketFactory.getSocket();
+    let activePowerups;
+    let loggedInUser;
     AuthService.getLoggedInUser()
-    .then(user=> {
+    .then(user => {
         loggedInUser = user;
     })
     
-    var powerUps = {
+    let powerUps = {
         'Sword of Ultimate Shame': swordsOfCertainDeath,
         'Daggers of Disdain' : daggersOfDisdain,
         'Chopsticks of Plenty' : chopsticksOfPlenty,
@@ -69,10 +69,10 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     }
 
     function swordOfUncertainty () {
-        var posOrNeg = [-10, 10];
-        var zeroOrOne = Math.floor(Math.random()*2);
-        var multiplier = posOrNeg[zeroOrOne];
-        var randomNum = Math.floor(Math.random()*multiplier);
+        let posOrNeg = [-10, 10];
+        let zeroOrOne = Math.floor(Math.random()*2);
+        let multiplier = posOrNeg[zeroOrOne];
+        let randomNum = Math.floor(Math.random()*multiplier);
         PlaylistFactory.setUpvoteAmount(randomNum);
         $rootScope.$on('upvote', ()=> {
             PlaylistFactory.setUpvoteAmount(1);

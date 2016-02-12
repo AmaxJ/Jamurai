@@ -1,20 +1,20 @@
 app.factory('PlayerFactory', (PlaylistFactory, $http) => {
-    var youtubePlayer;
-    var factory = {};
+    let youtubePlayer;
+    let factory = {};
 
     factory.startPlaylist = () => {
-        var playlist = PlaylistFactory.getPlaylist().songs;
+        let playlist = PlaylistFactory.getPlaylist().songs;
         factory.loadVideoById(playlist[0]);
         // playlist.shift();
 
     }
 
     factory.loadVideoById = (songObj) => {
-        var songID = songObj.song.youTubeId;
+        let songID = songObj.song.youTubeId;
         PlaylistFactory.setCurrentSong(songObj);
-        var playlistObj = PlaylistFactory.getPlaylist();
-        var playlist = playlistObj.songs;
-        var index = playlist.indexOf(songObj);
+        let playlistObj = PlaylistFactory.getPlaylist();
+        let playlist = playlistObj.songs;
+        let index = playlist.indexOf(songObj);
         playlist.splice(index, 1);
         youtubePlayer.loadVideoById(songID);
         return $http({
