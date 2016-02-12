@@ -5,7 +5,7 @@
   "main": "server/start.js",
   "scripts": {
     "start": "nodemon --watch server -e js,html server/start.js",
-    "postinstall": "gulp build"
+    "postinstall": "bower install && gulp build"
   },
   "engines": {
     "node": ">=4.0.0"
