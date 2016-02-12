@@ -116,13 +116,6 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
 
     factory.usePowerup = (powerup,user,room) => {
         powerUps[powerup](user,room);
-
-        // socket.emit('usePowerUp', {powerup: powerup, user: user,room: room});
-        // return $http({
-        //     method: 'PUT',
-        //     url: '/api/users/' + user._id + '/powerup',
-        //     data: {powerup: powerup}
-        // }) 
         return $http({
             method: 'POST',
             url: `/api/powerups/use-powerup/${user._id}/${room._id}`,

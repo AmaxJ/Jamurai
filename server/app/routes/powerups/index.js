@@ -3,6 +3,7 @@ var router = require('express').Router();
 var Song = require('mongoose').model('Song');
 var Room = require('mongoose').model('Room');
 var PowerupData = require('mongoose').model('PowerupData');
+var User = require('mongoose').model('User');
 module.exports = router;
 
 router.route('/:userId/:roomId')
@@ -39,18 +40,18 @@ router.route('/use-powerup/:userId/:roomId/')
         var userId = req.params.userId;
         var roomId = req.params.roomId;
         var powerup = req.body.powerup;
+
+        User.findOne({_id: userId})
+        .then(function(user){
+            User.savePowerup(powerup, user)
+        })
+
         PowerupData.findOne({user: userId, room: roomId})
             .then((powerupData) =>{
                 return powerupData.usePowerup(powerup);
             })
             .then(function(powerups) {
                 res.json(powerups);
-            })
-            .then(() => {
-                User.findOne({_id: req.params.userId})
-                .then(function(user){
-                    User.savePowerup(powerup, user)
-                })
             })
             .then(null, next);
     })

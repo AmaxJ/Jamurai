@@ -71,11 +71,8 @@ schema.methods.sanitize =  function () {
 
 //adds a powerup to user 
 schema.statics.savePowerup = (powerup, user) => {
-    user.powerups.addToSet(powerup.powerup);
+    user.powerups.addToSet(powerup);
     return user.save()
-    .then((user) => {
-        return user;
-    })
 }
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
