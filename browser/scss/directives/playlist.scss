@@ -1,4 +1,10 @@
 .currently-playing {
+  border-top-color: red;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-bottom-color: red;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
   padding-top: 20px;
   color: $highlight-color;
   p {
@@ -15,6 +21,9 @@
 
 #playlist {
     /*margin-left: 33%;*/
+    .playlist-button {
+      margin-top: 20px;
+    }
     .song-honor {
       font-size: 22px;
       text-align: center;

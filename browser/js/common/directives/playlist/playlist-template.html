@@ -1,12 +1,17 @@
 <div id="playlist" class='col-md-12 col-sm-12'>
      <div class="row">
         <div class="playlist-header col-md-8 col-md-offset-2">
-            <button ng-click="startPlaylist()" class="btn playlist-button">Start the jamz</button>
-            <button ng-click="toggle(false)" class="btn-success btn playlist-button">Add a Song</button>
+            <h4 ng-show="currentlyPlaying()" id="currently-playing">Currently Playing:</h4>
             <div class="currently-playing" ng-show="currentlyPlaying()">
-                <h4 id="currently-playing">Currently Playing:</h4>
+                <div id="player-bar" class="row">
+                    <youtube-embed width="320" height="180"></youtube-embed>
+                    <!-- <img ng-if="currentlyPlaying()" src="{{currentlyPlaying().song.thumbnails.medium.url}}" alt=""> -->
+                </div>
+                
                 <p id="currently-playing-title">{{currentlyPlaying().song.title}}</p>
             </div>
+            <button ng-click="startPlaylist()" class="btn playlist-button">Start the jamz</button>
+            <button ng-click="toggle(false)" class="btn-success btn playlist-button">Add a Song</button>
         </div>
     </div>
     <div class='spacer'>
