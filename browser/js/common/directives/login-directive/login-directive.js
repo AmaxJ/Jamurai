@@ -1,4 +1,4 @@
-app.directive('login', function(AuthService, $state) {
+app.directive('login', (AuthService, $state) => {
 	return {
 		restrict: 'E',
 		templateUrl: '/js/common/directives/login-directive/login-directive.html'

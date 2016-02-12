@@ -1,4 +1,4 @@
-app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, SocketFactory, PowerupFactory, $rootScope) {
+app.directive('youtubeEmbed', ($window, PlayerFactory, PlaylistFactory, SocketFactory, PowerupFactory, $rootScope) => {
     return {
         restrict: "E",
 
@@ -10,29 +10,29 @@ app.directive('youtubeEmbed', function($window, PlayerFactory, PlaylistFactory, 
 
         templateUrl: 'js/common/directives/youtube-embed/youtube-embed.html',
 
-        link: function(scope, element) {
+        link: (scope, element) => {
 
-            var youtubePlayer = PlayerFactory.getPlayer();
-            var socket = SocketFactory.getSocket();
+            let youtubePlayer = PlayerFactory.getPlayer();
+            let socket = SocketFactory.getSocket();
             //Loads player and attaches to DOM
             function stateChange(event) {
               if(event.data === 0) {
-                var currentSong = PlaylistFactory.getCurrentSong();
+                let currentSong = PlaylistFactory.getCurrentSong();
                 PlayerFactory.playNextSong(currentSong);
               };
               if(event.data === 1){
-                var currentSong = PlaylistFactory.getCurrentSong();
-                var playlistId = currentSong.playlist;
-                var userToPowerUp = currentSong.submittedBy._id;
+                let currentSong = PlaylistFactory.getCurrentSong();
+                let playlistId = currentSong.playlist;
+                let userToPowerUp = currentSong.submittedBy._id;
                 PowerupFactory.addPowerup(playlistId, userToPowerUp)
 
               }
             }
 
 
-            var tag = document.createElement('script');
+            let tag = document.createElement('script');
             tag.src = "http://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
+            let firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 
