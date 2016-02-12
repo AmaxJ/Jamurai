@@ -24,8 +24,6 @@ app.factory('PlayerFactory', (PlaylistFactory, $http) => {
     };
 
     factory.playNextSong = (currentSong) => {
-        // var currentSongIndex = PlaylistFactory.getPlaylist().songs.indexOf(currentSong);
-        // var nextSongId = PlaylistFactory.getPlaylist()[currentSongIndex + 1];
         factory.loadVideoById(PlaylistFactory.getPlaylist().songs[0]);
     };
 

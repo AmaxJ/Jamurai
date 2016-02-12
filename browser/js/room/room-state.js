@@ -16,6 +16,10 @@ app.config($stateProvider => {
                     user(AuthService) {
                         return AuthService.getLoggedInUser()
                             .then(user => user);
+                    },
+                    powerups(PowerupFactory, user, room) {
+                        return PowerupFactory.getPowerups(user._id, room._id)
+
                     }
             },
             onExit: function(user, RoomFactory) {
@@ -23,13 +27,11 @@ app.config($stateProvider => {
                 let scoreObj = room.userScores.filter(scoreObj => {
                     return scoreObj.user._id === user._id;
                 })[0];
-                console.log("room.userScores", room.userScores);
-                console.log("scoreObj", scoreObj);
                 RoomFactory.removeUser(room._id, user._id, scoreObj._id);
             }
         })
     })
-    .controller('RoomCtrl', ($scope, $rootScope, room, user, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
+    .controller('RoomCtrl', ($scope, $rootScope, room, user, powerups, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
 
         RoomFactory.addUser(room._id, user._id);
 
@@ -39,14 +41,6 @@ app.config($stateProvider => {
             });
         }
 
-        let formatPowerUps = powerUpObj => {
-            return powerUpObj.powerups.map(powerup => {
-                let pwrUp = {};
-                pwrUp.name = powerup;
-                pwrUp.icon = powerUpIcons[powerup];
-                return pwrUp;
-            });
-        }
 
         var socket = SocketFactory.getSocket();
         geo.getCurrentPosition(function(position) {
@@ -55,55 +49,22 @@ app.config($stateProvider => {
                 coordinates: coords
             })
         });
+
         $scope.room = room;
         $scope.user = user;
+        $scope.powerups = PowerupFactory.getActivePowerups;
         $scope.showPlaylist = true;
         $scope.toggleShowPlaylist = boolean => {
-                $scope.showPlaylist = boolean;
-            }
-            // $scope.startPlaylist = PlayerFactory.startPlaylist;
-            // $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
-
-        let powerUpIcons = {
-            'Chopsticks of Plenty': '/food.svg',
-            'Sword of Ultimate Shame': '/twoswords.svg',
-            'Daggers of Disdain': '/daggerSolid.svg',
-            'Katana of Disgrace': '/sword.svg',
-            'Enlightened Blessing': '/discipline.svg',
-            'Sword of Uncertainty': '/yinyang.svg',
-            'Poison Darts': '/darts.svg',
-            'The Last Jamurai': '/helmet.svg'
+            $scope.showPlaylist = boolean;
         }
+        $scope.startPlaylist = PlayerFactory.startPlaylist;
 
-        $scope.powerUps;
-        UserFactory.getPowerUps(user._id, room._id)
-            .then(powerUpObj => {
-                $scope.powerUps = formatPowerUps(powerUpObj)
-            })
+        $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
 
         $scope.usePowerUp = (powerup, user, room) => {
             PowerupFactory.usePowerup(powerup, user, room);
         }
 
-        socket.on('updateUsers', function(room) {
-            $scope.room = room;
-            sortScores();
-            $rootScope.$digest();
-        })
-
-        socket.on('updateVotes', function(updateObj) {
-            $scope.room = updateObj.updatedRoom;
-            sortScores();
-            $scope.$digest();
-        })
-
-        socket.on('updatePowerups', function(updatedPowerups) {
-
-            if (updatedPowerups.user === user._id) {
-                $scope.powerUps = formatPowerUps(updatedPowerups);
-                $scope.$digest();
-            }
-        })
 
         socket.on('updateRoom', updateObj => {
             var room = updateObj.room;
