@@ -4,9 +4,9 @@ node_js:
 services:
  - mongodb
 install:
+ - bower install
  - npm install
 before_script:
  - npm install -g gulp bower
- - bower install
 script:
  - gulp travis
