@@ -31,7 +31,6 @@ schema.method({
             });
     },
     removeSong: function(songId) {
-        console.log("id of song to remove")
         var indexToRemove = this.songs.indexOf(songId);
         this.songs.splice(indexToRemove, 1);
         return this.save();

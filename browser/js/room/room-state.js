@@ -41,6 +41,10 @@ app.config($stateProvider => {
             });
         }
 
+        $scope.sidebarHeight = () => {
+            return {'height': '100%'}
+        }
+
 
         var socket = SocketFactory.getSocket();
         geo.getCurrentPosition(function(position) {
