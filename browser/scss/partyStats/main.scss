@@ -1,5 +1,22 @@
 .graph-buttons {
-    h5 {
-        text-align: center;
+    text-align: center;
+    button {
+        font-family: sans-serif;
+        font-size: 1.2em;
     }
 }
+.buttons {
+    margin-top: 25px;
+}
+.chart{
+    margin-top: 8px;
+    border-bottom: 1px solid $table-border-color;
+    border-radius: 8px;
+}
+svg {
+    text {
+        fill: white;
+    }
+}
+
+
