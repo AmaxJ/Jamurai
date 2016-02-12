@@ -4,18 +4,50 @@ app.config(function($stateProvider) {
         templateUrl: 'js/profiles/profile-template.html',
         controller: 'ProfileCtrl',
         resolve: {
-        	theUser: function (AuthService) {
+        	theUser: (AuthService) => {
         		return AuthService.getLoggedInUser()
-                .then(function(user){
+                .then(user => {
                     return user;
                 })
-        	}
+        	},
+            userPowerups: (theUser, UserFactory) => {
+                let powerUpIcons = {
+                    'Chopsticks of Plenty': '/food.svg',
+                    'Sword of Ultimate Shame': '/twoswords.svg',
+                    'Daggers of Disdain': '/daggerSolid.svg',
+                    'Katana of Disgrace': '/sword.svg',
+                    'Enlightened Blessing': '/discipline.svg',
+                    'Sword of Uncertainty': '/yinyang.svg',
+                    'Poison Darts': '/darts.svg',
+                    'The Last Jamurai': '/helmet.svg'
+                };
+
+                let formatPowerUps = powerUpObj => {
+                    return powerUpObj.map(powerup => {
+                        let pwrUp = {};
+                        pwrUp.name = powerup;
+                        pwrUp.icon = powerUpIcons[powerup];
+                        return pwrUp;
+                    });
+                };
+
+                return UserFactory.getPowerupsByUser(theUser._id)
+                .then(powerups => {
+                    if (powerups.length > 0) {
+                        return formatPowerUps(powerups);
+                    }
+                    else {
+                        return [];
+                    }
+                })
+            } 
         }
     });
 })
 
-.controller('ProfileCtrl', function($scope, ProfileFactory, theUser){
+.controller('ProfileCtrl', function($scope, ProfileFactory, theUser, userPowerups){
     var isEditable = false;
+    $scope.userPowerups = userPowerups;
     $scope.loggedInUser = theUser;
     $scope.updateUser = function(user, update){
         ProfileFactory.updateUser(user, update)
@@ -45,7 +77,6 @@ app.config(function($stateProvider) {
             data: update
         })
         .then(function(response){
-            console.log('Updated user?',response.data);
             return response.data;
         })
     }
