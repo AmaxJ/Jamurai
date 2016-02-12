@@ -3,7 +3,6 @@ app.factory('PlayerFactory', (PlaylistFactory, $http) => {
     var factory = {};
 
     factory.startPlaylist = () => {
-        console.log('FIRST SONG',PlaylistFactory.getPlaylist().songs[0])
         var playlist = PlaylistFactory.getPlaylist().songs;
         factory.loadVideoById(playlist[0]);
         // playlist.shift();

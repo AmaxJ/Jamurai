@@ -1,4 +1,5 @@
 app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFactory) {
+    var roomState
     var factory = {};
     var socket = SocketFactory.getSocket();
 
@@ -33,13 +34,31 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
             .then(response => response.data);
     };
 
-    factory.addUserEmit = (roomId, userId) => {
-        SocketFactory.emitUserAdd(roomId, userId);
+    factory.addUser = (roomId, userId) => {
+        socket.emit("userEntered", {
+            roomId: roomId,
+            userId: userId,
+        })
     }
 
-    factory.removeUserEmit = (roomId, userId) => {
-        SocketFactory.emitUserRemove(roomId, userId)
+    factory.removeUser = (roomId, userId, scoreObjId) => {
+        socket.emit('userLeft', {
+            roomId: roomId,
+            userId: userId,
+            scoreObjId: scoreObjId
+        });
     }
+
+    factory.setRoomState = state => {
+        roomState = state;
+    }
+
+    factory.getRoomState = () => {
+        return roomState;
+    }
+    // factory.removeUserEmit = (roomId, userId, scoreObjId) => {
+    //     SocketFactory.emitUserRemove(roomId, userId, scoreObjId);
+    // }
 
     return factory;
 });
