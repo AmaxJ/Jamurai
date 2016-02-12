@@ -21,7 +21,7 @@
     </div>
     <div class="col-sm-7" id="playlist-div">
         <playlist ng-show="showPlaylist" user='user' room='room' playlist="playlist()" toggle="toggleShowPlaylist"></playlist>
-        <search-add ng-show="!showPlaylist"><search-add>
+        <search-add ng-show="!showPlaylist"></search-add>
     </div>
     <div class="col-sm-3" id="right-sidebar" ng-style="sidebarHeight()">
         <div class="row">
@@ -34,4 +34,7 @@
             </div>
         </div>
     </div>
+</div>
+<div id="player-bar" class="row">
+    <youtube-embed></youtube-embed>
 </div>

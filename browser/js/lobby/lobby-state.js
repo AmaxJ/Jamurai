@@ -25,7 +25,6 @@ app.config(function($stateProvider) {
 
 }).controller('LobbyCtrl', ($scope, user, rooms) => {
     $scope.user = user;
-    console.log('usr',$scope.user);
     $scope.rooms = rooms;
 
 });

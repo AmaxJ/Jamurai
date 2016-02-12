@@ -19,15 +19,21 @@ app.config($stateProvider => {
                     },
                     powerups(PowerupFactory, user, room) {
                         return PowerupFactory.getPowerups(user._id, room._id)
-                            
+
                     }
             },
-            onExit: function(user, room, RoomFactory) {
-                RoomFactory.removeUserEmit(room._id, user._id);
+            onExit: function(user, RoomFactory) {
+                let room = RoomFactory.getRoomState();
+                let scoreObj = room.userScores.filter(scoreObj => {
+                    return scoreObj.user._id === user._id;
+                })[0];
+                RoomFactory.removeUser(room._id, user._id, scoreObj._id);
             }
         })
     })
     .controller('RoomCtrl', ($scope, $rootScope, room, user, powerups, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
+
+        RoomFactory.addUser(room._id, user._id);
 
         let sortScores = () => {
             $scope.room.userScores.sort((a, b) => {
@@ -51,17 +57,13 @@ app.config($stateProvider => {
         $scope.room = room;
         $scope.user = user;
         $scope.powerups = PowerupFactory.getActivePowerups;
-
         $scope.showPlaylist = true;
         $scope.toggleShowPlaylist = boolean => {
             $scope.showPlaylist = boolean;
         }
-
-
         $scope.startPlaylist = PlayerFactory.startPlaylist;
 
         $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
-        
 
         $scope.usePowerUp = (powerup, user, room) => {
             PowerupFactory.usePowerup(powerup, user, room);
@@ -70,12 +72,13 @@ app.config($stateProvider => {
 
         socket.on('updateRoom', updateObj => {
             var room = updateObj.room;
+            RoomFactory.setRoomState(room);
             $scope.room = room;
+            sortScores();
             $scope.$digest();
         })
 
         $scope.playlist = PlaylistFactory.getPlaylist;
 
-        RoomFactory.addUserEmit(room._id, user._id);
-
     });
+

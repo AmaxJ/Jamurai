@@ -319,4 +319,4 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 
 
 
-})
+});
