@@ -52,17 +52,16 @@
         padding-bottom: 30px;
     }
 
-  tr.ng-move,
-  tr.ng-enter,
+  tr.ng-move
    {
-    -webkit-transition:all ease 0.8s;
-    transition:all ease 0.8s;
+    -webkit-transition:all ease-in 0.8s;
+    transition:all ease-in 2s;
   }
 
-  tr.ng-leave{
-    -webkit-transition:all ease 0.4s;
-    transition:all ease 0.4s;
-  }
+  /*tr.ng-leave{
+    -webkit-transition:all ease-out 0.8s;
+    transition:all linear 0.8s;
+  }*/
 
   tr.ng-leave.ng-leave-active,
   tr.ng-move,

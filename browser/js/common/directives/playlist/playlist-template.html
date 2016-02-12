@@ -1,7 +1,7 @@
 <div id="playlist" class='col-md-12 col-sm-12'>
      <div class="row">
         <div class="playlist-header col-md-8 col-md-offset-2">
-            <h4 ng-show="currentlyPlaying()" id="currently-playing">Currently Playing:</h4>
+            <h4 id="currently-playing">{{room.name}}</h4>
             <div class="currently-playing" ng-show="currentlyPlaying()">
                 <div id="player-bar" class="row">
                     <youtube-embed width="320" height="180"></youtube-embed>
