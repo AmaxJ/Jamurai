@@ -124,6 +124,7 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         .then(response => {
             activePowerups = formatPowerUps(response.data);
         })
+
     }
 
     socket.on('updatePowerups', function(updatedPowerups) {        
