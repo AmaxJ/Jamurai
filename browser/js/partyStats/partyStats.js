@@ -144,7 +144,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
                 left: 100
             },
             x: function(d){
-            	console.log('d',d);
             	return d.label},
             y: function(d){return d.value + (1e-10)},
             showValues: true,
