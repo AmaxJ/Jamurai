@@ -15,100 +15,176 @@ app.config(function($stateProvider) {
 })
 
 app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
+	$scope.data = [];
+	$scope.data2 = [];
 	$scope.rooms = rooms;
 	$scope.users = users;
-	console.log('rooms',$scope.rooms);
 
-	var config1 = {
-    	title: 'Song Popularity by Party',
-    	tooltips: true,
-    	labels: false,
-    	mouseover: function() {},
-    	mouseout: function() {},
-    	click: function() {},
-    	legend: {
-      		display: true,
-      		position: 'right'
-		}
+	var options1 = {
+	 chart: {
+            type: 'discreteBarChart',
+            height: 450,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 50,
+                left: 50
+            },
+            x: function(d){return d.label},
+            y: function(d){return d.value + (1e-10)},
+            showValues: true,
+            valueFormat: function(d){
+                return d3.format(',.4f')(d);
+            },
+            duration: 500,
+            xAxis: {
+                axisLabel: 'Song',
+                css: {
+                    'color': 'white'
+                }
+            },
+            yAxis: {
+                axisLabel: 'Number of Parties Requested at',
+                axisLabelDistance: -10
+            }
+        }
 	}
 
-	var config2 = {
-		title: 'Most Loved Songs',
-		tooltips: true,
-		labels: false,
-		mouseover: function(){},
-		mouseout: function(){},
-		click: function(){},
-		legend: {
-			display: true,
-			position: 'right'
-		}
+	var options2 = {
+	 chart: {
+            type: 'discreteBarChart',
+            height: 450,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 100,
+                left: 100
+            },
+            x: function(d){return d.label},
+            y: function(d){return d.value + (1e-10)},
+            showValues: true,
+            valueFormat: function(d){
+                return d3.format(',.4f')(d);
+            },
+            duration: 500,
+            xAxis: {
+                axisLabel: 'Song',
+            },
+            yAxis: {
+                axisLabel: 'Vote Score',
+                axisLabelDistance: -10
+            }
+        }
 	}
 
-	var config3 = {
-    	title: 'Most Popular Locations by Parties',
-    	tooltips: true,
-    	labels: false,
-    	mouseover: function() {},
-    	mouseout: function() {},
-    	click: function() {},
-    	legend: {
-      		display: true,
-      		position: 'right'
-		}
+
+	var options3 = {
+	 chart: {
+            type: 'discreteBarChart',
+            height: 450,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 100,
+                left: 100
+            },
+            x: function(d){return d.label},
+            y: function(d){return d.value + (1e-10)},
+            showValues: true,
+            valueFormat: function(d){
+                return d3.format(',.4f')(d);
+            },
+            duration: 500,
+            xAxis: {
+                axisLabel: 'Location'
+            },
+            yAxis: {
+                axisLabel: 'Number of Parties',
+                axisLabelDistance: -10
+            }
+        }
 	}
 
-	var config4 = {
-    	title: 'Most Popular Locations by Users',
-    	tooltips: true,
-    	labels: false,
-    	mouseover: function() {},
-    	mouseout: function() {},
-    	click: function() {},
-    	legend: {
-      		display: true,
-      		position: 'right'
-		}
+	var options4 = {
+	 chart: {
+            type: 'discreteBarChart',
+            height: 450,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 100,
+                left: 100
+            },
+            x: function(d){return d.label},
+            y: function(d){return d.value + (1e-10)},
+            showValues: true,
+            valueFormat: function(d){
+                return d3.format(',.4f')(d);
+            },
+            duration: 500,
+            xAxis: {
+                axisLabel: 'Location'
+            },
+            yAxis: {
+                axisLabel: 'Number of Users',
+                axisLabelDistance: -10
+            }
+        }
 	}
 
-	var config5 = {
-    	title: 'Most Hated Songs',
-    	tooltips: true,
-    	labels: false,
-    	mouseover: function() {},
-    	mouseout: function() {},
-    	click: function() {},
-    	legend: {
-      		display: true,
-      		position: 'right'
-		}
+	var options5 = {
+	 chart: {
+	 		title: 'Most Hated Songs',
+            type: 'discreteBarChart',
+            height: 450,
+            margin : {
+                top: 20,
+                right: 20,
+                bottom: 100,
+                left: 100
+            },
+            x: function(d){
+            	return d.label},
+            y: function(d){return d.value + (1e-10)},
+            showValues: true,
+            valueFormat: function(d){
+                return d3.format(',.4f')(d);
+            },
+            duration: 500,
+            xAxis: {
+                axisLabel: 'Song'
+            },
+            yAxis: {
+                axisLabel: 'Vote Score',
+                axisLabelDistance: -10
+            }
+        }
 	}
 
-	var data1 = {
-		series: ['# requests per party'],
-		data: []
-	}
+	var data1 = [{
+		key: '# requests per party',
+		values: []
+	}]
 
-	var data2 = {
-		series: ['vote score'],
-		data: []
-	}
+	var data2 = [{
+		key: 'vote score',
+		values: []
+	}]
 
-	var data3 = {
-		series: ['Location'],
-		data: []
-	}
+	var data3 = [{
+		key: 'Location',
+		values: []
+	}]
 
-	var data4 = {
-		series: ['Location'],
-		data: []
-	}
+	var data4 = [{
+		key: 'Location',
+		values: []
+	}]
 
-	var data5 = {
-		series: ['vote score'],
-		data: []
-	}
-
+	var data5 = [{
+		key: 'vote score',
+		values: []
+	}]
 
 	var masterSongList = [];
 	var hateCopy = [];
@@ -242,76 +318,66 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	for(var g=0; g<masterSongList.length; g++)
 	{
 		var obj = {};
-		obj.x = masterSongList[g][0];
-		obj.y = [masterSongList[g][1]];
-		data1.data.push(obj);
+		obj.label = masterSongList[g][0];
+		obj.value = masterSongList[g][1];
+		data1[0].values.push(obj);
 	}
 
 	for(var g=0; g<hateCopy.length; g++)
 	{
 		var obj = {};
-		obj.x = hateCopy[g][0];
-		obj.y = [hateCopy[g][1]];
-		data5.data.push(obj);
+		obj.label = hateCopy[g][0];
+		obj.value = hateCopy[g][1];
+		data5[0].values.push(obj);
 	}
 
 	for(var h=0; h<overallMasterVzn.length; h++)
 	{
 		var obj = {};
-		obj.x = overallMasterVzn[h][0];
-		obj.y = [overallMasterVzn[h][1]];
-		data2.data.push(obj);
+		obj.label = overallMasterVzn[h][0];
+		obj.value = overallMasterVzn[h][1];
+		data2[0].values.push(obj);
 	}
 
 	for(var g=0; g<roomLocList.length; g++)
 	{
 		var obj = {};
-		obj.x = roomLocList[g][0];
-		obj.y = [roomLocList[g][1]];
-		data3.data.push(obj);
+		obj.label = roomLocList[g][0];
+		obj.value = roomLocList[g][1];
+		data3[0].values.push(obj);
 	}
 
 	for(var i=0; i<userLocList.length; i++)
 	{
 		var obj = {};
-		obj.x = userLocList[i][0];
-		obj.y = [userLocList[i][1]];
-		data4.data.push(obj);
+		obj.label = userLocList[i][0];
+		obj.value = userLocList[i][1];
+		data4[0].values.push(obj);
 	}
-	console.log('d1',masterSongList);
-	console.log('d5',hateCopy);
 
 	$scope.getOverallPopularity = function() {
 		$scope.data = data2;
-		$scope.config = config2;
-		// $scope.overall = true;
-		// $scope.singular = false;
+		$scope.options = options2;
 	}
 
 	$scope.getSingularPopularity = function() {
 		$scope.data = data1;
-		$scope.config = config1;
-		// $scope.singular = true;
-		// $scope.overall = false;
+		$scope.options = options1;
 	}
 
 	$scope.getHatedSongs = function() {
 		$scope.data = data5;
-		$scope.config = config5;
+		$scope.options = options5;
 	}
 
 	$scope.getRoomLocPop = function() {
 		$scope.data2 = data3;
-		$scope.config2 = config3;
-		// $scope.roomVzn = true;
-		// $scope.userVzn = false;
+		$scope.options2 = options3;
 	}
 
 	$scope.getUserLocPop = function() {
 		$scope.data2 = data4;
-		$scope.config2 = config4;
-		// $scope.userVzn = true;
-		// $scope.roomVzn = false;
+		$scope.options2 = options4;
 	}
 
 	$scope.getSingularPopularity();

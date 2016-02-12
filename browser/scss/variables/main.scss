@@ -6,7 +6,7 @@
 
 /*Colors*/
 $red: #FF4136;
-
+$transparent-white : rgba(255,255,255,0.3);
 /*Text*/
 $primary-text-color: white;
 $font-stack: ninjaFont;
@@ -17,6 +17,7 @@ $highlight-color: $red;
 $navbar-border-color: $red;
 $border-color: black;
 $table-border-color: $red;
+$white-border: $transparent-white;
 
 /*Buttons*/
 $primary-button-color: black;
@@ -29,5 +30,6 @@ $button-active-color: $red;
 $background-color: black;
 $main-content-background: black;
 $navbar-background-color: black;
+
 
 
