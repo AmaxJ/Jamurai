@@ -1,4 +1,5 @@
 app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFactory) {
+    var roomState
     var factory = {};
     var socket = SocketFactory.getSocket();
 
@@ -46,6 +47,14 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
             userId: userId,
             scoreObjId: scoreObjId
         });
+    }
+
+    factory.setRoomState = state => {
+        roomState = state;
+    }
+
+    factory.getRoomState = () => {
+        return roomState;
     }
     // factory.removeUserEmit = (roomId, userId, scoreObjId) => {
     //     SocketFactory.emitUserRemove(roomId, userId, scoreObjId);

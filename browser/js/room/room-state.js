@@ -18,7 +18,8 @@ app.config($stateProvider => {
                             .then(user => user);
                     }
             },
-            onExit: function(user, room, RoomFactory) {
+            onExit: function(user, RoomFactory) {
+                let room = RoomFactory.getRoomState();
                 let scoreObj = room.userScores.filter(scoreObj => {
                     return scoreObj.user._id === user._id;
                 })[0];
@@ -106,7 +107,9 @@ app.config($stateProvider => {
 
         socket.on('updateRoom', updateObj => {
             var room = updateObj.room;
+            RoomFactory.setRoomState(room);
             $scope.room = room;
+            sortScores();
             $scope.$digest();
         })
 
@@ -114,8 +117,3 @@ app.config($stateProvider => {
 
     });
 
-function findUserScoreObj(room, userId) {
-    return room.userScores.filter(scoreObj => {
-        return scoreObj.user._id === userId;
-    })[0];
-}
