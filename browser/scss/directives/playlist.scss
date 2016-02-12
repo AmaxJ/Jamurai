@@ -24,6 +24,8 @@
 }
 
 #playlist {
+    border-left: 1px solid $white-border;
+    border-right: 1px solid $white-border;
     /*margin-left: 33%;*/
     .playlist-button {
       margin-top: 20px;
@@ -41,7 +43,7 @@
         opacity: 0.85;
         border-color: $table-border-color;
     }
-    
+
     table:hover {
         opacity: 1;
     }
