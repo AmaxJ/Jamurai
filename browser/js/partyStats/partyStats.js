@@ -50,13 +50,16 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             valueFormat: function(d){
                 return d3.format(',.4f')(d);
             },
+            showXAxis: true,
+            showYAxis: true,
             duration: 500,
             xAxis: {
-                axisLabel: 'Song'
+                axisLabel: 'Song',
             },
             yAxis: {
                 axisLabel: 'Number of Parties Requested at',
-                axisLabelDistance: -10
+                axisLabelDistance: -10,
+                tickFormat: function(d){ return d3.format(',f')(d) }
             }
         }
 	}
@@ -81,8 +84,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             margin : {
                 top: 20,
                 right: 20,
-                bottom: 100,
-                left: 100
+                bottom: 50,
+                left: 50
             },
             x: function(d){return d.label},
             y: function(d){return d.value + (1e-10)},
@@ -90,6 +93,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             valueFormat: function(d){
                 return d3.format(',.4f')(d);
             },
+            showXAxis: true,
+            showYAxis: true,
             duration: 500,
             xAxis: {
                 axisLabel: 'Song'
@@ -123,8 +128,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             margin : {
                 top: 20,
                 right: 20,
-                bottom: 100,
-                left: 100
+                bottom: 50,
+                left: 50
             },
             x: function(d){return d.label},
             y: function(d){return d.value + (1e-10)},
@@ -132,6 +137,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             valueFormat: function(d){
                 return d3.format(',.4f')(d);
             },
+            showXAxis: true,
+            showYAxis: true,
             duration: 500,
             xAxis: {
                 axisLabel: 'Location'
@@ -163,8 +170,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             margin : {
                 top: 20,
                 right: 20,
-                bottom: 100,
-                left: 100
+                bottom: 50,
+                left: 50
             },
             x: function(d){return d.label},
             y: function(d){return d.value + (1e-10)},
@@ -172,6 +179,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             valueFormat: function(d){
                 return d3.format(',.4f')(d);
             },
+            showXAxis: true,
+            showYAxis: true,
             duration: 500,
             xAxis: {
                 axisLabel: 'Location'
@@ -204,9 +213,11 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             margin : {
                 top: 20,
                 right: 20,
-                bottom: 100,
-                left: 100
+                bottom: 50,
+                left: 50
             },
+            showXAxis: true,
+            showYAxis: true,
             x: function(d){
             	console.log('d',d);
             	return d.label},
@@ -446,7 +457,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	}
 
 	$scope.getSingularPopularity();
-	$scope.getRoomLocPop();
+	// $scope.getRoomLocPop();
 
 
 
