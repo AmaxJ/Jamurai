@@ -1,17 +1,15 @@
 {
-  "name": "sarkas",
-  "description": "jamurai",
-  "main": "server/start.js",
-  "license": "MIT",
-  "homepage": "https://github.com/AmaxJ/Jamurai",
-  "moduleType": [
-    "amd",
-    "es6",
-    "globals",
-    "node",
-    "yui"
+  "name": "Jamurai",
+  "version": "0.0.1",
+  "homepage": "www.Jamurai.io",
+  "authors": [
+    "Alan <ajohnson88@gmail.com>"
   ],
-  "private": true,
+  "description": "Collaborative playlist application",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -20,9 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular-charts": "~0.2.7"
-  },
-  "resolutions": {
-    "d3": "^3.3.13"
+    "angular-nvd3": "~1.0.5"
   }
 }
