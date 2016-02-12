@@ -35,6 +35,17 @@
     }
 }
 
+#powerupDiv-profile {
+	#public-powerup-label {
+		font-size: .9em;
+		color: $highlight-color;
+	}
+	img {
+		max-width: 100%;
+		margin-bottom: 0;
+		}
+}
+
 //public profile
 #public-photo {
     text-align: center;

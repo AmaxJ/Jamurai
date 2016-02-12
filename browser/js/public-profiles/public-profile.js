@@ -33,7 +33,6 @@ app.config(function ($stateProvider) {
 
 				return UserFactory.getPowerupsByUser(publicUser._id)
 				.then(powerups => {
-					console.log('poqwer resolve', powerups);
 					if (powerups.length > 0) {
 						return formatPowerUps(powerups);
 					}
