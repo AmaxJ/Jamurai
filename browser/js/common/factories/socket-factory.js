@@ -9,14 +9,6 @@ app.factory('SocketFactory', function() {
         	socket.emit('vote', payload);
         }
 
-        factory.emitUserAdd = function (roomId, userId) {
-            socket.emit('userEntered', {roomId: roomId, userId: userId});
-        }
-
-        factory.emitUserRemove = function (roomId, userId) {
-            socket.emit('userLeft', {roomId: roomId, userId: userId})
-        }
-
         factory.getSocket = function(){
         	return socket;
         }
