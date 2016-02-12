@@ -7,6 +7,7 @@ router.use('/songs', require('./songs'));
 router.use('/rooms', require('./rooms'));
 router.use('/playlists', require('./playlists'));
 router.use('/users', require('./users'));
+router.use('/powerups', require('./powerups'));
 
 
 // Make sure this is after all of

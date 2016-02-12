@@ -106,7 +106,6 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
     factory.getCurrentSong = function() {
         if(!currentSong) return null;
-        console.log("CURRENT SONG", currentSong)
         return currentSong;
     };
 
@@ -131,20 +130,13 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         else if (song.downVotes.indexOf(user._id) > -1) return 'downVote';
     }
 
-    socket.on('updateVotes', function(updatedObj) {
-        var songToUpdate = _.find(playlist.songs, function(o) {
-                return o.song.title === updatedObj.updatedSong.song.title;
-            })
-        var updateIndex = playlist.songs.indexOf(songToUpdate)
-        playlist.songs[updateIndex] = updatedObj.updatedSong;
-        factory.sort();
-        $rootScope.$digest();
-    })
 
     socket.on('updateRoom', updateObj=> {
-        playlist = updateObj.playlist;
-        factory.sort();
-        $rootScope.$digest();
+        if(updateObj.playlist) {
+            playlist = updateObj.playlist;
+            factory.sort();
+            $rootScope.$digest();   
+        }
     })
 
     return factory;
