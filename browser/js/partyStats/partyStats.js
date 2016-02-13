@@ -21,19 +21,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	$scope.users = users;
 	console.log('rooms',$scope.rooms);
 
-	// var config1 = {
- //    	title: 'Song Popularity by Party',
- //    	tooltips: true,
- //    	labels: false,
- //    	mouseover: function() {},
- //    	mouseout: function() {},
- //    	click: function() {},
- //    	legend: {
- //      		display: true,
- //      		position: 'right'
-	// 	}
-	// }
-
 	var options1 = {
 	 chart: {
             type: 'discreteBarChart',
@@ -64,19 +51,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
         }
 	}
 
-	// var config2 = {
-	// 	title: 'Most Loved Songs',
-	// 	tooltips: true,
-	// 	labels: false,
-	// 	mouseover: function(){},
-	// 	mouseout: function(){},
-	// 	click: function(){},
-	// 	legend: {
-	// 		display: true,
-	// 		position: 'right'
-	// 	}
-	// }
-
 	var options2 = {
 	 chart: {
             type: 'discreteBarChart',
@@ -105,21 +79,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             }
         }
 	}
-
-
-
-	// var config3 = {
- //    	title: 'Most Popular Locations by Parties',
- //    	tooltips: true,
- //    	labels: false,
- //    	mouseover: function() {},
- //    	mouseout: function() {},
- //    	click: function() {},
- //    	legend: {
- //      		display: true,
- //      		position: 'right'
-	// 	}
-	// }
 
 	var options3 = {
 	 chart: {
@@ -150,19 +109,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
         }
 	}
 
-	// var config4 = {
- //    	title: 'Most Popular Locations by Users',
- //    	tooltips: true,
- //    	labels: false,
- //    	mouseover: function() {},
- //    	mouseout: function() {},
- //    	click: function() {},
- //    	legend: {
- //      		display: true,
- //      		position: 'right'
-	// 	}
-	// }
-
 	var options4 = {
 	 chart: {
             type: 'discreteBarChart',
@@ -191,19 +137,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             }
         }
 	}
-
-	// var config5 = {
- //    	title: 'Most Hated Songs',
- //    	tooltips: true,
- //    	labels: false,
- //    	mouseover: function() {},
- //    	mouseout: function() {},
- //    	click: function() {},
- //    	legend: {
- //      		display: true,
- //      		position: 'right'
-	// 	}
-	// }
 
 	var options5 = {
 	 chart: {
@@ -457,7 +390,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	}
 
 	$scope.getSingularPopularity();
-	// $scope.getRoomLocPop();
+	$scope.getRoomLocPop();
 
 
 
