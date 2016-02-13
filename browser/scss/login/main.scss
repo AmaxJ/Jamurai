@@ -1,4 +1,9 @@
 #login-form {
+  h1 {
+  	font-family: $secondary-font-stack;
+  	padding-bottom: 30px;
+  	margin-top: 20px;
+  }
   width: 60%;
   margin: 0 auto;
   oauth {

@@ -42,7 +42,6 @@ router.route('/yid/:youTubeId')
                 youTubeId: req.params.youTubeId
             })
             .then(function(song) {
-                console.log(song);
                 res.status(200).json(song);
             })
             .then(null, next);

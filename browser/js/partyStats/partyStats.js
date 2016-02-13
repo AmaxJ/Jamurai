@@ -19,7 +19,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
 	$scope.data2 = [];
 	$scope.rooms = rooms;
 	$scope.users = users;
-	console.log('rooms',$scope.rooms);
 
 	var options1 = {
 	 chart: {
@@ -42,6 +41,10 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             duration: 500,
             xAxis: {
                 axisLabel: 'Song',
+
+                css: {
+                    'color': 'white'
+                }
             },
             yAxis: {
                 axisLabel: 'Number of Parties Requested at',
@@ -71,7 +74,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             showYAxis: true,
             duration: 500,
             xAxis: {
-                axisLabel: 'Song'
+                axisLabel: 'Song',
             },
             yAxis: {
                 axisLabel: 'Vote Score',
@@ -79,6 +82,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             }
         }
 	}
+
 
 	var options3 = {
 	 chart: {
@@ -152,7 +156,6 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             showXAxis: true,
             showYAxis: true,
             x: function(d){
-            	console.log('d',d);
             	return d.label},
             y: function(d){return d.value + (1e-10)},
             showValues: true,

@@ -86,7 +86,6 @@ router.route('/:playlistId/:songId')
                 return playlist.removeSong(req.params.songId);
             })
             .then( playlist => {
-                console.log('Updated playlist?', playlist)
                 res.status(204).json(playlist);
             })
             .then(null, next);
