@@ -15,9 +15,11 @@ weight.
 
 ###Images
 
-![alt text](http://www.jamurai.com/dojo.png "Dojo")
+![Lobby](https://imgur.com/oSchlrG)
 
-![alt text](http://www.jamurai.com/search.png "Song Search")
+![Dojo](https://imgur.com/QKsQ4jw)
+
+![Stats](https://imgur.com/YHoCsu0)
 
 Built by:
 - [Nate Maddrey](https://github.com/nmadd)
