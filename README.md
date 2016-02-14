@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/AmaxJ/Jamurai.svg?branch=master)](https://travis-ci.org/AmaxJ/Jamurai)
 
-# [Jamurai](www.jamurai.io)
+# [Jamurai](http://www.jamurai.io)
 
 Jamurai is a realtime collaborative playlist application for
 crowd-sourcing music selection at parties. 
