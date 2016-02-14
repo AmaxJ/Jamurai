@@ -31,7 +31,7 @@ app.config($stateProvider => {
             }
         })
     })
-    .controller('RoomCtrl', ($scope, $rootScope, room, user, powerups, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory) => {
+    .controller('RoomCtrl', ($scope, $rootScope, room, user, powerups, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory, $timeout) => {
 
         RoomFactory.addUser(room._id, user._id);
 
@@ -76,6 +76,7 @@ app.config($stateProvider => {
             $scope.room = room;
             sortScores();
             $scope.$digest();
+            $rootScope.$digest();
         })
 
         $scope.playlist = PlaylistFactory.getPlaylist;

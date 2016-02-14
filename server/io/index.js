@@ -94,6 +94,23 @@ module.exports = function(server) {
                     });
                 });
         })
+
+        socket.on('messageAdded', function(payload) {
+            let roomId = payload.roomId;
+            let userName = payload.userName;
+            let msg = payload.message;
+            Room.findById(roomId)
+            .then(room => {
+                return room.addMsg(userName,msg)
+            })
+            .then(updatedRoom => {
+                let playlist = updatedRoom.playlist;
+                io.emit('updateRoom', {
+                    room: updatedRoom,
+                    playlist: playlist
+                })
+            })
+        })
             //Add a song
         socket.on('songAdded', function(payload) {
             Room.findById(payload.roomId)

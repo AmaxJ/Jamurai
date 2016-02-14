@@ -41,6 +41,14 @@ app.factory('RoomFactory', function($http, PlaylistFactory, $rootScope, SocketFa
         })
     }
 
+    factory.addMessage = (roomId, userName, message) => {
+        socket.emit('messageAdded', {
+            roomId: roomId,
+            userName: userName,
+            message: message
+        })
+    }
+
     factory.removeUser = (roomId, userId, scoreObjId) => {
         socket.emit('userLeft', {
             roomId: roomId,
