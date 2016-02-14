@@ -5,15 +5,17 @@
 * {
   box-sizing: border-box;
   color: $primary-text-color;
-  font-family: $font-stack;
 }
 
-
+th {
+  font-family: $nav-header-font;
+}
 
 .btn {
   background-color: $primary-button-color;
   border-color: $button-border-color;
   border-radius: 5px;
+  font-size: 1.3em;
   &:hover {
       background-color: $button-hover-color;
       border-color: $button-hover-border-color;
@@ -37,6 +39,7 @@ p {
 }
 
 html, body {
+  font-family: $font-stack;
   width: 100%;
   height: 100%;
 }
