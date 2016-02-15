@@ -15,11 +15,11 @@ weight.
 
 ###Images
 
-![Lobby](https://imgur.com/oSchlrG)
+![Lobby](https://github.com/AmaxJ/Jamurai/tree/master/static/screenshots/lobby.png)
 
-![Dojo](https://imgur.com/QKsQ4jw)
+![Dojo](https://github.com/AmaxJ/Jamurai/tree/master/static/screenshots/dojo.png)
 
-![Stats](https://imgur.com/YHoCsu0)
+![Stats](https://github.com/AmaxJ/Jamurai/tree/master/static/screenshots/stats.png)
 
 Built by:
 - [Nate Maddrey](https://github.com/nmadd)
