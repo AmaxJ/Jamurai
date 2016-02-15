@@ -41,7 +41,6 @@ app.directive('playlist', function() {
                     $scope.messages.push(obj);
                 }
                 $scope.$digest();
-                $rootScope.$digest();
             })
 
             $scope.messageWorks = function() {

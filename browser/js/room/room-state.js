@@ -76,7 +76,6 @@ app.config($stateProvider => {
             $scope.room = room;
             sortScores();
             $scope.$digest();
-            $rootScope.$digest();
         })
 
         $scope.playlist = PlaylistFactory.getPlaylist;
