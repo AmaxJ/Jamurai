@@ -1,4 +1,5 @@
 .profile-details {
+
 	background: $main-content-background;
 	height: 100%;
 	margin: 0 auto;
@@ -9,10 +10,11 @@
 		margin-top: 30px;
 	}
     label {
-        font-size: 1.25em;
+        font-size: 1.3em;
     }
     p {
-        font-size:1.2em;
+        font-size:1.1em;
+        font-family: $secondary-font-stack;
     }
 	img {
 		width: 250px;
@@ -36,8 +38,11 @@
 }
 
 #powerupDiv-profile {
+    padding-top: 20px;
+    text-align: center;
 	#public-powerup-label {
-		font-size: .9em;
+		font-size: 1.1em;
+        font-family: $nav-header-font;
 		color: $highlight-color;
 	}
 	img {
@@ -54,8 +59,11 @@
 
 //public profile power up bar
 .powerupDiv {
+    padding-top: 20px;
+    text-align: center;
 	#public-powerup-label {
-		font-size: .9em;
+		font-size: 1.1em;
+        font-family: $nav-header-font;
 		color: $highlight-color;
 	}
 	img {

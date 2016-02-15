@@ -27,6 +27,9 @@
     border-left: 1px solid $white-border;
     border-right: 1px solid $white-border;
     /*margin-left: 33%;*/
+    #room-name-display {
+      font-family:$nav-header-font;
+    }
     .playlist-button {
       margin-top: 20px;
     }
