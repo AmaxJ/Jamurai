@@ -371,18 +371,18 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
         $scope.options = options5;
     }
 
-    $scope.getRoomLocPop = function() {
-        $scope.data2 = data3;
-        $scope.options2 = options3;
-    }
+    // $scope.getRoomLocPop = function() {
+    //     $scope.data2 = data3;
+    //     $scope.options2 = options3;
+    // }
 
-    $scope.getUserLocPop = function() {
-        $scope.data2 = data4;
-        $scope.options2 = options4;
-    }
+    // $scope.getUserLocPop = function() {
+    //     $scope.data2 = data4;
+    //     $scope.options2 = options4;
+    // }
 
     $scope.getSingularPopularity();
-    $scope.getRoomLocPop();
+    // $scope.getRoomLocPop();
 
 
 
