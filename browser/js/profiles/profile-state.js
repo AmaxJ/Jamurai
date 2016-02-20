@@ -1,4 +1,4 @@
-app.config(function($stateProvider) {
+app.config($stateProvider => {
     $stateProvider.state('profile', {
         url: '/profile',
         templateUrl: 'js/profiles/profile-template.html',
@@ -45,30 +45,32 @@ app.config(function($stateProvider) {
     });
 })
 
-.controller('ProfileCtrl', function($scope, ProfileFactory, theUser, userPowerups){
-    var isEditable = false;
+.controller('ProfileCtrl', ($scope, ProfileFactory, theUser, userPowerups) => {
+    let isEditable = false;
     $scope.userPowerups = userPowerups;
     $scope.loggedInUser = theUser;
-    $scope.updateUser = function(user, update){
+    $scope.updateUser = (user, update) => {
         ProfileFactory.updateUser(user, update)
-        .then(function(user){
+        .then(user => {
             $scope.updateDetails = {};
             ProfileFactory.setIsEditable();
             loggedInUser = user;
         })
-    }
-    // $scope.loggedInUser = ProfileFactory.getLoggedInUser;
+    };
+
     $scope.isEditable = () => {
         return isEditable;
-    }
+    };
+
     $scope.setEditable = () => {
         isEditable = !isEditable;
-    }
+    };
+
     $scope.updateDetails = {};
 })
 
-.factory('ProfileFactory', function($http){
-    var factory = {};
+.factory('ProfileFactory', $http => {
+    let factory = {};
     
     factory.updateUser = (user, update) => {
         return $http({
@@ -76,7 +78,7 @@ app.config(function($stateProvider) {
             url: 'api/users/' + user._id,
             data: update
         })
-        .then(function(response){
+        .then(response => {
             return response.data;
         })
     }

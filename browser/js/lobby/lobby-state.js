@@ -1,12 +1,12 @@
-var geo = navigator.geolocation;
+let geo = navigator.geolocation;
 
-app.config(function($stateProvider) {
+app.config($stateProvider => {
     $stateProvider.state('lobby', {
         url: '/lobby',
         templateUrl: 'js/lobby/lobby.html',
         controller: 'LobbyCtrl',
         resolve: {
-        	user: function (AuthService) {
+        	user: (AuthService) => {
         		return AuthService.getLoggedInUser()
         				// .then(function(user){
                         //     geo.getCurrentPosition(function(position){
@@ -17,7 +17,7 @@ app.config(function($stateProvider) {
                         //     })
                         // })
         	},
-            rooms: function (RoomFactory) {
+            rooms: (RoomFactory) => {
                 return RoomFactory.getAllRooms();
             }
         }

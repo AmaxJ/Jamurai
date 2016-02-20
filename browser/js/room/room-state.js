@@ -1,4 +1,4 @@
-var geo = navigator.geolocation;
+let geo = navigator.geolocation;
 
 app.config($stateProvider => {
         $stateProvider.state('room', {
@@ -22,10 +22,10 @@ app.config($stateProvider => {
 
                     }
             },
-            onEnter: function(room, user, RoomFactory) {
+            onEnter: (room, user, RoomFactory) => {
                 RoomFactory.addUser(room._id, user._id);
             },
-            onExit: function(user, RoomFactory) {
+            onExit: (user, RoomFactory) => {
                 let room = RoomFactory.getRoomState();
                 let scoreObj = room.userScores.filter(scoreObj => {
                     return scoreObj.user._id === user._id;
@@ -49,9 +49,9 @@ app.config($stateProvider => {
         }
 
 
-        var socket = SocketFactory.getSocket();
-        geo.getCurrentPosition(function(position) {
-            var coords = [position.coords.latitude, position.coords.longitude];
+        let socket = SocketFactory.getSocket();
+        geo.getCurrentPosition((position) => {
+            let coords = [position.coords.latitude, position.coords.longitude];
             return UserFactory.updateUser(user._id, {
                 coordinates: coords
             })
@@ -74,7 +74,7 @@ app.config($stateProvider => {
 
 
         socket.on('updateRoom', updateObj => {
-            var room = updateObj.room;
+            let room = updateObj.room;
             RoomFactory.setRoomState(room);
             $scope.room = room;
             sortScores();

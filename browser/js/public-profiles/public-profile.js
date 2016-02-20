@@ -1,4 +1,4 @@
-app.config(function ($stateProvider) {
+app.config($stateProvider => {
 	$stateProvider.state('publicProfile', {
 		url: '/publicProfile/:userId',
 		templateUrl: 'js/public-profiles/public-profile-template.html',
@@ -44,7 +44,7 @@ app.config(function ($stateProvider) {
 		}
 	})
 })
-.controller('PublicProfileCtrl', function($scope, publicUser, UserFactory, userPowerups){
+.controller('PublicProfileCtrl', ($scope, publicUser, UserFactory, userPowerups) => {
 	$scope.publicUser = publicUser;
 	$scope.userPowerups = userPowerups;
 
