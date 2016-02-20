@@ -1,9 +1,9 @@
 'use strict';
-var router = require('express').Router();
-var Room = require('mongoose').model('Room');
-var Playlist = require('mongoose').model('Playlist');
-var User = require('mongoose').model('User');
-var Song = require('mongoose').model('Song');
+let router = require('express').Router();
+let Room = require('mongoose').model('Room');
+let Playlist = require('mongoose').model('Playlist');
+let User = require('mongoose').model('User');
+let Song = require('mongoose').model('Song');
 module.exports = router;
 
 router.route('/')

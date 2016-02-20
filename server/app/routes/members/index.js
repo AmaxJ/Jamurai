@@ -1,9 +1,9 @@
 'use strict';
-var router = require('express').Router();
+let router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
+let _ = require('lodash');
 
-var ensureAuthenticated = function (req, res, next) {
+let ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -11,9 +11,9 @@ var ensureAuthenticated = function (req, res, next) {
     }
 };
 
-router.get('/secret-stash', ensureAuthenticated, function (req, res) {
+router.get('/secret-stash', ensureAuthenticated, (req, res) => {
 
-    var theStash = [
+    let theStash = [
         'http://ep.yimg.com/ay/candy-crate/bulk-candy-store-2.gif',
         'http://www.dailybunny.com/.a/6a00d8341bfd0953ef0148c793026c970c-pi',
         'http://images.boomsbeat.com/data/images/full/44019/puppy-wink_1-jpg.jpg',

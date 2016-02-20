@@ -1,49 +1,46 @@
 'use strict';
-var router = require('express').Router();
-var Song = require('mongoose').model('Song');
+let router = require('express').Router();
+let Song = require('mongoose').model('Song');
 module.exports = router;
 
 router.route('/')
-    .get(function(req, res, next) {
+    .get((req, res, next) => {
         Song.find({})
-            .then(function(songs) {
+            .then(songs => {
                 res.json(songs);
             })
             .then(null, next);
     })
-    .post(function(req, res, next) {
+    .post((req, res, next) => {
         Song.create(req.body)
-            .then(function(song) {
+            .then(song => {
                 res.status(201).json(song);
             })
             .then(null, next);
     })
 
-
 router.route('/:songId')
-    .get(function(req, res, next) {
+    .get((req, res, next) => {
         Song.findById(req.params.songId)
-            .then(function(song) {
+            .then(song => {
                 res.json(song);
             }).then(null, next);
     })
-    .put(function(req, res, next) {
+    .put((req, res, next) => {
         Song.findByIdAndUpdate(req.params.songId, req.body, {new: true}
             )
-            .then(function(song) {
+            .then(song => {
                 res.status(204).json(song);
             }).then(null, next);
     });
 
-
 router.route('/yid/:youTubeId')
-    .get(function(req, res, next) {
+    .get((req, res, next) => {
         Song.findOne({
                 youTubeId: req.params.youTubeId
             })
-            .then(function(song) {
+            .then(song => {
                 res.status(200).json(song);
             })
             .then(null, next);
     });
-
