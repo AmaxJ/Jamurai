@@ -7,11 +7,11 @@ let User = require('mongoose').model('User');
 module.exports = router;
 
 router.route('/:userId/:roomId')
-    .get(function(req, res, next) {
+    .get((req, res, next) => {
         let userId = req.params.userId;
         let roomId = req.params.roomId;
         PowerupData.findOne({user: userId, room: roomId})
-            .then(function(powerups) {
+            .then(powerups => {
                 res.json(powerups);
             })
             .then(null, next);
