@@ -13,6 +13,5 @@ app.factory('SocketFactory', function() {
         	return socket;
         }
 
-
         return factory;
     });

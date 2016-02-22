@@ -22,6 +22,9 @@ app.config($stateProvider => {
 
                     }
             },
+            onEnter: function(room, user, RoomFactory) {
+                RoomFactory.addUser(room._id, user._id);
+            },
             onExit: function(user, RoomFactory) {
                 let room = RoomFactory.getRoomState();
                 let scoreObj = room.userScores.filter(scoreObj => {
@@ -33,8 +36,6 @@ app.config($stateProvider => {
     })
     .controller('RoomCtrl', ($scope, $rootScope, room, user, powerups, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory, $timeout) => {
 
-        RoomFactory.addUser(room._id, user._id);
-
         let sortScores = () => {
             $scope.room.userScores.sort((a, b) => {
                 return b.score - a.score;
@@ -42,7 +43,9 @@ app.config($stateProvider => {
         }
 
         $scope.sidebarHeight = () => {
-            return {'height': '100%'}
+            return {
+                'height': '100%'
+            }
         }
 
 
@@ -81,4 +84,3 @@ app.config($stateProvider => {
         $scope.playlist = PlaylistFactory.getPlaylist;
 
     });
-

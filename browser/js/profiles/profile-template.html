@@ -17,26 +17,23 @@
                     <input ng-show="isEditable()" ng-model="updateDetails.email" type="text" id="userEmail" class="form-control">
                 </div>
                 <div class="form-group col-sm-4 col-sm-offset-4">
-                    <input class="btn btn-success" ng-show="isEditable()" type="submit" value="Save">
+                    <input class="btn btn-danger" ng-show="isEditable()" type="submit" value="Save">
                 </div>
             </form>
         </div>
         <div id="edit-button">
-            <button class="btn btn-primary" ng-click="setEditable()">Edit</button>
+            <button class="btn hvr-rectangle-out" ng-click="setEditable()">Edit</button>
         </div>
     </div>
     <div class="row" id='powerupDiv-profile'>
-            <div class="col-sm-4 col-sm-offset-4">
-                <div>
-                    <h4 id="public-powerup-label">
-                        <span class="ninja-symbol">+</span>
-                         Your Power Ups <span class="ninja-symbol">+</span>
-                    </h4>
-                </div>
-                <div ng-repeat="powerup in userPowerups" class='col-sm-6'>
-                    <img id="powerup-icon" ng-src="{{powerup.icon}}"></img>
-                    <p id="power-name">{{powerup.name}}</p>
-                </div>
+        <div class="col-sm-4 col-sm-offset-4">
+            <div>
+                <h4 id="public-powerup-label">Your Power Ups</h4>
+            </div>
+            <div ng-repeat="powerup in userPowerups" class='col-sm-6'>
+                <img id="powerup-icon" ng-src="{{powerup.icon}}"></img>
+                <p id="power-name">{{powerup.name}}</p>
             </div>
         </div>
+    </div>
 </div>
