@@ -4,7 +4,7 @@ app.directive('navbar', ($rootScope, AuthService, AUTH_EVENTS, $state, PlayerFac
         restrict: 'E',
         scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
-        link: (scope) => {
+        link(scope) {
 
             scope.items = [
                 { label: 'Lobby', state: 'lobby' },
@@ -14,20 +14,20 @@ app.directive('navbar', ($rootScope, AuthService, AUTH_EVENTS, $state, PlayerFac
 
             scope.user = null;
 
-            scope.isLoggedIn = () => {
-                return AuthService.isAuthenticated();
-            };
+            scope.isLoggedIn = () => AuthService.isAuthenticated();
 
             scope.logout = () => {
-                AuthService.logout().then(() => {
-                   $state.go('home');
-                });
+                AuthService.logout()
+                    .then(() => {
+                        $state.go('home');
+                    });
             };
 
             let setUser = function () {
-                AuthService.getLoggedInUser().then(user => {
-                    scope.user = user;
-                });
+                AuthService.getLoggedInUser()
+                    .then(user => {
+                        scope.user = user;
+                    });
             };
 
             let removeUser = () => {
