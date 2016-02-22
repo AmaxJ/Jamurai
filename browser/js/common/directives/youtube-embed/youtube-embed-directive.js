@@ -1,16 +1,13 @@
 app.directive('youtubeEmbed', ($window, PlayerFactory, PlaylistFactory, SocketFactory, PowerupFactory, $rootScope) => {
     return {
         restrict: "E",
-
         scope: {
             height: "@",
             width: "@",
             videoid: "@"
         },
-
         templateUrl: 'js/common/directives/youtube-embed/youtube-embed.html',
-
-        link: (scope, element) => {
+        link(scope, element) {
 
             let youtubePlayer = PlayerFactory.getPlayer();
             let socket = SocketFactory.getSocket();
@@ -24,17 +21,14 @@ app.directive('youtubeEmbed', ($window, PlayerFactory, PlaylistFactory, SocketFa
                 let currentSong = PlaylistFactory.getCurrentSong();
                 let playlistId = currentSong.playlist;
                 let userToPowerUp = currentSong.submittedBy._id;
-                PowerupFactory.addPowerup(playlistId, userToPowerUp)
-
+                PowerupFactory.addPowerup(playlistId, userToPowerUp);
               }
             }
-
-
+            // TODO this probably needs to go inside app.run()
             let tag = document.createElement('script');
             tag.src = "http://www.youtube.com/iframe_api";
             let firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 
             $window.onYouTubeIframeAPIReady = function() {
                 PlayerFactory.setPlayer(new YT.Player('player', {
