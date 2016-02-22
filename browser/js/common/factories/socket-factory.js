@@ -1,18 +1,15 @@
-app.factory('SocketFactory', function() {
+app.factory('SocketFactory', () => {
         if (!window.io) throw new Error('socket.io not found!');
 
-        var socket = io.connect(window.location.origin);
+        let socket = io.connect(window.location.origin);
 
-        var factory = {};
+        let factory = {};
 
-        factory.emitVote = function(payload){
+        factory.emitVote = payload => {
         	socket.emit('vote', payload);
         }
 
-        factory.getSocket = function(){
-        	return socket;
-        }
-
+        factory.getSocket = () => socket;
 
         return factory;
     });

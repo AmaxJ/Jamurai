@@ -44,6 +44,9 @@
         right: 0;
         overflow: scroll;
         padding-bottom: 200px;
+        #power-ups-label {
+            font-family: $nav-header-font;
+        }
         #powerup-icon {
             width: 95px;
             &:hover {
@@ -59,7 +62,7 @@
         }
         #power-name {
             margin-top: 20px;
-            font-size: 1em;
+            font-size: 1.2em;
             font-weight: bold;
             &:hover {
                 -ms-transform: scale(1.1);
@@ -91,7 +94,7 @@
     }
     .score-card {
         margin-top: 20px;
-        font-size: 1em;
+        font-size: 1.2em;
         font-weight: bold;
         span {
             font-weight: normal;

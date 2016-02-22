@@ -1,114 +1,109 @@
 #playlist-div {
-  margin-left: 20%;
+    margin-left: 20%;
 }
 
 .currently-playing {
-  border-top-color: red;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-bottom-color: red;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  padding-top: 20px;
-  color: $highlight-color;
-  p {
-    font-size: 18px;
-  }
-  #currently-playing-title {
-    font-family: $secondary-font-stack;
-  }
+    border-top-color: red;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-bottom-color: red;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding-top: 20px;
+    color: $highlight-color;
+    p {
+        font-size: 18px;
+    }
+    #currently-playing-title {
+        font-family: $secondary-font-stack;
+    }
 }
 
 .playlist-header {
-  text-align: center;
+    text-align: center;
 }
 
 #playlist {
+    border-left: 1px solid $white-border;
+    border-right: 1px solid $white-border;
     /*margin-left: 33%;*/
+    #room-name-display {
+        font-family: $nav-header-font;
+    }
     .playlist-button {
-      margin-top: 20px;
+        margin-top: 20px;
     }
     .song-honor {
-      font-size: 22px;
-      text-align: center;
-      font-weight: bold;
+        font-size: 22px;
+        text-align: center;
+        font-weight: bold;
     }
     .song-title {
-      font-size: 18px;
-      font-family: $secondary-font-stack;
+        font-size: 1.4em;
+        font-family: $secondary-font-stack;
     }
     table {
         opacity: 0.85;
         border-color: $table-border-color;
     }
-    
     table:hover {
         opacity: 1;
     }
     td {
-       border-color: $table-border-color;
+        vertical-align: middle;
+        border-color: $table-border-color;
     }
     th {
         font-size: 1.3em;
-        border-color: red;
+        border-color: rgba(255, 65, 54, 0.5);
     }
     #playlist-table {
         padding-bottom: 30px;
     }
-
-  tr.ng-move
-   {
-    -webkit-transition:all ease-in 0.8s;
-    transition:all ease-in 2s;
-  }
-
-  /*tr.ng-leave{
+    tr.ng-move {
+        -webkit-transition: all ease-in 0.8s;
+        transition: all ease-in 2s;
+    }
+    /*tr.ng-leave{
     -webkit-transition:all ease-out 0.8s;
     transition:all linear 0.8s;
   }*/
-
-  tr.ng-leave.ng-leave-active,
-  tr.ng-move,
-  tr.ng-enter {
-    opacity:0;
-    max-height:0;
-  }
-
-  tr.ng-leave,
-  tr.ng-move.ng-move-active,
-  tr.ng-enter.ng-enter-active {
-    opacity:1;
-    max-height:40px;
-  }
-
-  .spacer {
-    margin-bottom: 4%;
-  }
-
-  .upVoted {
-      &:hover {
-          background-color: $button-hover-color;
-          border-color: $button-hover-border-color;
-      }
-      span {
-        color: #08CAB0;
-      }
-  }
-
-  .downVoted {
-    &:hover {
-        background-color: $button-hover-color;
-        border-color: $button-hover-border-color;
+    tr.ng-leave.ng-leave-active,
+    tr.ng-move,
+    tr.ng-enter {
+        opacity: 0;
+        max-height: 0;
     }
-    span {
-      color: #D21E48;
+    tr.ng-leave,
+    tr.ng-move.ng-move-active,
+    tr.ng-enter.ng-enter-active {
+        opacity: 1;
+        max-height: 40px;
     }
-  }
-
+    .spacer {
+        margin-bottom: 4%;
+    }
+    .upVoted {
+        &:hover {
+            background-color: $button-hover-color;
+            border-color: $button-hover-border-color;
+        }
+        span {
+            color: #08CAB0;
+        }
+    }
+    .downVoted {
+        &:hover {
+            background-color: $button-hover-color;
+            border-color: $button-hover-border-color;
+        }
+        span {
+            color: #D21E48;
+        }
+    }
 }
 
 #submittedBy-image {
-  height: 75px;
-  width: 75px;
-
+    height: 75px;
+    width: 75px;
 }

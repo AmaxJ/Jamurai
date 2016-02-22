@@ -16,10 +16,7 @@
     <div class="row powerupDiv">
             <div class="col-sm-4 col-sm-offset-4">
                 <div>
-                    <h4 id="public-powerup-label">
-                        <span class="ninja-symbol">+</span>
-                         {{publicUser.username}}'s' Power Ups <span class="ninja-symbol">+</span>
-                    </h4>
+                    <h4 id="public-powerup-label">{{publicUser.username}}'s' Power Ups</h4>
                 </div>
                 <div ng-repeat="powerup in userPowerups" class='col-sm-6'>
                     <img id="powerup-icon" ng-src="{{powerup.icon}}"></img>

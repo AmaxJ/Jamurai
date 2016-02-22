@@ -1,9 +1,9 @@
 [![Build Status](https://travis-ci.org/AmaxJ/Jamurai.svg?branch=master)](https://travis-ci.org/AmaxJ/Jamurai)
 
-# [Jamurai](www.jamurai.io)
+# [Jamurai](http://www.jamurai.io)
 
-Jamurai is a realtime collaborative playlist application for
-crowd-sourcing music selection at parties. 
+Jamurai is a real-time collaborative playlist application for
+crowdsourcing music selection at parties. 
 
 ###Features
 Users can create rooms (called "Dojos") where songs are submitted to construct a playlist. Other 
@@ -15,9 +15,11 @@ weight.
 
 ###Images
 
-![alt text](http://www.jamurai.com/dojo.png "Dojo")
+![Lobby](https://github.com/AmaxJ/Jamurai/blob/master/static/screenshots/lobby.png?raw=true)
 
-![alt text](http://www.jamurai.com/search.png "Song Search")
+![Dojo](https://github.com/AmaxJ/Jamurai/blob/master/static/screenshots/dojo.png?raw=true)
+
+![Stats](https://github.com/AmaxJ/Jamurai/blob/master/static/screenshots/stats.png?raw=true)
 
 Built by:
 - [Nate Maddrey](https://github.com/nmadd)
@@ -27,5 +29,5 @@ Built by:
 
 Credits:
 
-- Icons made with images from [freepik](www.freepik.com) , [flaticon](www.flaticon.com) available under the creative commons license.
+- Icons made with images from [freepik](www.freepik.com) and [flaticon](www.flaticon.com), available under the creative commons license.
 - Samurai logo by [Stevan Rodic](https://dribbble.com/Stevan)
