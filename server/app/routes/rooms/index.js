@@ -7,8 +7,7 @@ let Song = require('mongoose').model('Song');
 module.exports = router;
 
 router.route('/')
-
-.get((req, res, next) => {
+    .get((req, res, next) => {
         Room.find({})
             .populate('users')
             .populate('creator')
@@ -30,12 +29,13 @@ router.route('/')
                         path: 'song',
                         model: 'Song'
                     },
-                    populate: [
-                        {path: 'song',
-                        model: 'Song'},
-                        {path: 'submittedBy',
-                        model: 'User'}
-                    ]
+                    populate: [{
+                        path: 'song',
+                        model: 'Song'
+                    }, {
+                        path: 'submittedBy',
+                        model: 'User'
+                    }]
                 }
             })
             .then(rooms => {
@@ -58,7 +58,6 @@ router.route('/')
 
 
 router.route('/:roomId')
-
     .get((req, res, next) => {
         Room.findById(req.params.roomId)
             .populate('songs')
@@ -78,12 +77,13 @@ router.route('/:roomId')
                 populate: {
                     path: 'songs',
                     model: 'SongData',
-                    populate: [
-                        {path: 'song',
-                        model: 'Song'},
-                        {path: 'submittedBy',
-                        model: 'User'}
-                    ]
+                    populate: [{
+                        path: 'song',
+                        model: 'Song'
+                    }, {
+                        path: 'submittedBy',
+                        model: 'User'
+                    }]
                 }
             })
             .then(room => {
@@ -100,15 +100,14 @@ router.route('/:roomId')
             })
             .then(null, next);
     })
-
-.delete((req, res, next) => {
-    Room.findByIdAndRemove(req.params.roomId)
-        .exec()
-        .then(room => {
-            res.status(204).end();
-        })
-        .then(null, next);
-});
+    .delete((req, res, next) => {
+        Room.findByIdAndRemove(req.params.roomId)
+            .exec()
+            .then(room => {
+                res.status(204).end();
+            })
+            .then(null, next);
+    });
 
 
 router.route('/addUser/:roomId')
