@@ -5,13 +5,11 @@ app.factory('SocketFactory', () => {
 
         let factory = {};
 
-        factory.emitVote = (payload) => {
+        factory.emitVote = payload => {
         	socket.emit('vote', payload);
         }
 
-        factory.getSocket = () => {
-        	return socket;
-        }
+        factory.getSocket = () => socket;
 
         return factory;
     });
