@@ -12,12 +12,10 @@ app.config($stateProvider => {
             }
         }
     })
-
 })
 
 app.controller('LobbyCtrl', ($scope, user, rooms) => {
     $scope.user = user;
     $scope.rooms = rooms;
-
 });
 
