@@ -1,5 +1,5 @@
 'use strict';
-var router = require('express').Router();
+let router = require('express').Router();
 module.exports = router;
 
 router.use('/members', require('./members'));

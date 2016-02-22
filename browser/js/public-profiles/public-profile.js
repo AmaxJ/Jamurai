@@ -1,16 +1,16 @@
-app.config(function ($stateProvider) {
+app.config($stateProvider => {
 	$stateProvider.state('publicProfile', {
 		url: '/publicProfile/:userId',
 		templateUrl: 'js/public-profiles/public-profile-template.html',
 		controller: 'PublicProfileCtrl',
 		resolve: {
-			publicUser: (UserFactory, $stateParams) => {
+			publicUser(UserFactory, $stateParams) {
 				return UserFactory.getUserById($stateParams.userId)
 						.then(user => {
 							return user;
 						});
 			},
-			userPowerups: (publicUser, UserFactory) => {
+			userPowerups(publicUser, UserFactory) {
 				let powerUpIcons = {
 				    'Chopsticks of Plenty': '/food.svg',
 				    'Sword of Ultimate Shame': '/twoswords.svg',
@@ -32,20 +32,19 @@ app.config(function ($stateProvider) {
 			    };
 
 				return UserFactory.getPowerupsByUser(publicUser._id)
-				.then(powerups => {
-					if (powerups.length > 0) {
-						return formatPowerUps(powerups);
-					}
-					else {
-						return [];
-					}
-				})
+    				.then(powerups => {
+    					if (powerups.length > 0) {
+    						return formatPowerUps(powerups);
+    					} else {
+    						return [];
+    					}
+    				})
 			}
 		}
 	})
-})
-.controller('PublicProfileCtrl', function($scope, publicUser, UserFactory, userPowerups){
+});
+
+app.controller('PublicProfileCtrl', ($scope, publicUser, UserFactory, userPowerups) => {
 	$scope.publicUser = publicUser;
 	$scope.userPowerups = userPowerups;
-
 });

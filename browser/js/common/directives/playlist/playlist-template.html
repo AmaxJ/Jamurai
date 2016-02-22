@@ -1,12 +1,17 @@
 <div id="playlist" class='col-md-12 col-sm-12'>
      <div class="row">
         <div class="playlist-header col-md-8 col-md-offset-2">
-            <button ng-click="startPlaylist()" class="btn playlist-button">Start the jamz</button>
-            <button ng-click="toggle(false)" class="btn-success btn playlist-button">Add a Song</button>
+            <h4 id="room-name-display">{{room.name}}</h4>
             <div class="currently-playing" ng-show="currentlyPlaying()">
-                <h4 id="currently-playing">Currently Playing:</h4>
+                <div id="player-bar" class="row">
+                    <youtube-embed width="320" height="180"></youtube-embed>
+                    <!-- <img ng-if="currentlyPlaying()" src="{{currentlyPlaying().song.thumbnails.medium.url}}" alt=""> -->
+                </div>
+
                 <p id="currently-playing-title">{{currentlyPlaying().song.title}}</p>
             </div>
+            <button ng-click="startPlaylist()" class="btn hvr-rectangle-out playlist-button">Start the jamz</button>
+            <button ng-click="toggle(false)" class="btn hvr-rectangle-out playlist-button">Add a Song</button>
         </div>
     </div>
     <div class='spacer'>
@@ -25,8 +30,9 @@
                     <td><img class="img-circle" id="submittedBy-image" src="{{songObj.submittedBy.picture}}" alt=""></td>
                     <td class="song-title">{{songObj.song.title}}</td>
                     <td>
-                        <button class="btn btn-sm btn-success" ng-click="vote($event, songObj, {type: 'up', amount: upvoteAmount()}, user, room)" ng-disabled='{{ checkUserVote(user, songObj) === "upVote" }}' ng-class="{upVoted: {{ checkUserVote(user, songObj) === 'upVote' }} }"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                        <button class="btn btn-sm btn-danger" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)" ng-disabled='{{ checkUserVote(user, songObj) === "downVote" }}' ng-class="{downVoted: {{ checkUserVote(user, songObj) === 'downVote'}} }"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        <button class="btn btn-sm hvr-rectangle-out" ng-click="vote($event, songObj, {type: 'up', amount: upvoteAmount()}, user, room)" ng-disabled='{{ checkUserVote(user, songObj) === "upVote" }}' ng-class="{upVoted: {{ checkUserVote(user, songObj) === 'upVote' }} }"><span class="glyphicon glyphicon-arrow-up"></span></button>
+
+                        <button class="btn btn-sm hvr-rectangle-out" ng-click="vote($event, songObj, {type: 'down', amount: downvoteAmount()},user,room)" ng-disabled='{{ checkUserVote(user, songObj) === "downVote" }}' ng-class="{downVoted: {{ checkUserVote(user, songObj) === 'downVote'}} }"><span class="glyphicon glyphicon-arrow-down"></span></button>
                     </td>
                     <td class='song-honor'>{{getVoteValue(songObj)}}</td>
                     <td>

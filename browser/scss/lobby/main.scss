@@ -5,10 +5,13 @@
     #room-table {
         opacity: 0.85;
         th {
-            font-size: 1.3em;
+            font-size: 1.4em;
         }
     }
     #room-table:hover {
         opacity: 1;
+    }
+    td {
+        vertical-align: middle;
     }
 }

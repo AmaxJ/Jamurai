@@ -3,60 +3,121 @@
 /*$background-color: black; */
 
 * {
-  box-sizing: border-box;
-  color: $primary-text-color;
-  font-family: $font-stack;
+    box-sizing: border-box;
+    color: $primary-text-color;
 }
 
+th {
+    font-family: $nav-header-font;
+}
 
+.bigFont {
+    font-size: 1.3em;
+}
 
 .btn {
-  background-color: $primary-button-color;
-  border-color: $button-border-color;
-  border-radius: 5px;
-  &:hover {
-      background-color: $button-hover-color;
-      border-color: $button-hover-border-color;
-  }
-  &:active {
-    background-color: $button-active-color;
+    background-color: $primary-button-color;
     border-color: $button-border-color;
-  }
-  &:focus {
-      background: none;
-      color: $button-active-color;
-  }
-  &:visited {
-      background: none;
-      color: $button-active-color;
-  }
+    border-radius: 5px;
+    font-size: 1.3em;
+    // &:hover {
+    //     background-color: $button-hover-color;
+    //     border-color: $button-hover-border-color;
+    // }
+    // &:active {
+    //     background-color: $button-active-color;
+    //     border-color: $button-border-color;
+    // }
+    // &:focus {
+    //     background: none;
+    //     color: $button-active-color;
+    // }
+    // &:visited {
+    //     background: none;
+    //     color: $button-active-color;
+    // }
 }
 
 p {
-  color: $primary-text-color;
+    color: $primary-text-color;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
+html,
+body {
+    font-family: $font-stack;
+    width: 100%;
+    height: 100%;
 }
 
 body {
-  background-color: $background-color;
+    background-color: $background-color;
+}
+
+.btn-danger:hover {
+    background: $button-hover-color;
+}
+
+.hvr-rectangle-out {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    background: $background-color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+}
+
+.hvr-rectangle-out:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $button-hover-color;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+.hvr-rectangle-out:hover,
+.hvr-rectangle-out:focus,
+.hvr-rectangle-out:active {
+    color: white;
+}
+
+.hvr-rectangle-out:hover:before,
+.hvr-rectangle-out:focus:before,
+.hvr-rectangle-out:active:before {
+    -webkit-transform: scale(1);
+    transform: scale(1);
 }
 
 @mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 #main {
-  margin: 0 auto;
-  height: 100%;
-  width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
 }
 
 @import 'directives/main';

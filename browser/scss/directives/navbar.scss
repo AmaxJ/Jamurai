@@ -1,43 +1,41 @@
 #navbar {
-  #nav-logo {
-    float: left;
-    height: 200%;
-    margin-bottom: 10px;
-  }
-  background-color: $navbar-background-color;
-  border-color: $navbar-border-color;
-  .container {
-    width: 91%;
-    max-width: 1340px;
-  }
-
-  #logout {
-    font-size: 1.1em;
-  }
-  span.glyphicon {
-    font-size: 1.6em;
-    margin: auto;
-  }
-
-  .navbar-brand {
-      color: $primary-text-color;
+    #nav-logo {
+        float: left;
+        height: 200%;
+        margin-bottom: 10px;
     }
-
-  .nav > li > a {
-    cursor: pointer;
-    transition: color 0.2s;
-    color: $primary-text-color;
-    &.active {
-      color: $highlight-color;
+    background-color: $navbar-background-color;
+    border-color: $navbar-border-color;
+    .container {
+        width: 91%;
+        max-width: 1340px;
     }
-    &:hover {
-      background: none;
-      color: $highlight-color;
+    #logout {
+        font-size: 1.1em;
     }
-    &:focus {
-      background: none;
-      color: $highlight-color;
+    span.glyphicon {
+        font-size: 1.6em;
+        margin: auto;
     }
-
-  }
+    .navbar-brand {
+        font-family: $nav-header-font;
+        color: $primary-text-color;
+    }
+    .nav > li > a {
+        font-family: $nav-header-font;
+        cursor: pointer;
+        transition: color 0.2s;
+        color: $primary-text-color;
+        &.active {
+            color: $highlight-color;
+        }
+        &:hover {
+            background: none;
+            color: $highlight-color;
+        }
+        &:focus {
+            background: none;
+            color: $highlight-color;
+        }
+    }
 }

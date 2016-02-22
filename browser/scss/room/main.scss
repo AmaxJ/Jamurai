@@ -19,10 +19,10 @@
     padding-top: 30px;
     #left-sidebar {
         text-align: center;
-        /*position: fixed;
+        position: fixed;
         left: 0;
-        height: 100%;
-        overflow: scroll;*/
+        overflow: scroll;
+        padding-bottom: 200px;
         .profile-img {
             width: 95%;
             border: 1px solid $border-color;
@@ -40,10 +40,13 @@
     }
     #right-sidebar {
         text-align: center;
-      /*  position: fixed;
+        position: fixed;
         right: 0;
-        height: 100%;
-        overflow: scroll;*/
+        overflow: scroll;
+        padding-bottom: 200px;
+        #power-ups-label {
+            font-family: $nav-header-font;
+        }
         #powerup-icon {
             width: 95px;
             &:hover {
@@ -59,7 +62,7 @@
         }
         #power-name {
             margin-top: 20px;
-            font-size: 1em;
+            font-size: 1.2em;
             font-weight: bold;
             &:hover {
                 -ms-transform: scale(1.1);
@@ -91,7 +94,7 @@
     }
     .score-card {
         margin-top: 20px;
-        font-size: 1em;
+        font-size: 1.2em;
         font-weight: bold;
         span {
             font-weight: normal;
@@ -99,11 +102,11 @@
     }
 }
 
-#player-bar {
+/*#player-bar {
     z-index: -1;
     opacity: 0.0;
     position: fixed;
     bottom: 0px;
     width: 50%;
     height: 60%;
-}
+}*/

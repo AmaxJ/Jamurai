@@ -6,17 +6,20 @@
 
 /*Colors*/
 $red: #FF4136;
-
+$transparent-white : rgba(255,255,255,0.3);
 /*Text*/
+$main-font: 'Montserrat';
+$nav-header-font: ninjaFont;
 $primary-text-color: white;
-$font-stack: ninjaFont;
+$font-stack: $main-font;
 $secondary-font-stack: Helvetica;
 $highlight-color: $red;
 
 /*Border colors*/
 $navbar-border-color: $red;
 $border-color: black;
-$table-border-color: $red;
+$table-border-color: rgba(255, 65, 54, 0.3);
+$white-border: $transparent-white;
 
 /*Buttons*/
 $primary-button-color: black;
@@ -29,5 +32,6 @@ $button-active-color: $red;
 $background-color: black;
 $main-content-background: black;
 $navbar-background-color: black;
+
 
 

@@ -14,6 +14,7 @@ module.exports = function(server) {
     io = socketio(server);
 
     io.on('connection', function(socket) {
+
         //Vote functions
         socket.on('vote', function(payload) {
                 var song = payload.song;
@@ -50,9 +51,8 @@ module.exports = function(server) {
                         return room.addToScore(savedSongData, updatedVote);
                     })
                     .then(room => {
-                        console.log('Updated playlist?', room.playlist)
                         var playlist = room.playlist;
-                        io.emit('updateRoom', {
+                        io.in(room._id).emit('updateRoom', {
                             playlist: playlist,
                             room: room
                         });
@@ -67,13 +67,14 @@ module.exports = function(server) {
                 let roomId = data.roomId;
                 let userId = data.userId;
                 let scoreObjId = data.scoreObjId;
+                socket.leave(roomId);
                 Room.findById(roomId)
                     .then(room => {
                         return room.removeUser(userId, scoreObjId);
                     })
                     .then(updatedRoom => {
                         let playlist = updatedRoom.playlist;
-                        io.emit('updateRoom', {
+                        io.in(updatedRoom._id).emit('updateRoom', {
                             room: updatedRoom,
                             playlist: playlist
                         });
@@ -83,13 +84,14 @@ module.exports = function(server) {
         socket.on('userEntered', function(data) {
             let roomId = data.roomId;
             let userId = data.userId;
+            socket.join(roomId);
             Room.findById(roomId)
                 .then(room => {
                     return room.addUser(userId);
                 })
                 .then(updatedRoom => {
                     let playlist = updatedRoom.playlist;
-                    io.emit('updateRoom', {
+                    io.in(updatedRoom._id).emit('updateRoom', {
                         room: updatedRoom,
                         playlist: playlist
                     });
@@ -124,7 +126,7 @@ module.exports = function(server) {
                 })
                 .then(function(updatedRoom) {
                     var playlist = updatedRoom.playlist;
-                    io.emit('updateRoom', {
+                    io.in(updatedRoom._id).emit('updateRoom', {
                         room: updatedRoom,
                         playlist: playlist
                     });
@@ -136,11 +138,12 @@ module.exports = function(server) {
         socket.on('addPowerUp', function(payload) {
             var playlist = payload.playlist;
             var userId = payload.user;
-
+            var roomId;
             Room.findOne({
                     playlist: playlist
                 })
                 .then(function(room) {
+                    roomId = room._id;
                     return PowerupData.findOne({
                         room: room._id,
                         user: userId
@@ -150,7 +153,7 @@ module.exports = function(server) {
                     return powerupData.addPowerup();
                 })
                 .then((updatedPowerups) => {
-                    io.emit('updatePowerups', updatedPowerups)
+                    io.in(roomId).emit('updatePowerups', updatedPowerups)
                 })
         })
 
@@ -219,7 +222,7 @@ module.exports = function(server) {
                 })
                 .then(updatedRoom => {
                     var playlist = updatedRoom.playlist;
-                    io.emit('updateRoom', {
+                    io.in(updatedRoom._id).emit('updateRoom', {
                         room: updatedRoom,
                         playlist: playlist
                     });
