@@ -1,16 +1,13 @@
-app.config(function($stateProvider) {
+app.config($stateProvider => {
     $stateProvider.state('profile', {
         url: '/profile',
         templateUrl: 'js/profiles/profile-template.html',
         controller: 'ProfileCtrl',
         resolve: {
-        	theUser: (AuthService) => {
-        		return AuthService.getLoggedInUser()
-                .then(user => {
-                    return user;
-                })
+        	theUser(AuthService) {
+        		return AuthService.getLoggedInUser();
         	},
-            userPowerups: (theUser, UserFactory) => {
+            userPowerups(theUser, UserFactory) {
                 let powerUpIcons = {
                     'Chopsticks of Plenty': '/food.svg',
                     'Sword of Ultimate Shame': '/twoswords.svg',
@@ -32,55 +29,46 @@ app.config(function($stateProvider) {
                 };
 
                 return UserFactory.getPowerupsByUser(theUser._id)
-                .then(powerups => {
-                    if (powerups.length > 0) {
-                        return formatPowerUps(powerups);
-                    }
-                    else {
-                        return [];
-                    }
-                })
-            } 
+                    .then(powerups => {
+                        if (powerups.length > 0) {
+                            return formatPowerUps(powerups);
+                        } else {
+                            return [];
+                        }
+                });
+            }
         }
     });
-})
+});
 
-.controller('ProfileCtrl', function($scope, ProfileFactory, theUser, userPowerups){
-    var isEditable = false;
+app.controller('ProfileCtrl', ($scope, ProfileFactory, theUser, userPowerups) => {
+    let isEditable = false;
     $scope.userPowerups = userPowerups;
     $scope.loggedInUser = theUser;
-    $scope.updateUser = function(user, update){
+    $scope.updateUser = (user, update) => {
         ProfileFactory.updateUser(user, update)
-        .then(function(user){
-            $scope.updateDetails = {};
-            ProfileFactory.setIsEditable();
-            loggedInUser = user;
-        })
-    }
-    // $scope.loggedInUser = ProfileFactory.getLoggedInUser;
-    $scope.isEditable = () => {
-        return isEditable;
-    }
+            .then(user => {
+                $scope.updateDetails = {};
+                ProfileFactory.setIsEditable();
+                loggedInUser = user;
+            })
+    };
+    $scope.isEditable = () => isEditable;
     $scope.setEditable = () => {
         isEditable = !isEditable;
-    }
+    };
     $scope.updateDetails = {};
 })
-
-.factory('ProfileFactory', function($http){
-    var factory = {};
-    
+//TODO this should be moved to separate file for consistency
+app.factory('ProfileFactory', $http => {
+    let factory = {};
     factory.updateUser = (user, update) => {
         return $http({
             method: 'PUT',
-            url: 'api/users/' + user._id,
+            url: `api/users/${user._id}`,
             data: update
         })
-        .then(function(response){
-            return response.data;
-        })
+        .then(response => response.data)
     }
-
-
     return factory;
 });
