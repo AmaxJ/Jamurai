@@ -7,10 +7,10 @@ app.directive('searchAdd', (SubmitSongFactory, PlaylistFactory, SocketFactory) =
             scope.showSearchResults = false;
             scope.search = text => {
                 return SubmitSongFactory.searchYoutube(text)
-                .then(searchResults =>{
-                    scope.searchResults = SubmitSongFactory.getSearchResults();
-                    scope.showSearchResults = true;
-                })
+                    .then(searchResults => {
+                        scope.searchResults = SubmitSongFactory.getSearchResults();
+                        scope.showSearchResults = true;
+                    })
             }
             let socket = SocketFactory.getSocket();
             scope.entry = "A-team";
