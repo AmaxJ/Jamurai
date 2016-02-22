@@ -14,9 +14,7 @@ app.controller('RoomFormCtrl', ($scope, RoomFactory, $state) => {
         location: null,
         playlists: []
     }
-    $scope.getRoomState = () => {
-        return showForm;
-    }
+    $scope.getRoomState = () => showForm;
     $scope.showForm = () => {
         showForm = !showForm;
     }

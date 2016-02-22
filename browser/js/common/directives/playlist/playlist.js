@@ -8,14 +8,12 @@ app.directive('playlist', () => {
             user: '=',
             'toggle': '=',
         },
-        controller: ($scope, PlayerFactory, PlaylistFactory) => {
+        controller($scope, PlayerFactory, PlaylistFactory) {
             $scope.startPlaylist = PlayerFactory.startPlaylist;
             $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
             $scope.loadVideoById = PlayerFactory.loadVideoById;
             $scope.vote = PlaylistFactory.vote;
-            $scope.getVoteValue = (song) => {
-                return song.total;
-            }
+            $scope.getVoteValue = song => song.total;
             $scope.upvoteAmount = PlaylistFactory.getUpvoteAmount;
             $scope.downvoteAmount = PlaylistFactory.getDownvoteAmount;
             $scope.checkUserVote = PlaylistFactory.checkUserVote;
