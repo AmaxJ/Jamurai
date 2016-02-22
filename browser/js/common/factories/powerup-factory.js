@@ -4,34 +4,34 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     let activePowerups;
     let loggedInUser;
     AuthService.getLoggedInUser()
-    .then(user => {
-        loggedInUser = user;
-    })
-    
+        .then(user => {
+            loggedInUser = user;
+        })
+
     let powerUps = {
         'Sword of Ultimate Shame': swordsOfCertainDeath,
-        'Daggers of Disdain' : daggersOfDisdain,
-        'Lotus of Generosity' : lotusOfGenerosity,
-        'Katana of Disgrace' : katanaOfDisgrace,
-        'Enlightened Blessing' : soundOfEnlightenment,
-        'Sword of Uncertainty' : swordOfUncertainty,
-        'Poison Darts' : poisonDarts,
+        'Daggers of Disdain': daggersOfDisdain,
+        'Lotus of Generosity': lotusOfGenerosity,
+        'Katana of Disgrace': katanaOfDisgrace,
+        'Enlightened Blessing': soundOfEnlightenment,
+        'Sword of Uncertainty': swordOfUncertainty,
+        'Poison Darts': poisonDarts,
         'The Last Jamurai': theLastJamurai
     }
 
     let powerUpIcons = {
-            'Lotus of Generosity': '/lotus.svg',
-            'Sword of Ultimate Shame': '/twoswords.svg',
-            'Daggers of Disdain': '/daggerSolid.svg',
-            'Katana of Disgrace': '/sword.svg',
-            'Enlightened Blessing': '/discipline.svg',
-            'Sword of Uncertainty': '/yinyang.svg',
-            'Poison Darts': '/darts.svg',
-            'The Last Jamurai': '/helmet.svg'
-        }
+        'Lotus of Generosity': '/lotus.svg',
+        'Sword of Ultimate Shame': '/twoswords.svg',
+        'Daggers of Disdain': '/daggerSolid.svg',
+        'Katana of Disgrace': '/sword.svg',
+        'Enlightened Blessing': '/discipline.svg',
+        'Sword of Uncertainty': '/yinyang.svg',
+        'Poison Darts': '/darts.svg',
+        'The Last Jamurai': '/helmet.svg'
+    }
 
     let formatPowerUps = powerUpObj => {
-        if(!powerUpObj.powerups) return null;
+        if (!powerUpObj.powerups) return null;
         return powerUpObj.powerups.map(powerup => {
             let pwrUp = {};
             pwrUp.name = powerup;
@@ -40,98 +40,94 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
         });
     }
 
-    function lotusOfGenerosity () {
+    function lotusOfGenerosity() {
         PlaylistFactory.setUpvoteAmount(10);
-        $rootScope.$on('upvote', ()=> {
+        $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
-    function soundOfEnlightenment () {
+    function soundOfEnlightenment() {
         PlaylistFactory.setUpvoteAmount(100);
         $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
-    function swordsOfCertainDeath () {
+    function swordsOfCertainDeath() {
         PlaylistFactory.setDownvoteAmount(-100);
-        $rootScope.$on('downvote', ()=> {
+        $rootScope.$on('downvote', () => {
             PlaylistFactory.setDownvoteAmount(-1);
         })
     }
 
-    function katanaOfDisgrace () {
+    function katanaOfDisgrace() {
         PlaylistFactory.setDownvoteAmount(-10);
-        $rootScope.$on('downvote', ()=> {
+        $rootScope.$on('downvote', () => {
             PlaylistFactory.setDownvoteAmount(-1);
         })
     }
 
-    function swordOfUncertainty () {
+    function swordOfUncertainty() {
         let posOrNeg = [-10, 10];
-        let zeroOrOne = Math.floor(Math.random()*2);
+        let zeroOrOne = Math.floor(Math.random() * 2);
         let multiplier = posOrNeg[zeroOrOne];
-        let randomNum = Math.floor(Math.random()*multiplier);
+        let randomNum = Math.floor(Math.random() * multiplier);
         PlaylistFactory.setUpvoteAmount(randomNum);
-        $rootScope.$on('upvote', ()=> {
+        $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
-    function daggersOfDisdain (user, room) {
-        socket.emit('multiPower', {user: user, room: room, strength: -5});
+    function daggersOfDisdain(user, room) {
+        socket.emit('multiPower', { user: user, room: room, strength: -5 });
     }
 
-    function poisonDarts (user, room) {
-        socket.emit('multiPower', {user: user, room: room, strength: -2});
+    function poisonDarts(user, room) {
+        socket.emit('multiPower', { user: user, room: room, strength: -2 });
     }
 
-    function theLastJamurai (user, room) {
-        socket.emit('multiPower', {user: user, room: room, strength: -1000});
+    function theLastJamurai(user, room) {
+        socket.emit('multiPower', { user: user, room: room, strength: -1000 });
     }
-
 
     factory.getPowerups = (userId, roomId) => {
         return $http({
-            method: 'GET',
-            url: `/api/powerups/${userId}/${roomId}`
-        })
-        .then(response => {
-            if(response.data) {
-                activePowerups = formatPowerUps(response.data);
-            }   
-            return response.data;
-        });
+                method: 'GET',
+                url: `/api/powerups/${userId}/${roomId}`
+            })
+            .then(response => {
+                if (response.data) {
+                    activePowerups = formatPowerUps(response.data);
+                }
+                return response.data;
+            });
     }
 
-    factory.getActivePowerups = () => {
-        return activePowerups;
-    }
-
+    factory.getActivePowerups = () => activePowerups;
 
     factory.addPowerup = (playlistId, userId) => {
-        socket.emit('addPowerUp', {user: userId, playlist: playlistId});
+        socket.emit('addPowerUp', { user: userId, playlist: playlistId });
     }
 
-    factory.usePowerup = (powerup,user,room) => {
-        powerUps[powerup](user,room);
+    factory.usePowerup = (powerup, user, room) => {
+        powerUps[powerup](user, room);
         return $http({
-            method: 'POST',
-            url: `/api/powerups/use-powerup/${user._id}/${room._id}`,
-            data: {powerup: powerup}
-        })
-        .then(response => {
-            activePowerups = formatPowerUps(response.data);
-        })
+                method: 'POST',
+                url: `/api/powerups/use-powerup/${user._id}/${room._id}`,
+                data: { powerup: powerup }
+            })
+            .then(response => {
+                activePowerups = formatPowerUps(response.data);
+            })
 
     }
 
-    socket.on('updatePowerups', function(updatedPowerups) {        
-        if(updatedPowerups.user === loggedInUser._id) {
+    socket.on('updatePowerups', function(updatedPowerups) {
+        if (updatedPowerups.user === loggedInUser._id) {
             activePowerups = formatPowerUps(updatedPowerups);
-            $rootScope.$digest();     
-        }   
+            $rootScope.$digest();
+        }
     })
 
     return factory;
