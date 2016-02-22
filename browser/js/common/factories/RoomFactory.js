@@ -21,15 +21,13 @@ app.factory('RoomFactory', ($http, PlaylistFactory, $rootScope, SocketFactory) =
                 method: 'GET',
                 url: '/api/rooms/'
             })
-            .then(response => {
-                return response.data;
-            })
+            .then(response => response.data);
     };
 
     factory.getRoomById = roomId => {
         return $http({
                 method: 'GET',
-                url: '/api/rooms/' + roomId
+                url: `/api/rooms/${roomId}`
             })
             .then(response => response.data);
     };
@@ -53,9 +51,7 @@ app.factory('RoomFactory', ($http, PlaylistFactory, $rootScope, SocketFactory) =
         roomState = state;
     }
 
-    factory.getRoomState = () => {
-        return roomState;
-    }
+    factory.getRoomState = () => roomState;
 
     return factory;
 });
