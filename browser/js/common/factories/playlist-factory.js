@@ -1,17 +1,15 @@
-app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
-    var factory = {};
-    var playlist;
-    var currentSong;
-    var upvoteAmount = 1;
-    var downvoteAmount = -1;
-    var socket = SocketFactory.getSocket();
-
-
+app.factory('PlaylistFactory', ($http, $rootScope, SocketFactory) => {
+    let factory = {};
+    let playlist;
+    let currentSong;
+    let upvoteAmount = 1;
+    let downvoteAmount = -1;
+    let socket = SocketFactory.getSocket();
 
     //Called when new room is created
-    factory.createPlaylist = function() {
+    factory.createPlaylist = () => {
         return $http.post('/api/playlists', {})
-            .then(function(response) {
+            .then(response => {
                 playlist = response.data;
                 return response.data._id;
             });
@@ -29,17 +27,15 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     }
 
     //Returns song from DB or null if song doesn't exist
-    var _findSongAndReturn = function(song) {
-        var youtubeId = song.id.videoId;
-        return $http.get('/api/songs/yid/' + youtubeId)
-            .then(function(song) {
-                return song.data;
-            });
+    let _findSongAndReturn = song => {
+        let youtubeId = song.id.videoId;
+        return $http.get(`/api/songs/yid/${youtubeId}`)
+            .then(song => song.data);
     };
 
     //Creates new song in database
-    var _addSongToDb = function(song) {
-        var newSong = {
+    let _addSongToDb = song => {
+        let newSong = {
             title: song.snippet.title,
             youTubeId: song.id.videoId,
             youTubeChannel: song.snippet.channelTitle,
@@ -47,22 +43,20 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
             thumbnails: song.snippet.thumbnails
         }
         return $http.post('/api/songs', newSong)
-            .then(function(response) {
-                return response.data;
-            });
+            .then(response => response.data);
     };
 
     //Adding new songs to room playlist
-    factory.addSong = function(song, user) {
+    factory.addSong = (song, user) => {
         return _findSongAndReturn(song)
-            .then(function(songFromDb) {
+            .then(songFromDb => {
                 if (!songFromDb) {
                     return _addSongToDb(song);
                 }
                 return songFromDb;
             })
-            .then(function(song) {
-                return $http.put('/api/playlists/' + playlist._id, {
+            .then(song => {
+                return $http.put(`/api/playlists/${playlist._id}`, {
                     song: song,
                     user: user._id
                 });
@@ -71,15 +65,15 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     //Sorts playlist by vote value
-    factory.sort = function() {
+    factory.sort = () => {
         if (playlist) {
-                playlist.songs.sort(function(a, b) {
+                playlist.songs.sort((a, b) => {
                 return b.total - a.total;
             });
         }
     };
 
-    factory.vote = function($event, song, vote, user, room) {
+    factory.vote = ($event, song, vote, user, room) => {
         $event.stopPropagation();
         SocketFactory.emitVote({song: song, vote: vote, user: user, room: room});
         if(vote.type === 'up') {
@@ -90,38 +84,31 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
         }
     };
 
-    factory.setPlaylist = function(newPlaylist) {
+    factory.setPlaylist = newPlaylist => {
         playlist = newPlaylist;
         factory.sort();
     };
 
-    factory.getPlaylist = function() {
-        return playlist;
-    };
+    factory.getPlaylist = () => playlist;
 
-    factory.setCurrentSong = function(newSong) {
-
+    factory.setCurrentSong = newSong => {
         currentSong = newSong;
     };
 
-    factory.getCurrentSong = function() {
+    factory.getCurrentSong = () => {
         if(!currentSong) return null;
         return currentSong;
     };
 
-    factory.getUpvoteAmount = () => {
-        return upvoteAmount;
-    };
+    factory.getUpvoteAmount = () => upvoteAmount;
 
-    factory.setUpvoteAmount = (num) => {
+    factory.setUpvoteAmount = num => {
         upvoteAmount = num;
     };
 
-    factory.getDownvoteAmount = () => {
-        return downvoteAmount;
-    };
+    factory.getDownvoteAmount = () => downvoteAmount;
 
-    factory.setDownvoteAmount = (num) => {
+    factory.setDownvoteAmount = num => {
         downvoteAmount = num;
     };
 
@@ -131,11 +118,11 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     }
 
 
-    socket.on('updateRoom', updateObj=> {
+    socket.on('updateRoom', updateObj => {
         if(updateObj.playlist) {
             playlist = updateObj.playlist;
             factory.sort();
-            $rootScope.$digest();   
+            $rootScope.$digest();
         }
     })
 
