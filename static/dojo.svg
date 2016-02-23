@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="346px" height="244px" viewBox="0 0 346 244" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.1 (25234) - http://www.bohemiancoding.com/sketch -->
+    <title>Dojo outline</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Group" sketch:type="MSLayerGroup" transform="translate(1.000000, 1.000000)" stroke-width="0.8">
+            <path d="M0.00798017963,0.152757711 C0.00798017963,0.152757711 171.8638,46.7787902 343.719628,0.113674828 L340.575232,8.56300296 L335.275866,10.6547321 L334.139547,13.3344894 L331.751871,14.2074863 L329.329539,27.5149092 L323.764765,27.8423617 L321.546621,34.7677358 L316.524421,36.2175275 L316.390627,38.4838216 C316.390627,38.4838216 311.645737,42.9164054 301.460922,44.4943854 C301.460922,44.4943854 301.81484,49.0969152 298.490036,52.3462035 M298.606241,52.2438555 C298.023828,53.1053672 297.317624,53.9366618 296.485235,53.9366616 C295.652847,53.9366614 251.529676,53.9366616 251.529676,53.9366616" id="Path-1" stroke="#50E3F3" sketch:type="MSShapeGroup"></path>
+            <path id="Path-7" stroke="#4FE4F3" filter="url(#filter-1)" sketch:type="MSShapeGroup" d=""></path>
+            <path id="Path-10" stroke="#4FE4F3" filter="url(#filter-2)" sketch:type="MSShapeGroup" d=""></path>
+            <path d="M266.735342,126.546865 L266.735341,241.653881 L242.89477,241.653881 L242.89477,87.2903649" id="Path-12" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M252.4,241.504029 L252.4,126.943015 L266.595733,126.943015" id="Path-13" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M100.15102,87.0272642 L100.15102,240.481255 L76.0355756,240.481255 L76.0355756,125.474646 L88.0932977,125.474644" id="Path-21" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M87.4,125.100047 L87.4,240.517654" id="Path-22" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path id="Path-33" stroke="#4FE4F3" filter="url(#filter-3)" sketch:type="MSShapeGroup" d=""></path>
+            <path d="M256.196328,64.8296651 L266.954192,69.651782 L266.123391,71.30352 L256.307402,67.1541558" id="Path-40" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path id="Path-41" stroke="#4FE4F3" filter="url(#filter-4)" sketch:type="MSShapeGroup" d=""></path>
+            <path d="M256.364451,72.6533779 L263.739233,71.7402126 L263.739234,75.0489482" id="Path-42" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M0.381921303,0.434565926 L3.28850421,8.78540552 L7.35103862,10.1253525 L8.17963333,12.8998137 L9.56727988,13.5566164 L14.805676,25.8243269 M14.4323527,25.4567339 L17.7001659,26.358052 L20.740572,34.0994653 L25.6342331,36.1597289 L26.3761396,38.3824262 C26.3761396,38.3824262 35.4646201,42.4266466 41.0080151,42.9308213 C41.0080151,42.9308213 41.7924819,49.8865084 42.9783735,49.8865088 C42.9783735,49.8865088 54.124948,53.7776407 91.9060152,53.7776397 L252.349216,53.9784373" id="Path-43" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M85.4,53.795945 L85.4,74.7609807" id="Path-45" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M98.4,53.850976 L98.4,74.9291308" id="Path-46" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M242.4,54.1255272 L242.4,75.2422593" id="Path-48" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M256.4,54.0033932 L256.4,74.9804096" id="Path-48-Copy" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M242.228782,64.9727419 L231.88113,69.3724363 L232.420039,71.0926095 L242.185858,67.075152" id="Path-49" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M242.346179,72.6958152 L235.421918,71.5576894 L235.421918,74.7767293" id="Path-50" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M98.258543,63.9908857 L108.343875,68.3647343 L107.548689,70.1342593 L98.258543,66.0954118" id="Path-53" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M85.1461824,64.2815911 L75.1408219,68.5184736 L75.7356457,70.2160946 L85.4200639,66.2149199" id="Path-54" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M85.4558139,72.785258 L78.409828,71.8290964 L78.409828,74.7351253" id="Path-55" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M98.7162442,71.8369642 L106.038737,70.8490922 L106.038737,74.171335" id="Path-56" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M38.9220421,70.5300412 C38.9220421,70.5300412 49.1654779,74.5069652 88.4467113,74.5069653 L116.227153,74.5069653 C116.227153,74.5069653 169.961791,75.9526577 227.396102,74.9753723 L254.983173,74.9753723 C254.983173,74.9753723 296.392287,76.2992115 304.434723,72.0451537 L302.362513,76.051128 C302.362513,76.051128 297.080032,78.4942045 254.974099,78.4942046 L108.615234,78.4942046 C108.615234,78.4942046 62.2257759,78.4942045 40.739605,74.3370151 L38.9220421,70.5300412 Z" id="Path-57" stroke="#50E3F3" sketch:type="MSShapeGroup"></path>
+            <rect id="Rectangle-1" stroke="#50E3F3" sketch:type="MSShapeGroup" x="78" y="132" width="7" height="4"></rect>
+            <rect id="Rectangle-1-Copy" stroke="#50E3F3" sketch:type="MSShapeGroup" x="256" y="132" width="7" height="4"></rect>
+            <rect id="Rectangle-2" stroke="#50E3F3" sketch:type="MSShapeGroup" x="80" y="136" width="3" height="10"></rect>
+            <rect id="Rectangle-2-Copy" stroke="#50E3F3" sketch:type="MSShapeGroup" x="258" y="136" width="3" height="10"></rect>
+            <path d="M262.4,126.947422 L262.4,86.9836666" id="Path-30" stroke="#50E3F3" sketch:type="MSShapeGroup"></path>
+            <path d="M79.4,125.35724 L79.4,86.6353343" id="Path-31" stroke="#50E3F3" sketch:type="MSShapeGroup"></path>
+            <path d="M19.8158756,31.4461662 C19.8158756,31.4461662 62.9369122,39.7208664 140.051849,40.9881266 L140.718852,43.1249365 L204.034974,44.023656 L205.553899,41.3141936 C205.553899,41.3141936 288.812366,37.7349111 322.279512,32.8429415" id="Path-58" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M9.74142838,13.6008736 C9.74142838,13.6008736 170.762913,48.3938309 331.784408,14.1267752" id="Path-59" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M12.0781491,18.7697269 C12.0781491,18.7697269 171.546212,54.0539753 331.014262,19.010882" id="Path-60" stroke="#4FE4F3" sketch:type="MSShapeGroup"></path>
+            <path d="M43,75 L43,87.1639805 L298.710403,87.1639805" id="Path-33" stroke="#50E3F3" sketch:type="MSShapeGroup"></path>
+            <path d="M298.4,87.630382 L298.4,76.6968264" id="Path-32" stroke="#50E3F3" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
