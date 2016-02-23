@@ -40,19 +40,19 @@
             </table>
         </div>
     </div>
-</div>
-<div>
-    <table id='chat'>
-        <tr>
-            <th id='chathead'>
-                Dojo Chat
-            </th>
-        </tr>
-        <tr ng-repeat='message in messages'>
-            <td>
-                {{message.text}}
-            </td>
-        </tr>
-    </table>
+
+
+<div id='chat'>
+    <div id='chathead'>DOJO CHAT</div>
+    <div id='msgblock'>
+        <div id='msgs' ng-repeat='message in messages'>
+        {{message.text}}
+        </div>
+    </div>
     <input id='chatForm' ng-model='chatEntry' ng-Enter="messageWorks()"/>
 </div>
+
+
+</div>
+
+
