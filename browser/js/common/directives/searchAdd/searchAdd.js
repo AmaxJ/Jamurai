@@ -15,7 +15,7 @@ app.directive('searchAdd', (SubmitSongFactory, PlaylistFactory, SocketFactory) =
             let socket = SocketFactory.getSocket();
             scope.entry = "A-team";
             scope.add = (result, user) => {
-                PlaylistFactory.addSong(result, user)
+                PlaylistFactory.addSong(result, user, scope.room._id)
                     .then(response => {
                         socket.emit("songAdded", {
                             roomId: scope.room._id

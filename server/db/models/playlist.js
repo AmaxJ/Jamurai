@@ -15,7 +15,7 @@ var schema = new mongoose.Schema({
 });
 
 schema.method({
-    addSong: function(songId, userId) {
+    addSong: function(songId, userId, roomId) {
         var self = this;
         SongData.create({
                 playlist: self._id,
@@ -25,6 +25,13 @@ schema.method({
             .then(songDataObj => {
                 self.songs.addToSet(songDataObj._id);
                 return self.save();
+            })
+            .then(function(playlist) {
+                return Song.findById(songId);
+            })
+            .then(function(song) {
+                song.roomsRequestedIn.addToSet(roomId);
+                return song.save();
             })
             .then(null, console.error.bind(console));
     },

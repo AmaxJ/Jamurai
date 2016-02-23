@@ -49,7 +49,7 @@ router.route('/:playlistId')
     .put((req, res, next) => {
         Playlist.findById(req.params.playlistId)
             .then(playlist => {
-                return playlist.addSong(req.body.song._id, req.body.user);
+                return playlist.addSong(req.body.song._id, req.body.user, req.body.roomId);
             })
             .then(playlist => {
                 res.status(204).json(playlist);
