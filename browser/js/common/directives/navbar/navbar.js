@@ -1,10 +1,10 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, PlayerFactory) {
+app.directive('navbar', ($rootScope, AuthService, AUTH_EVENTS, $state, PlayerFactory) => {
 
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
-        link: function (scope) {
+        link(scope) {
 
             scope.items = [
                 { label: 'Lobby', state: 'lobby' },
@@ -14,29 +14,23 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
 
             scope.user = null;
 
-            scope.isLoggedIn = function () {
-                return AuthService.isAuthenticated();
+            scope.isLoggedIn = () => AuthService.isAuthenticated();
+
+            scope.logout = () => {
+                AuthService.logout()
+                    .then(() => {
+                        $state.go('home');
+                    });
             };
 
-            scope.logout = function () {
-                AuthService.logout().then(function () {
-                   $state.go('home');
-                });
+            let setUser = function () {
+                AuthService.getLoggedInUser()
+                    .then(user => {
+                        scope.user = user;
+                    });
             };
 
-            // scope.goToState = function(state) {
-            //     console.log('state line',$state);
-            //     $state.go(state);
-            
-            // }
-
-            var setUser = function () {
-                AuthService.getLoggedInUser().then(function (user) {
-                    scope.user = user;
-                });
-            };
-
-            var removeUser = function () {
+            let removeUser = () => {
                 scope.user = null;
             };
 

@@ -1,5 +1,5 @@
-app.factory('UserFactory', function($http){
-	var factory = {};
+app.factory('UserFactory', ($http) => {
+	let factory = {};
 
 	factory.getUserById = id => {
 		return $http({

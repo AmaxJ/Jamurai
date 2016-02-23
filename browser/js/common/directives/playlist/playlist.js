@@ -1,4 +1,4 @@
-app.directive('playlist', function() {
+app.directive('playlist', () => {
     return {
         restrict: 'E',
         templateUrl: '/js/common/directives/playlist/playlist-template.html',
@@ -8,16 +8,18 @@ app.directive('playlist', function() {
             user: '=',
             'toggle': '=',
         },
+<<<<<<< HEAD
         controller: function($scope, $rootScope, PlayerFactory, PlaylistFactory, RoomFactory, SocketFactory) {
 
+=======
+        controller($scope, PlayerFactory, PlaylistFactory) {
+>>>>>>> master
             $scope.startPlaylist = PlayerFactory.startPlaylist;
             var socket = SocketFactory.getSocket();
             $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
             $scope.loadVideoById = PlayerFactory.loadVideoById;
             $scope.vote = PlaylistFactory.vote;
-            $scope.getVoteValue = (song) => {
-                return song.total;
-            }
+            $scope.getVoteValue = song => song.total;
             $scope.upvoteAmount = PlaylistFactory.getUpvoteAmount;
             $scope.downvoteAmount = PlaylistFactory.getDownvoteAmount;
             $scope.checkUserVote = PlaylistFactory.checkUserVote;

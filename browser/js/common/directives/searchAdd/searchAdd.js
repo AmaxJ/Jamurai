@@ -5,12 +5,12 @@ app.directive('searchAdd', (SubmitSongFactory, PlaylistFactory, SocketFactory) =
         templateUrl: 'js/common/directives/searchAdd/searchAdd.html',
         link(scope) {
             scope.showSearchResults = false;
-            scope.search = function(text) {
+            scope.search = text => {
                 return SubmitSongFactory.searchYoutube(text)
-                .then(searchResults =>{
-                    scope.searchResults = SubmitSongFactory.getSearchResults();
-                    scope.showSearchResults = true;
-                })
+                    .then(searchResults => {
+                        scope.searchResults = SubmitSongFactory.getSearchResults();
+                        scope.showSearchResults = true;
+                    })
             }
             let socket = SocketFactory.getSocket();
             scope.entry = "A-team";

@@ -1,17 +1,15 @@
-app.directive('playerBar', function(PlayerFactory){
+app.directive('playerBar', PlayerFactory => {
 	return {
 		restrict: "E",
 		templateUrl: '/js/common/directives/player-bar/player-bar-template.html',
-		link: function(s,e,a){
-			var showVid = true;
-			s.toggleVid = function(){
+		link(scope, el, attrs) {
+			let showVid = true;
+			scope.toggleVid = () => {
 				showVid = !showVid;
 			}
-			s.getVidState = function(){
-				return showVid;
-			}
-			s.play = PlayerFactory.play;
-			s.pause = PlayerFactory.pause;
+			scope.getVidState = () => showVid;
+			scope.play = PlayerFactory.play;
+			scope.pause = PlayerFactory.pause;
 		}
 	}
 })
