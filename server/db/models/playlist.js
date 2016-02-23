@@ -34,9 +34,9 @@ schema.method({
                 return songDataObj.save();
             });
     },
-    removeSong: function(songId) {
-        var indexToRemove = this.songs.indexOf(songId);
-        var songObjId = this.songs.splice(indexToRemove, 1)[0].toString();
+    removeSong: function(songObjId) {
+        var indexToRemove = this.songs.indexOf(songObjId);
+        this.songs.splice(indexToRemove, 1)[0].toString();
         this.history.push(songObjId);
         return this.save();
     }
