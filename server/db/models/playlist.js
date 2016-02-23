@@ -7,6 +7,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "SongData"
     }],
+    history: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SongData"
+    }]
 });
 
 schema.method({
@@ -32,7 +36,8 @@ schema.method({
     },
     removeSong: function(songId) {
         var indexToRemove = this.songs.indexOf(songId);
-        this.songs.splice(indexToRemove, 1);
+        var songObjId = this.songs.splice(indexToRemove, 1)[0].toString();
+        this.history.push(songObjId);
         return this.save();
     }
 });
