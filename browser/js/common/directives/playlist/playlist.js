@@ -9,6 +9,10 @@ app.directive('playlist', () => {
             'toggle': '=',
         },
         controller($scope, PlayerFactory, PlaylistFactory) {
+            let checkCreator = () => {
+                return $scope.user._id === $scope.room.creator._id;
+            };
+            $scope.userIsCreator = checkCreator();
             $scope.startPlaylist = PlayerFactory.startPlaylist;
             $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
             $scope.loadVideoById = PlayerFactory.loadVideoById;
