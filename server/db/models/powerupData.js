@@ -22,7 +22,6 @@ schema.method({
         
         let randomEngine = () => {
             let rando = +Math.floor(Math.random()*861);
-            console.log('our number:', rando);
             if (rando >= 0 && rando < 21) {
                 return 'The Last Jamurai';
             }

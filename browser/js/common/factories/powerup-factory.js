@@ -41,14 +41,14 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     }
 
     function lotusOfGenerosity() {
-        PlaylistFactory.setUpvoteAmount(10);
+        PlaylistFactory.setUpvoteAmount(5);
         $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
     function soundOfEnlightenment() {
-        PlaylistFactory.setUpvoteAmount(15);
+        PlaylistFactory.setUpvoteAmount(10);
         $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
