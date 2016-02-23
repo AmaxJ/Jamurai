@@ -15,25 +15,6 @@ app.config($stateProvider => {
                 return AuthService.getLoggedInUser()
                     .then(user => user);
             },
-            onExit: function(user, RoomFactory) {
-                let room = RoomFactory.getRoomState();
-                let scoreObj = room.userScores.filter(scoreObj => {
-                    return scoreObj.user._id === user._id;
-                })[0];
-                RoomFactory.removeUser(room._id, user._id, scoreObj._id);
-            }
-    }
-    .controller('RoomCtrl', ($scope, $rootScope, room, user, powerups, RoomFactory, SocketFactory, PlaylistFactory, UserFactory, PowerupFactory, PlayerFactory, $timeout) => {
-
-        let sortScores = () => {
-            $scope.room.userScores.sort((a, b) => {
-                return b.score - a.score;
-            });
-        }
-
-        $scope.sidebarHeight = () => {
-            return {
-                'height': '100%'
             powerups(PowerupFactory, user, room) {
                 return PowerupFactory.getPowerups(user._id, room._id)
             }

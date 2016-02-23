@@ -8,12 +8,8 @@ app.directive('playlist', () => {
             user: '=',
             'toggle': '=',
         },
-<<<<<<< HEAD
-        controller: function($scope, $rootScope, PlayerFactory, PlaylistFactory, RoomFactory, SocketFactory) {
 
-=======
-        controller($scope, PlayerFactory, PlaylistFactory) {
->>>>>>> master
+        controller($scope, PlayerFactory, PlaylistFactory, SocketFactory, RoomFactory) {
             $scope.startPlaylist = PlayerFactory.startPlaylist;
             var socket = SocketFactory.getSocket();
             $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
