@@ -100,7 +100,6 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
     };
 
     factory.setCurrentSong = function(newSong) {
-
         currentSong = newSong;
     };
 
@@ -132,6 +131,7 @@ app.factory('PlaylistFactory', function($http, $rootScope, SocketFactory) {
 
 
     socket.on('updateRoom', updateObj=> {
+        console.log('same update diff place',updateObj);
         if(updateObj.playlist) {
             playlist = updateObj.playlist;
             factory.sort();

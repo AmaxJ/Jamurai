@@ -30,6 +30,7 @@ app.directive('playlist', function() {
             }
 
             socket.on('updateRoom', updateObj => {
+                console.log('update',updateObj);
                 var room = updateObj.room;
                 RoomFactory.setRoomState(room);
                 $scope.room = room;

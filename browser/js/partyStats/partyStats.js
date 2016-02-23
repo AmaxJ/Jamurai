@@ -18,6 +18,7 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
     $scope.data = [];
     $scope.data2 = [];
     $scope.rooms = rooms;
+    console.log('vroom',$scope.rooms);
     $scope.users = users;
 
     var options1 = {
@@ -54,9 +55,9 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
             yAxis: {
                 axisLabel: 'Number of Parties Requested at',
                 axisLabelDistance: -10,
-                rotateLabels: 20,
                 tickFormat: function(d){ return d3.format(',f')(d) }
             },
+            rotateLabels: 20
         }
     }
 
@@ -251,8 +252,8 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
                 roomLocList.push([thisLoc, 1]);
             }
         }
-        for (var y = 0; y < thisRoom.playlist.songs.length; y++) {
-            var thisSong = thisRoom.playlist.songs[y].song.title
+        for (var y = 0; y < thisRoom.playlist.songStorage.length; y++) {
+            var thisSong = thisRoom.playlist.songStorage[y].song.title
             if (thisSong.length > 25) {
                 thisSong = thisSong.substring(0, 20);
             }
@@ -273,13 +274,13 @@ app.controller('partyStats', ($scope, RoomFactory, rooms, users) => {
                 var foundInMasterVzn = false;
                 for (var j = 0; j < overallMasterVzn.length; j++) {
                     if (overallMasterVzn[j][0] === thisSong) {
-                        overallMasterVzn[j][1] += thisRoom.playlist.songs[y].total;
+                        overallMasterVzn[j][1] += thisRoom.playlist.songStorage[y].total;
                         foundInMasterVzn = true;
                         break;
                     }
                 }
                 if (!foundInMasterVzn) {
-                    overallMasterVzn.push([thisSong, thisRoom.playlist.songs[y].total]);
+                    overallMasterVzn.push([thisSong, thisRoom.playlist.songStorage[y].total]);
                 }
             }
         }

@@ -7,6 +7,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "SongData"
     }],
+    songStorage: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SongData"
+    }]
 });
 
 schema.method({
@@ -19,6 +23,7 @@ schema.method({
         })
         .then(songDataObj => {
             self.songs.addToSet(songDataObj._id);
+            self.songStorage.addToSet(songDataObj._id);
             return self.save();
         })
         .then(null, console.error.bind(console));
