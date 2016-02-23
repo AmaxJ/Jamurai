@@ -40,6 +40,10 @@ var schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
+    messages: {
+        type: [String],
+        default: []
+    },
     playlist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist"
@@ -212,6 +216,41 @@ schema.method({
                 console.log("error in Room.addUser: ", error);
             });
     },
+
+    addMsg: function(userName, msg) {
+        let self = this;
+        self.messages.push(userName+': '+msg);
+        return self.save()
+        .then(room => {
+            return self.constructor.findById(self._id)
+                .populate('users')
+                .populate('userScores')
+                .populate({
+                    path: 'userScores',
+                    model: 'UserScore',
+                    populate: {
+                        path: "user",
+                        model: "User"
+                    }
+                })
+                .populate({
+                    path: 'playlist',
+                    model: 'Playlist',
+                    populate: {
+                        path: 'songs',
+                        model: 'SongData',
+                        populate: [{
+                            path: 'song',
+                            model: 'Song'
+                        }, {
+                            path: 'submittedBy',
+                            model: 'User'
+                        }]
+                    }
+                })
+        })
+    },
+
     removeUser: function(userId, scoreObjId) {
         let self = this;
         this.users.pull(userId);

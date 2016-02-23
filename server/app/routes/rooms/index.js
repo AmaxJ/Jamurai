@@ -36,6 +36,21 @@ router.route('/')
                         path: 'submittedBy',
                         model: 'User'
                     }]
+                },
+                populate: {
+                    path: 'songStorage',
+                    model: 'SongData',
+                    populate: {
+                        path: 'song',
+                        model: 'Song'
+                    },
+                    populate: [{
+                        path: 'song',
+                        model: 'Song'
+                    }, {
+                        path: 'submittedBy',
+                        model: 'User'
+                    }]
                 }
             })
             .then(rooms => {

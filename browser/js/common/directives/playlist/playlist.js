@@ -8,8 +8,10 @@ app.directive('playlist', () => {
             user: '=',
             'toggle': '=',
         },
-        controller($scope, PlayerFactory, PlaylistFactory) {
+
+        controller($scope, PlayerFactory, PlaylistFactory, SocketFactory, RoomFactory) {
             $scope.startPlaylist = PlayerFactory.startPlaylist;
+            var socket = SocketFactory.getSocket();
             $scope.currentlyPlaying = PlaylistFactory.getCurrentSong;
             $scope.loadVideoById = PlayerFactory.loadVideoById;
             $scope.vote = PlaylistFactory.vote;
@@ -17,6 +19,36 @@ app.directive('playlist', () => {
             $scope.upvoteAmount = PlaylistFactory.getUpvoteAmount;
             $scope.downvoteAmount = PlaylistFactory.getDownvoteAmount;
             $scope.checkUserVote = PlaylistFactory.checkUserVote;
+            $scope.messages = [];
+            for(var x=0; x<$scope.room.messages.length; x++)
+            {
+                var obj = {};
+                obj.text = $scope.room.messages[x];
+                $scope.messages.push(obj);
+            }
+
+            socket.on('updateRoom', updateObj => {
+                console.log('update',updateObj);
+                var room = updateObj.room;
+                RoomFactory.setRoomState(room);
+                $scope.room = room;
+                $scope.messages = [];
+                for(var x=0; x<$scope.room.messages.length; x++)
+                {
+                    var obj = {};
+                    obj.text = $scope.room.messages[x];
+                    $scope.messages.push(obj);
+                }
+                $scope.$digest();
+            })
+
+            $scope.messageWorks = function() {
+                var roomId = $scope.room._id;
+                var userName = $scope.user.username;
+                var message = $scope.chatEntry;
+                $scope.chatEntry = '';
+                RoomFactory.addMessage(roomId,userName,message)
+            }
         }
     }
 });
