@@ -42,7 +42,11 @@ var schema = new mongoose.Schema({
     roomsRequestedIn : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Room"
-    }]
+    }],
+    numRoomsRequestedIn : {
+        type: Number,
+        default: 0
+    }
 });
 
 mongoose.model('Song',schema);

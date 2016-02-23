@@ -31,6 +31,7 @@ schema.method({
             })
             .then(function(song) {
                 song.roomsRequestedIn.addToSet(roomId);
+                song.numRoomsRequestedIn = song.roomsRequestedIn.length;
                 return song.save();
             })
             .then(null, console.error.bind(console));
