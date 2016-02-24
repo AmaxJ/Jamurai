@@ -51,7 +51,7 @@ schema.statics.createNewDataSet = function() {
             });
         })
         .then(function(newStatsObj) {
-            return Self.findById(newStatsObj._id)
+            return self.findById(newStatsObj._id)
                 .populate("topTenSongs")
                 .populate("bottomTenSongs")
                 .populate("popularByRoom")
