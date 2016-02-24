@@ -21,29 +21,29 @@ schema.method({
         let powerUps =['Lotus of Generosity', 'Sword of Ultimate Shame', 'Daggers of Disdain', 'Katana of Disgrace', 'Enlightened Blessing', 'Sword of Uncertainty', 'Poison Darts', 'The Last Jamurai'];
         
         let randomEngine = () => {
-            let rando = +Math.floor(Math.random()*861);
-            if (rando >= 0 && rando < 21) {
+            let rando = +Math.floor(Math.random()*101);
+            if (rando >= 0 && rando < 3) {
                 return 'The Last Jamurai';
             }
-            else if (rando > 20 && rando < 91) {
+            else if (rando > 2 && rando < 11) {
                 return 'Sword of Ultimate Shame';
             }
-            else if (rando > 90 && rando < 241) {
+            else if (rando > 10 && rando < 31) {
                 return 'Lotus of Generosity';
             }
-            else if (rando > 240 && rando < 341) {
+            else if (rando > 30 && rando < 41) {
                 return 'Daggers of Disdain';
             }
-            else if (rando > 340 && rando < 451) {
+            else if (rando > 40 && rando < 56) {
                 return 'Katana of Disgrace';
             }
-            else if (rando > 450 && rando < 621) {
+            else if (rando > 55 && rando < 76) {
                 return 'Enlightened Blessing';
             }
-            else if (rando > 620 && rando < 761) {
+            else if (rando > 75 && rando < 91) {
                 return 'Sword of Uncertainty';
             }
-            else if (rando > 760 && rando < 861) {
+            else if (rando > 90 && rando < 101) {
                 return 'Poison Darts'
             }
         }
