@@ -1,4 +1,4 @@
-app.config(function($stateProvider) {
+app.config($stateProvider => {
     $stateProvider.state('partyStats', {
         url: '/partyStats',
         templateUrl: 'js/partyStats/partyStats.html',
@@ -27,14 +27,14 @@ app.controller('partyStats', ($scope, stats) => {
                 bottom: 85,
                 left: 50
             },
-            x: function(d) {
+            x(d) {
                 return d.label
             },
-            y: function(d) {
+            y(d) {
                 return d.value + (1e-10)
             },
             showValues: true,
-            valueFormat: function(d) {
+            valueFormat(d) {
                 return d3.format(',.4f')(d);
             },
             duration: 500,
@@ -64,14 +64,14 @@ app.controller('partyStats', ($scope, stats) => {
                 bottom: 100,
                 left: 100
             },
-            x: function(d) {
+            x(d) {
                 return d.label
             },
-            y: function(d) {
+            y(d) {
                 return d.value + (1e-10)
             },
             showValues: true,
-            valueFormat: function(d) {
+            valueFormat(d) {
                 return d3.format(',.4f')(d);
             },
             duration: 500,
@@ -99,14 +99,14 @@ app.controller('partyStats', ($scope, stats) => {
                 bottom: 100,
                 left: 100
             },
-            x: function(d) {
+            x(d) {
                 return d.label
             },
-            y: function(d) {
+            y(d) {
                 return d.value + (1e-10)
             },
             showValues: true,
-            valueFormat: function(d) {
+            valueFormat(d) {
                 return d3.format(',.4f')(d);
             },
             duration: 500,
@@ -168,6 +168,5 @@ app.controller('partyStats', ($scope, stats) => {
     }
 
     $scope.getSingularPopularity();
-
 
 });
