@@ -32,7 +32,7 @@ schema.statics.createNewDataSet = function() {
     var returnId = function(song) {
         return song._id };
 
-    Song.find({})
+    return Song.find({})
         .then(function(songs) {
             songs.sort(function(a, b) {
                 return b.totalScore - a.totalScore;
@@ -75,6 +75,7 @@ schema.statics.getLatest = function() {
             if (stats.length === 0) return self.createNewDataSet();
             var timeSinceLastStat = Date.now() - stats[0].date;
             var twentyFourHours = 86400000;
+            console.log("Time since last stat: ", timeSinceLastStat)
             if (timeSinceLastStat > twentyFourHours) {
                 return self.createNewDataSet();
             }

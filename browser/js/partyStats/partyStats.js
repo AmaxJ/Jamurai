@@ -12,11 +12,10 @@ app.config($stateProvider => {
             }
         }
     });
-})
+});
 
 app.controller('partyStats', ($scope, stats) => {
     $scope.data = [];
-
     var options1 = {
         chart: {
             type: 'discreteBarChart',
@@ -50,7 +49,6 @@ app.controller('partyStats', ($scope, stats) => {
                 axisLabelDistance: -10
             },
             rotateLabels: 20
-
         }
     }
 
@@ -86,7 +84,6 @@ app.controller('partyStats', ($scope, stats) => {
             rotateLabels: 20
         }
     }
-
 
     var options3 = {
         chart: {
