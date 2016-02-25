@@ -11,6 +11,10 @@ var schema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    created: {
+        type: Boolean,
+        default: false
+    },
     name: {
         type: String,
         required: true
@@ -164,57 +168,69 @@ schema.method({
     addUser: function(userId) {
         let self = this;
         this.users.addToSet(userId);
-        return this.save()
-            .then((room) => {
-                return this.constructor.findById(this._id)
-                    .populate('users')
-                    .populate('userScores');
-            })
-            .then(room => {
-                //returns userscore obj if it exists
-                let userScoreObj = room.userScores.filter(scoreObj => {
-                    return scoreObj.user.toString() === userId.toString();
-                })[0];
-                if (!userScoreObj) {
-                    return self.constructor.findOrCreateScoreObj(userId, room._id);
-                } else {
-                    return "Already have a score Obj"
-                }
-            })
-            .then(function(room) {
-                return self.addPowerupData(userId);
-            })
-            .then(function(powerUp) {
-                return self.constructor.findById(self._id)
-                    .populate('users')
-                    .populate('userScores')
-                    .populate({
-                        path: 'userScores',
-                        model: 'UserScore',
-                        populate: {
-                            path: "user",
-                            model: "User"
-                        }
-                    })
-                    .populate({
-                        path: 'playlist',
-                        model: 'Playlist',
-                        populate: {
-                            path: 'songs',
-                            model: 'SongData',
-                            populate: [{
-                                path: 'song',
-                                model: 'Song'
-                            }, {
-                                path: 'submittedBy',
-                                model: 'User'
-                            }]
-                        }
-                    })
-            })
-            .then(null, error => {
-                console.log("error in Room.addUser: ", error);
-            });
+        return User.findById(userId)
+        .then(user => {
+            let createIdx = user.roomsCreated.indexOf(self.name);
+            let joinIdx = user.roomsJoined.indexOf(self.name);
+            if(createIdx===-1 && joinIdx===-1)
+            {
+                user.roomsJoined.push(self.name)
+            }
+            return user.save();
+        })
+        .then(data => {
+            return self.save()
+        })
+        .then((room) => {
+            return self.constructor.findById(self._id)
+                .populate('users')
+                .populate('userScores');
+        })
+        .then(room => {
+            //returns userscore obj if it exists
+            let userScoreObj = room.userScores.filter(scoreObj => {
+                return scoreObj.user.toString() === userId.toString();
+            })[0];
+            if (!userScoreObj) {
+                return self.constructor.findOrCreateScoreObj(userId, room._id);
+            } else {
+                return "Already have a score Obj"
+            }
+        })
+        .then(function(room) {
+            return self.addPowerupData(userId);
+        })
+        .then(function(powerUp) {
+            return self.constructor.findById(self._id)
+                .populate('users')
+                .populate('userScores')
+                .populate({
+                    path: 'userScores',
+                    model: 'UserScore',
+                    populate: {
+                        path: "user",
+                        model: "User"
+                    }
+                })
+                .populate({
+                    path: 'playlist',
+                    model: 'Playlist',
+                    populate: {
+                        path: 'songs',
+                        model: 'SongData',
+                        populate: [{
+                            path: 'song',
+                            model: 'Song'
+                        }, {
+                            path: 'submittedBy',
+                            model: 'User'
+                        }]
+                    }
+                })
+        })
+        .then(null, error => {
+            console.log("error in Room.addUser: ", error);
+        });
     },
 
     addMsg: function(userName, msg) {
@@ -317,5 +333,22 @@ schema.method({
         // this.save;
     }
 });
+
+schema.post('save', function (next) {
+    let self = this;
+    if(!self.created)
+    {
+        self.created = true;
+        return self.save()
+        .then(room => {
+            var creatorId = room.creator;
+            return User.findById(creatorId)
+        })
+        .then(user => {
+            user.roomsCreated.push(self.name);
+            return user.save();
+        })
+    }
+})
 
 mongoose.model('Room', schema);

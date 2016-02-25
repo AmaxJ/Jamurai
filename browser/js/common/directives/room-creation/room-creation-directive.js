@@ -23,6 +23,7 @@ app.controller('RoomFormCtrl', ($scope, RoomFactory, $state) => {
         RoomFactory.createNewRoom($scope.newRoom)
             .then(newRoom => {
                 $state.go('room', {roomId: newRoom._id});
+                console.log('room',newRoom);
             })
             .then(null, console.error.bind(console));
     }

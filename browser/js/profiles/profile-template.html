@@ -36,4 +36,8 @@
             </div>
         </div>
     </div>
+    <div id='roomscreatehead'>Rooms Created</div>
+    <div ng-repeat='createdRoom in createdRooms track by $index'>{{createdRoom}}</div>
+    <div id='roomsjoinhead'>Rooms Joined</div>
+    <div ng-repeat='joinedRoom in joinedRooms track by $index'>{{joinedRoom}}</div>
 </div>
