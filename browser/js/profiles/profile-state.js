@@ -58,6 +58,8 @@ app.controller('ProfileCtrl', ($scope, ProfileFactory, theUser, userPowerups) =>
         isEditable = !isEditable;
     };
     $scope.updateDetails = {};
+    $scope.createdRooms = $scope.loggedInUser.roomsCreated;
+    $scope.joinedRooms = $scope.loggedInUser.roomsJoined;
 })
 //TODO this should be moved to separate file for consistency
 app.factory('ProfileFactory', $http => {

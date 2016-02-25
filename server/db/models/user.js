@@ -33,6 +33,12 @@ var schema = new mongoose.Schema({
     salt: {
         type: String
     },
+    roomsCreated: [{
+        type: String
+    }],
+    roomsJoined: [{
+        type: String
+    }],
     dateCreation: {
         type: Date,
         default: Date.now
