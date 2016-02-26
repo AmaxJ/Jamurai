@@ -1,5 +1,4 @@
 'use strict'
-var _ = require('lodash');
 var mongoose = require('mongoose');
 var Song = mongoose.model('Song');
 
@@ -75,7 +74,6 @@ schema.statics.getLatest = function() {
             if (stats.length === 0) return self.createNewDataSet();
             var timeSinceLastStat = Date.now() - stats[0].date;
             var twentyFourHours = 86400000;
-            console.log("Time since last stat: ", timeSinceLastStat)
             if (timeSinceLastStat > twentyFourHours) {
                 return self.createNewDataSet();
             }
