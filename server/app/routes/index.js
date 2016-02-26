@@ -8,7 +8,7 @@ router.use('/rooms', require('./rooms'));
 router.use('/playlists', require('./playlists'));
 router.use('/users', require('./users'));
 router.use('/powerups', require('./powerups'));
-
+router.use('/statistics', require('./statistics'));
 
 // Make sure this is after all of
 // the registered routes!

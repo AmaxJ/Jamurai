@@ -6,6 +6,7 @@ require('./userScore');
 require('./powerupData');
 require('./user');
 require('./song');
+require('./statistics');
 require('./room');
 require('./playlist');
 

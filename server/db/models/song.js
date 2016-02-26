@@ -36,8 +36,17 @@ var schema = new mongoose.Schema({
 		default: 0
 	},
 	totalScore: {
-		type: Number
-	}
+		type: Number,
+        default: 0
+	},
+    roomsRequestedIn : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Room"
+    }],
+    numRoomsRequestedIn : {
+        type: Number,
+        default: 0
+    }
 });
 
 mongoose.model('Song',schema);
