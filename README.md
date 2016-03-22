@@ -3,7 +3,7 @@
 # [Jamurai](http://www.jamurai.io)
 
 Jamurai is a real-time collaborative playlist application for
-crowdsourcing music selection at parties. 
+crowdsourcing music selection at parties. Try it out at [jamurai.io](http://www.jamurai.io).
 
 ###Features
 Users can create rooms (called "Dojos") where songs are submitted to construct a playlist. Other 
