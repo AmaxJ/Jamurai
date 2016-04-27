@@ -41,35 +41,35 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     }
 
     function lotusOfGenerosity() {
-        PlaylistFactory.setUpvoteAmount(10);
+        PlaylistFactory.setUpvoteAmount(5);
         $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
     function soundOfEnlightenment() {
-        PlaylistFactory.setUpvoteAmount(100);
+        PlaylistFactory.setUpvoteAmount(10);
         $rootScope.$on('upvote', () => {
             PlaylistFactory.setUpvoteAmount(1);
         })
     }
 
     function swordsOfCertainDeath() {
-        PlaylistFactory.setDownvoteAmount(-100);
-        $rootScope.$on('downvote', () => {
-            PlaylistFactory.setDownvoteAmount(-1);
-        })
-    }
-
-    function katanaOfDisgrace() {
         PlaylistFactory.setDownvoteAmount(-10);
         $rootScope.$on('downvote', () => {
             PlaylistFactory.setDownvoteAmount(-1);
         })
     }
 
+    function katanaOfDisgrace() {
+        PlaylistFactory.setDownvoteAmount(-5);
+        $rootScope.$on('downvote', () => {
+            PlaylistFactory.setDownvoteAmount(-1);
+        })
+    }
+
     function swordOfUncertainty() {
-        let posOrNeg = [-10, 10];
+        let posOrNeg = [-8, 8];
         let zeroOrOne = Math.floor(Math.random() * 2);
         let multiplier = posOrNeg[zeroOrOne];
         let randomNum = Math.floor(Math.random() * multiplier);
@@ -80,15 +80,15 @@ app.factory('PowerupFactory', (PlaylistFactory, $rootScope, SocketFactory, $http
     }
 
     function daggersOfDisdain(user, room) {
-        socket.emit('multiPower', { user: user, room: room, strength: -5 });
+        socket.emit('multiPower', { user: user, room: room, strength: -3 });
     }
 
     function poisonDarts(user, room) {
-        socket.emit('multiPower', { user: user, room: room, strength: -2 });
+        socket.emit('multiPower', { user: user, room: room, strength: -1 });
     }
 
     function theLastJamurai(user, room) {
-        socket.emit('multiPower', { user: user, room: room, strength: -1000 });
+        socket.emit('multiPower', { user: user, room: room, strength: -10 });
     }
 
     factory.getPowerups = (userId, roomId) => {
