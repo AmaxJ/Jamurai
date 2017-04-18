@@ -26,7 +26,7 @@ var schema = new mongoose.Schema({
         default: []
     }],
 
-    total : {
+    total: {
         type: Number,
         default: 0
     },
@@ -39,11 +39,11 @@ var schema = new mongoose.Schema({
 });
 
 schema.method({
-    calculateValue : function() {
+    calculateValue: function() {
         this.total = this.upVotes.length - this.downVotes.length;
         return this.save();
     },
-    vote : function(userId, vote) { //vote = 'up' or 'down'
+    vote: function(userId, vote) { //vote = 'up' or 'down'
         if (!userId || !vote) return;
         if (vote.type === 'up') {
             if (this.upVotes.indexOf(userId) > -1) return;
@@ -62,12 +62,10 @@ schema.method({
         return this.save();
     },
     removeVote: function(userId, vote) {
-        if (!userId) return;
-        if (vote) {
-            var voteProp = vote + "Votes";
-            var userIndex = this[voteProp].indexOf(userId);
-            this[voteProp].splice(userIndex, 1);
-        }
+        if (!userId || !vote) return;
+        var voteProp = vote + "Votes";
+        var userIndex = this[voteProp].indexOf(userId);
+        this[voteProp].splice(userIndex, 1);
         return this.save();
     }
 });
